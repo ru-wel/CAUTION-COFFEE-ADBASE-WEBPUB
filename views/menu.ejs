@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MENU | CAUTION COFFEE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+
+    <%- include('header.ejs') %>
+
+    <section class="menu">
+
+        <div class="container"><br>
+            <h2 style="text-align: center;">DRINKS</h2><br>
+            <hr>
+            <h2 style="text-align: center;">SIGNATURE COFFEE</h2>
+            <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">            
+            <% menu.forEach(menuDocument => { %>
+                <% if (menuDocument.Signature) { %>
+                    <% menuDocument.Signature.forEach(item => { %>
+                        <div class="col">
+                            <div class="card h-100">
+                                <img src="./media/<%= item.menuImage %>" class="img-fluid" alt="Caution T-Shirt (Black)">
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= item.menuName %></h5>
+                                    <p class="card-text">PHP <%= item.price %></p>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                <% } %>
+            <% }) %>
+            </div>
+
+            <br><hr>
+            <h2 style="text-align: center;">NON-COFFEE</h2>
+            <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">            
+                <% menu.forEach(menuDocument => { %>
+                    <% if (menuDocument.Non_Coffee) { %>
+                        <% menuDocument.Non_Coffee.forEach(item => { %>
+                            <div class="col">
+                                <div class="card h-100">
+                                    <img src="./media/<%= item.menuImage %>" class="img-fluid" alt="Caution T-Shirt (Black)">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><%= item.menuName %></h5>
+                                        <p class="card-text">PHP <%= item.price %></p>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }) %>
+                    <% } %>
+                <% }) %>
+            </div>
+
+            <br><br><br>
+            <h2 style="text-align: center;">FOODS</h2>
+            <br><hr>
+            <h2 style="text-align: center;">BEST SELLERS</h2>
+            <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">            
+                <% menu.forEach(menuDocument => { %>
+                    <% if (menuDocument.Best_Sellers) { %>
+                        <% menuDocument.Best_Sellers.forEach(item => { %>
+                            <div class="col">
+                                <div class="card h-100">
+                                    <img src="./media/<%= item.menuImage %>" class="img-fluid" alt="Caution T-Shirt (Black)">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><%= item.menuName %></h5>
+                                        <p class="card-text">PHP <%= item.price %></p>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }) %>
+                    <% } %>
+                <% }) %>
+            </div>  
+            
+            <br>
+            <hr>
+            <h2 style="text-align: center;">SANDWICHES</h2>
+            <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">            
+                <% menu.forEach(menuDocument => { %>
+                    <% if (menuDocument.Sandwiches) { %>
+                        <% menuDocument.Sandwiches.forEach(item => { %>
+                            <div class="col">
+                                <div class="card h-100">
+                                    <img src="./media/<%= item.menuImage %>" class="img-fluid" alt="Caution T-Shirt (Black)">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><%= item.menuName %></h5>
+                                        <p class="card-text">PHP <%= item.price %></p>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }) %>
+                    <% } %>
+                <% }) %>
+            </div>  
+        </div>            
+
+    </section>
+
+    <%- include('footer.ejs') %>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+</body>
+</html>
