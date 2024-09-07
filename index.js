@@ -280,6 +280,31 @@ app.post('/review_process', async function (req, res) {
     });
 });
 
+app.get('/merch', async function (req, res) {
+    try {
+        // Retrieve all documents from the "reviews" collection
+        const querySnapshot = await getDocs(collection(db, "merchandise"));
+        const merch = [];
+
+        // Collect all reviews in an array
+        querySnapshot.forEach((doc) => {
+            merch.push(doc.data());
+        });
+
+        const user = auth.currentUser;
+        if (user) {
+            // User is signed in
+            res.render('merch.ejs', { merch, isLoggedIn : true, message : req.query.message }); // EMAIL FOR PLACEHOLDER ONLY : isLoggedIn TO BE REFACTORED
+        } else {
+            res.render('merch.ejs', { merch, isLoggedIn : false, message : req.query.message});
+        }
+        
+    } catch (error) {
+        console.error("Error fetching reviews:", error);
+        res.status(500).send("Error fetching reviews"); // <------------- POSSIBLE ERROR HANDLING (SEND STATUS CODES)
+    }
+});
+
 app.listen(3000, ()  => {
     console.log("Listening at Port 3000");
 });

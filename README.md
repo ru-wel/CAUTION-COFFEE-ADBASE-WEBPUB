@@ -10,3 +10,4 @@ Use 'git push origin' to push your local files to github repo
 
 Use 'git pull origin' to update your local files from github repo
 
+Use 'git checkout <'BRANCH NAME'>' to switch branches
