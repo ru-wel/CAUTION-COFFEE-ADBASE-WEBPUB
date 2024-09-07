@@ -1,0 +1,64 @@
+button {
+  all: unset;
+}
+
+button:focus {
+  outline: revert;
+}
+
+#logo{
+    width: 200px;
+    height: 50px;
+}
+
+@media only screen and (min-width: 990px) {
+
+    #navbarSupportedContent, #navbar3{
+      display: none !important;
+    }
+
+    #navbar1, #navbar2{
+      display: flex !important;
+      z-index: 1;
+    }
+
+    #threeWords{
+      z-index: 1;
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 124px;
+    }
+
+    #threeIcons{
+      display: none;
+    }
+
+}
+
+@media only screen and (max-width: 989px) {
+    #navbar1, #navbar2, #navbar3{
+      display: none !important;
+    }
+
+    #threeWords{
+      display: none;
+    }
+
+    #threeIcons{
+      z-index: 1;
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 124px;
+    }
+}
+
+@media (max-width: 767px) {
+    #logo {
+      width: 50px !important;
+      height: 50px !important;
+    }
+}

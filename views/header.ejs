@@ -1,0 +1,310 @@
+<header>
+    <div class="container-fluid p-4" id="threeWords">
+        <ul class="navbar-nav" style="flex-direction: row !important;">
+          <li class="nav-item me-3">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+          </li>
+          <li class="nav-item me-3">
+          <a class="nav-link" href="#">Feature</a> <!-- LINK TO BE ADDED -->
+          </li>
+          <li class="nav-item me-3">
+            <a class="nav-link" href="/review">Reviews</a>
+            </li>
+          <li class="nav-item dropdown">
+          <a
+              class="nav-link dropdown-toggle"
+              href="#" 
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+          > <!-- LINK TO BE ADDED -->
+              Products
+          </a>
+          <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Menu</a></li> <!-- LINK TO BE ADDED -->
+              <li><hr class="dropdown-divider" /></li>
+              <li><a class="dropdown-item" href="#">Coffee & Brew Gear</a></li> <!-- LINK TO BE ADDED -->
+              <li><hr class="dropdown-divider" /></li>
+              <li><a class="dropdown-item" href="#">Merchandise</a></li> <!-- LINK TO BE ADDED -->
+          </ul>
+          </li>
+        </ul>
+    </div>
+  
+    <div class="container-fluid p-4" id="threeIcons"> <!-- DO NOT SHOW ON SMALL SCREENS-->
+        <!-- LINK TO BE ADDED (CART) -->
+        <a class="text-reset me-3" href="#" 
+                      ><svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          fill="black"
+                          class="bi bi-bag"
+                          viewBox="0 0 16 16"
+                      >
+                          <path
+                          d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"
+                          /></svg></a>
+                    
+                    <!-- LINK TO BE ADDED (SEARCH) -->
+                      <a class="text-reset me-3" href="#"
+                      ><svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          fill="black"
+                          class="bi bi-search"
+                          viewBox="0 0 16 16"
+                      >
+                          <path
+                          d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"
+                          /></svg></a>
+  
+                      <div class="dropdown">
+
+                      <a
+                          data-mdb-dropdown-init
+                          class="text-reset me-3 dropdown-toggle"
+                          id="navbarDropdownMenuLink"
+                          href="#"
+                          role="button"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                      >
+                          <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          fill="black"
+                          class="bi bi-person-circle"
+                          viewBox="0 0 16 16"
+                          >
+                          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                          <path
+                              fill-rule="evenodd"
+                              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+                          />
+                          </svg>
+                      </a>
+                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink"> 
+                        <% if (!isLoggedIn) { %>
+                          <li><a class="dropdown-item" href="/login">Sign in</a></li>
+                          <li><hr class="dropdown-divider" /></li>
+                          <li><a class="dropdown-item" href="/signup">Sign up</a></li>
+                        <% } %>
+
+                          <% if (isLoggedIn) { %>
+                          <li><a class="dropdown-item" href="/profile">View Profile</a></li>
+                          <li><hr class="dropdown-divider" /></li>
+                          <li><form action="/logout" method="POST" class="dropdown-item">
+                                <button>Logout</button>
+                                </form></li>
+                          <% } %>
+                      </ul>
+                    </div>
+    </div>
+  
+    <nav class="navbar navbar-expand-lg">
+        
+        <div class="container p-4">
+          <!--LOGO-->
+          <a class="navbar-brand" href="/" style="z-index: 4;"><img src="./media/caution-logo.png" alt="" id="logo"></a>
+  
+          <!--NAV-->
+  
+            <!--TRIPLE ICONS-->
+            <div id="navbar1">
+              <a class="text-reset me-3" href="#"
+                      ><svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          fill="black"
+                          class="bi bi-bag"
+                          viewBox="0 0 16 16"
+                      >
+                          <path
+                          d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"
+                          /></svg></a>
+  
+                      <a class="text-reset me-3" href="#"
+                      ><svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          fill="black"
+                          class="bi bi-search"
+                          viewBox="0 0 16 16"
+                      >
+                          <path
+                          d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"
+                          /></svg></a>
+  
+                      <div class="dropdown">
+                      <a
+                          data-mdb-dropdown-init
+                          class="text-reset me-3 dropdown-toggle"
+                          id="navbarDropdownMenuLink"
+                          href="#"
+                          role="button"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                      >
+                          <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          fill="black"
+                          class="bi bi-person-circle"
+                          viewBox="0 0 16 16"
+                          >
+                          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                          <path
+                              fill-rule="evenodd"
+                              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+                          />
+                          </svg>
+                      </a>
+                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink"> 
+                        <% if (!isLoggedIn) { %>
+                          <li><a class="dropdown-item" href="/login">Sign in</a></li>
+                          <li><hr class="dropdown-divider" /></li>
+                          <li><a class="dropdown-item" href="/signup">Sign up</a></li>
+                        <% } %>
+
+                          <% if (isLoggedIn) { %>
+                          <li><a class="dropdown-item" href="/profile">View Profile</a></li>
+                          <li><hr class="dropdown-divider" /></li>
+                          <li><form action="/logout" method="POST" class="dropdown-item">
+                            <button>Logout</button>
+                            </form></li>
+                          <% } %>
+                      </ul>
+                    </div>
+            </div>
+  
+            <div class="d-flex align-items-center mt-2" id="navbar3">
+              <a class="text-reset me-3" href="#"
+              ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="black"
+                  class="bi bi-bag"
+                  viewBox="0 0 16 16"
+              >
+                  <path
+                  d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"
+                  /></svg></a>
+  
+              <a class="text-reset me-3" href="#"
+              ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="black"
+                  class="bi bi-search"
+                  viewBox="0 0 16 16"
+              >
+                  <path
+                  d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"
+                  /></svg></a>
+  
+              <div class="dropdown">
+              <a
+                  data-mdb-dropdown-init
+                  class="text-reset me-3 dropdown-toggle"
+                  id="navbarDropdownMenuLink"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+              >
+                  <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="black"
+                  class="bi bi-person-circle"
+                  viewBox="0 0 16 16"
+                  >
+                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                  <path
+                      fill-rule="evenodd"
+                      d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+                  />
+                  </svg>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink"> 
+                <% if (!isLoggedIn) { %>
+                  <li><a class="dropdown-item" href="/login">Sign in</a></li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li><a class="dropdown-item" href="/signup">Sign up</a></li>
+                <% } %>
+
+                  <% if (isLoggedIn) { %>
+                  <li><a class="dropdown-item" href="/profile">View Profile</a></li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li><form action="/logout" method="POST" class="dropdown-item">
+                    <button>Logout</button>
+                    </form></li>
+                  <% } %>
+              </ul>
+              </div>
+            </div>
+                    <!--HAMBURGER ICON-->
+              <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+              style="z-index: 3 !important;"
+            >
+              <!--ICON-->
+              <span class="navbar-toggler-icon"></span>
+            </button> 
+            <!-- HAMBURGER -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <div class="d-flex flex-column">
+                  <ul class="navbar-nav mt-3 mb-2 mb-lg-0">
+                      <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="#">Home</a>
+                      </li>
+                      <li class="nav-item">
+                      <a class="nav-link" href="#">Feature</a>
+                      </li>
+                      <li class="nav-item me-3">
+                        <a class="nav-link" href="/review">Reviews</a>
+                        </li>
+                      <li class="nav-item dropdown">
+                      <a
+                          class="nav-link dropdown-toggle"
+                          href="#"
+                          role="button"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                      >
+                          Products
+                      </a>
+                      <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="#">Menu</a></li>
+                          <li><hr class="dropdown-divider" /></li>
+                          <li><a class="dropdown-item" href="#">Coffee & Brew Gear</a></li>
+                          <li><hr class="dropdown-divider" /></li>
+                          <li><a class="dropdown-item" href="#">Merchandise</a></li>
+                      </ul>
+                      </li>
+                  </ul>
+  
+                  
+              </div>
+            </div>
+        </div>
+  
+  
+        </div>
+    </nav>
+</header>
