@@ -1,2 +1,2 @@
 Repository for our Caution-Coffee website
-Testing pull on git
+Use 'git pull origin' to update your local files from github repo
