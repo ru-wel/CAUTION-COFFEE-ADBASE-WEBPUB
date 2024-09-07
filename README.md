@@ -4,6 +4,9 @@ Use 'git add --all to add your local files to the "Staging Environment"
 
 Use 'git commit <'filename'> -m <'YOUR MESSAGE HERE'>' to commit changes to your local file or 'git commit -a -m <'YOUR MESSAGE HERE'>' to commit all files.
 
-Use 'git pull origin' to update your local files from github repo
+Use 'git remote add origin https://github.com/ru-wel/CAUTION-COFFEE-REPO.git' to set github repo as local repo
 
 Use 'git push origin' to push your local files to github repo
+
+Use 'git pull origin' to update your local files from github repo
+
