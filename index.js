@@ -7,7 +7,6 @@ import bodyParser from 'body-parser';
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import dotenv from 'dotenv';
-import { type } from 'os';
 
 dotenv.config(); // PROCESS .ENV FILE
 
