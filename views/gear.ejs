@@ -126,38 +126,51 @@
     <%- include('footer.ejs') %>
 
     <script>
-        let minusButtons = document.getElementsByClassName("minus");
-        let plusButtons = document.getElementsByClassName("plus");
+        
         let atcButtons = document.getElementsByClassName("atc");
         let quantityFields = document.getElementsByClassName("quantity");
+        let plusButtons = document.getElementsByClassName("plus");
+        let minusButtons = document.getElementsByClassName("minus");
 
-        for (let i = 0; i < minusButtons.length; i++) {
+        for (let i = 0; i < quantityFields.length; i++) {
+            if (quantityFields[i].value == 0) {
+                atcButtons[i].setAttribute("disabled", "");
+            }
+
             minusButtons[i].addEventListener("click", () => {
-                console.log(quantityFields[i].value);
                 let currentQuantity = parseInt(quantityFields[i].value);
                 if (currentQuantity > 0) {
                     quantityFields[i].value = currentQuantity - 1;
                 }
+                updateAtcButtonState(i);
             });
-        }
 
-        for (let i = 0; i < plusButtons.length; i++) {
             plusButtons[i].addEventListener("click", () => {
-                console.log(quantityFields[i].value);
                 let currentQuantity = parseInt(quantityFields[i].value);
-                if (currentQuantity >= 0) {
-                    quantityFields[i].value = currentQuantity + 1;
+                quantityFields[i].value = currentQuantity + 1;
+                updateAtcButtonState(i);
+            });
+
+            atcButtons[i].addEventListener("click", (event) => {
+                let currentQuantity = parseInt(quantityFields[i].value);
+                if (currentQuantity > 0){
+                    console.log(event.target.parentElement.getElementsByClassName("card-title")[0].innerHTML)
+                    let price = event.target.parentElement.getElementsByClassName("card-text")[0].innerHTML;
+                    let parts = price.split('PHP');
+                    let newPrice = parts[1].trim();
+                    console.log(newPrice);
+                    console.log(currentQuantity);
                 }
             });
-        }
 
-        for (let i = 0; i < atcButtons.length; i++) {
-            atcButtons[i].addEventListener("click", () => {
-                if (quantityFields[i].value != 0){
-                    console.log("Added to Cart");
+            function updateAtcButtonState(i) {
+                let currentQuantity = parseInt(quantityFields[i].value);
+                if (currentQuantity > 0) {
+                    atcButtons[i].removeAttribute("disabled");
+                } else {
+                    atcButtons[i].setAttribute("disabled", "");
                 }
-                else{ console.log("Quantity is 0"); }
-            })
+            }
         }
         
     </script>
