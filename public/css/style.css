@@ -1,6 +1,24 @@
+*{
+  font-family: "Playfair Display", serif;
+  
+}
+
+.best-sellers{
+  margin: 0px;
+}
+
 button {
   all: unset;
 }
+
+nav,footer{
+  background-color: #e8e8e1;
+}
+
+#location{
+  background-color: #e8e8e1;
+}
+
 
 button:focus {
   outline: revert;

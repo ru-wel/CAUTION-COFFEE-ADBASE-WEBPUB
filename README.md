@@ -10,3 +10,10 @@ Use 'git push origin' to push your local files to github repo
 
 Use 'git pull origin' to update your local files from github repo
 
+Use 'git checkout <'BRANCH NAME'>' to switch branches
+
+Use 'git branch' to check branches
+
+Use 'git status' to view status of your files in your local folder
+
+Use "git restore <'file'>" to discard changes in working directory
