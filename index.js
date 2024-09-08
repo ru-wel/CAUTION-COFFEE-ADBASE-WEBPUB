@@ -2,7 +2,7 @@ import express from 'express';
 import { initializeApp } from "firebase/app";
 // import { initializeApp as adminInitializeApp} from 'firebase-admin/app'; // FIREBASE ADMIN
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth"; // TO BE REFACTORED?
-import { getFirestore, doc, setDoc, getDoc, addDoc, collection, getDocs} from "firebase/firestore"; // TO BE REFACTORED? POSSIBLY : import * as firestore from 'firebase/firestore';
+import { getFirestore, doc, setDoc, getDoc, addDoc, collection, getDocs, query, where} from "firebase/firestore"; // TO BE REFACTORED? POSSIBLY : import * as firestore from 'firebase/firestore';
 import bodyParser from 'body-parser';
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -323,6 +323,47 @@ app.get('/menu', async function (req, res) {
             res.render('menu.ejs', { menu, isLoggedIn : true, message : req.query.message }); // EMAIL FOR PLACEHOLDER ONLY : isLoggedIn TO BE REFACTORED
         } else {
             res.render('menu.ejs', { menu, isLoggedIn : false, message : req.query.message});
+        }
+        
+    } catch (error) {
+        console.error("Error fetching menu:", error);
+        res.status(500).send("Error fetching menu"); // <------------- POSSIBLE ERROR HANDLING (SEND STATUS CODES)
+    }
+});
+
+app.get('/gear', async function (req, res) {
+    try {
+        // Retrieve all documents from the "reviews" collection
+        const querySnapshot = await getDocs(collection(db, "cnbgear"));
+        const gear = [];
+
+        // Collect all reviews in an array
+        querySnapshot.forEach((doc) => {
+            gear.push(doc.data());
+        });
+
+        // gear.reverse().forEach(gear => {
+        //     if (gear.category === "brew_gear"){
+        //         console.log(gear.gearImage);
+        //     }
+        // });
+        
+
+        // const gearRef = collection(db, "cnbgear");
+
+        // const q = query(collection(db, "cnbgear"), where("category", "==", "brew_gear"));
+
+        // const querySnapshot = await getDocs(q);
+        // querySnapshot.forEach((doc) => {
+        //     console.log(doc.id, " => ", doc.data());
+        // });
+
+        const user = auth.currentUser;
+        if (user) {
+            // User is signed in
+            res.render('gear.ejs', { gear, isLoggedIn : true, message : req.query.message }); // EMAIL FOR PLACEHOLDER ONLY : isLoggedIn TO BE REFACTORED
+        } else {
+            res.render('gear.ejs', { gear, isLoggedIn : false, message : req.query.message});
         }
         
     } catch (error) {
