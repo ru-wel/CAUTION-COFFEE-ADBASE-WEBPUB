@@ -2,7 +2,7 @@ import express from 'express';
 import { initializeApp } from "firebase/app";
 // import { initializeApp as adminInitializeApp} from 'firebase-admin/app'; // FIREBASE ADMIN
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth"; // TO BE REFACTORED?
-import { getFirestore, doc, setDoc, getDoc, addDoc, collection, getDocs, query, where} from "firebase/firestore"; // TO BE REFACTORED? POSSIBLY : import * as firestore from 'firebase/firestore';
+import { getFirestore, doc, setDoc, getDoc, addDoc, collection, getDocs} from "firebase/firestore"; // TO BE REFACTORED? POSSIBLY : import * as firestore from 'firebase/firestore';
 import bodyParser from 'body-parser';
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -341,22 +341,6 @@ app.get('/gear', async function (req, res) {
         querySnapshot.forEach((doc) => {
             gear.push(doc.data());
         });
-
-        // gear.reverse().forEach(gear => {
-        //     if (gear.category === "brew_gear"){
-        //         console.log(gear.gearImage);
-        //     }
-        // });
-        
-
-        // const gearRef = collection(db, "cnbgear");
-
-        // const q = query(collection(db, "cnbgear"), where("category", "==", "brew_gear"));
-
-        // const querySnapshot = await getDocs(q);
-        // querySnapshot.forEach((doc) => {
-        //     console.log(doc.id, " => ", doc.data());
-        // });
 
         const user = auth.currentUser;
         if (user) {
