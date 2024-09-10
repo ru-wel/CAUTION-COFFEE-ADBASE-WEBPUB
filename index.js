@@ -29,7 +29,8 @@ const firestore = initializeApp(firebaseConfig);
 const db = getFirestore(firestore);
 const auth = getAuth(firestore);
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true })); // PARSE DATA FROM HTML FORMS
+app.use(express.json()); // PARSE DATA FROM FETCH
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname,'css')));
 app.use(express.static(path.join(__dirname,'media'))); // SERVE STATIC FILES
@@ -354,6 +355,11 @@ app.get('/gear', async function (req, res) {
         res.status(500).send("Error fetching menu"); // <------------- POSSIBLE ERROR HANDLING (SEND STATUS CODES)
     }
 });
+
+app.post('/add-to-cart', (req, res) => {
+    console.log(req.body);
+    // TO DO : CONNECT TO DATABASE
+})
 
 app.listen(3000, ()  => {
     console.log("Listening at Port 3000");
