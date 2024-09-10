@@ -2,7 +2,7 @@ import express from 'express';
 import { initializeApp } from "firebase/app";
 // import { initializeApp as adminInitializeApp} from 'firebase-admin/app'; // FIREBASE ADMIN
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth"; // TO BE REFACTORED?
-import { getFirestore, doc, setDoc, getDoc, addDoc, collection, getDocs} from "firebase/firestore"; // TO BE REFACTORED? POSSIBLY : import * as firestore from 'firebase/firestore';
+import { getFirestore, doc, setDoc, getDoc, addDoc, collection, getDocs, query, where, updateDoc, arrayUnion} from "firebase/firestore"; // TO BE REFACTORED? POSSIBLY : import * as firestore from 'firebase/firestore';
 import bodyParser from 'body-parser';
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -163,7 +163,7 @@ app.get('/profile', (req, res) => {
                 if (docSnap.exists()) {
                     // Document data is available
                     const userData = docSnap.data();
-                    res.render('profile.ejs', {uid:uid, user:userData, isLoggedIn : true})
+                    res.render('profile.ejs', {user:userData, isLoggedIn : true})
                 } else {
                     // Document does not exist
                     console.log("No such document!");
@@ -250,7 +250,7 @@ app.post('/review_process', async function (req, res) {
 
                     const currentReviews = userData.reviews || []; // IF WALANG LAMAN YUNG REVIEWS ARRAY, CREATE NEW ARRAY
 
-                    currentReviews.push({           // APPEND NEW REVIEW TO THE CREATED ARRAY ^
+                    currentReviews.push({  // APPEND NEW REVIEW TO THE CREATED ARRAY ^
                         reviewID: docRef.id,  
                         rating: data.rating,
                         message: data.message,
@@ -351,8 +351,8 @@ app.get('/gear', async function (req, res) {
         }
         
     } catch (error) {
-        console.error("Error fetching menu:", error);
-        res.status(500).send("Error fetching menu"); // <------------- POSSIBLE ERROR HANDLING (SEND STATUS CODES)
+        console.error("Error fetching gear:", error);
+        res.status(500).send("Error fetching gear"); // <------------- POSSIBLE ERROR HANDLING (SEND STATUS CODES)
     }
 });
 
@@ -368,15 +368,28 @@ app.get('/cart', (req, res) => {
         
                 // Retrieve the document snapshot
                 const docSnap = await getDoc(docRef);
+                const username = docSnap.data().username;
+                const cartQuery = query(collection(db, 'cart'), where('username', '==', username)); // FIND CART OF THE USER IN DB
+                const cartSnap = await getDocs(cartQuery);
                 
-                if (docSnap.exists()) {
-                    // Document data is available
-                    const userData = docSnap.data();
-                    res.render('cart.ejs', {uid:uid, user:userData, isLoggedIn : true})
-                } else {
-                    // Document does not exist
-                    console.log("No such document!");
-                }
+                if (!cartSnap.empty){
+                    let cartID;
+                    cartSnap.forEach((doc) => {
+                        cartID = doc.id;
+                    });
+                    const cartRef = doc(db, "cart", cartID)
+                    const cartDoc = await getDoc(cartRef);
+
+                    if (cartDoc.exists()) {
+                        // Document data is available
+                        const cartData = cartDoc.data();
+                        res.render('cart.ejs', {cart:cartData, isLoggedIn : true})
+                    } else {
+                        // Document does not exist
+                        console.log("No such document!");
+                    }
+                } else { res.render('cart.ejs', {cart : "", isLoggedIn : true} )}
+                
             } catch (error) {
                 // Handle potential errors
                 console.error("Error fetching document:", error);
@@ -392,12 +405,11 @@ app.get('/cart', (req, res) => {
 })
 
 app.post('/add-to-cart', async function (req, res) {
-    console.log(req.body);
 
     // TO DO : CONNECT TO DATABASE + ADD DATA VALIDATION + ADD VALIDATION WHEN ADDED TO CART
 
     onAuthStateChanged(auth, async function (user) { // TO BE REFACTORED TO A FUNCTION ?
-        var message
+        var message // TO BE REMOVED
         if (user) {
             // User is signed in, 
             const uid = user.uid;
@@ -415,13 +427,49 @@ app.post('/add-to-cart', async function (req, res) {
                 if (docSnap.exists()) {
                     // Document data is available ----- GET USERNAME FROM DATABASE BASED ON USERID
                     const userData = docSnap.data();
+                    const username = userData.username;
 
-                    await addDoc(collection(db, "cart"), {
-                        username: userData.username,
-                        product_name : req.body.title,
-                        price : parseInt(req.body.price),
-                        quantity : req.body.quantity
-                    }); 
+                    const cartQuery = query(collection(db, 'cart'), where('username', '==', username)); // FIND CART OF THE USER IN DB
+                    const cartSnap = await getDocs(cartQuery);
+                    
+                    if (!cartSnap.empty) { // USER ALREADY HAS CART IN DB
+
+                        // UPDATE EXISTING CART
+                        let cartID;
+                        cartSnap.forEach((doc) => {
+                            cartID = doc.id;
+                        });
+                        
+                        const cartRef = doc(db, "cart", cartID)
+                        const cartDoc = await getDoc(cartRef);
+                        const cartData = cartDoc.data();
+                        const products = cartData.products || []; // IF WALANG LAMAN YUNG PRODUCTS ARRAY, CREATE NEW ARRAY
+                        const existingProductIndex = products.findIndex(product => product.product_name === req.body.title); // FIND INDEX OF EXISTING PRODUCT INSIDE CART
+
+                        if (existingProductIndex > -1) { // IF PRODUCT EXISTS IN CART, ONLY UPDATE ITS QUANTITY
+                            products[existingProductIndex].quantity += parseInt(req.body.quantity);
+                            await updateDoc(cartRef, {
+                                products: products
+                            });
+                        } else{
+                            await updateDoc(cartRef, {
+                                products: arrayUnion({
+                                    product_name: req.body.title,
+                                    price: parseInt(req.body.price),
+                                    quantity: req.body.quantity
+                                })
+                            });
+                        }
+                    } else {
+                        await addDoc(collection(db, "cart"), { // TO DO : GAWING OBJECT PER PRODUCT
+                            username: username,
+                            products: [{
+                                product_name : req.body.title,
+                                price : parseInt(req.body.price),
+                                quantity : req.body.quantity
+                            }]
+                        }); 
+                    }
                     res.json({ success: true, message: 'Product added to cart' }); // NEEDED IN FOR ORDER FOR .then(data => { PROMISE TO FIRE
                 } else {
                     // Document does not exist
@@ -436,9 +484,11 @@ app.post('/add-to-cart', async function (req, res) {
         } else { // ------ TO BE REMOVED/EDITED
           // User is signed out
           // ... -------- TO BE CONTINUED
-          // BAWAL MAGREVIEW KAPAG DI NAKASIGN IN
-          message = "Please sign in to write a review"
-          res.redirect(`/review?message=${encodeURIComponent(message)}`);
+          // BAWAL MAG ADD TO CART KAPAG DI NAKASIGN IN
+
+          // NOT POSSIBLE ATA TO KASE DI NMN FORM SUBMIT YUNG ADD TO CART UNLESS MAKAGAWA NG FETCH SA ELSE
+        //   message = "Please sign in to add to cart"
+        //   res.redirect(`/gear?message=${encodeURIComponent(message)}`);
         }
     });
 })

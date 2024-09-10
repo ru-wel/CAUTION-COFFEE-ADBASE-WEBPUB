@@ -13,7 +13,6 @@
 
     <%- include('header.ejs') %>
 
-
     <section class="coffeenbrewgear">
         <div class="container">
             <br><h2 style="text-align: center;">BREW GEAR</h2>
@@ -164,29 +163,33 @@
                         price : newPrice,
                         quantity : currentQuantity
                     };
-                    
-                    fetch('/add-to-cart', { // FETCH ROUTE FROM APPLICATION
-                        method: 'POST', 
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify(product) 
-                    })
-                    .then(response => {
-                        if (!response.ok) { // ------ EDIT ERROR HANDLING
-                            throw new Error('Network response was not ok'); 
-                        }
-                        return response.json(); 
-                    })
-                    .then(data => { // NEEDS res.json FROM APP TO FIRE
-                        if (data.success) { // ------ EDIT ERROR HANDLING
-                            alert('Product added to cart successfully!');
-                        } else { // ------ EDIT ERROR HANDLING
-                            alert('Failed to add product to cart.');
-                        }
-                    })
-                    .catch(error => { // ------ EDIT ERROR HANDLING
-                        console.error('Error adding product to cart:', error);
-                    });
 
+                    if ('<%- isLoggedIn %>' === 'true') {
+                        fetch('/add-to-cart', { // FETCH ROUTE FROM APPLICATION
+                            method: 'POST', 
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify(product) 
+                        })
+                        .then(response => {
+                            if (!response.ok) { // ------ EDIT ERROR HANDLING
+                                throw new Error('Network response was not ok'); 
+                            }
+                            return response.json(); 
+                        })
+                        .then(data => { // NEEDS res.json FROM APP TO FIRE
+                            if (data.success) { // ------ EDIT ERROR HANDLING
+                                alert('Product added to cart successfully!');
+                            } else { // ------ EDIT ERROR HANDLING
+                                alert('Failed to add product to cart.');
+                            }
+                        })
+                        .catch(error => { // ------ EDIT ERROR HANDLING
+                            console.error('Error adding product to cart:', error);
+                        });
+                    } else {
+                        alert('Please Sign In to Add to Cart');
+                        location.reload();
+                    }
                     quantityFields[i].value = 0;
                     updateAtcButtonState(i);
                 }

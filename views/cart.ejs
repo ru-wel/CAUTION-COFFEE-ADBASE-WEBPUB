@@ -15,13 +15,25 @@
 
     <div style="text-align: center;">
         <h1>CART</h1>
-        <h1>Profile</h1>
-        <h2>User Details of <%= user.fName + " " + user.lName %></h2>
-        <h3>First Name: <%= user.fName %></h3>
-        <h3>Last Name: <%= user.lName %></h3>
-        <h3>Username: <%= user.username %></h3>
-        <h3>Email: <%= user.email %></h3>
-        <br>
+        <% if (cart.products && cart.products.length > 0) { %> <!-- CHECK IF MAY REVIEWS BA YUNG USER -->
+            <% var total = []%>
+            <% var totalPrice = 0%>
+            <% cart.products.forEach(products => { %>
+                <div>
+                    <h3>Product: <%= products.product_name %></h3>    
+                    <h3>Price: <%= products.price %></h3>
+                    <h3>Quantity: <%= products.quantity %></h3>
+                    <br> <!-- FOR DISPLAY PURPOSES ONLY -->
+                    <% total.push(products.price * products.quantity) %>
+                </div>
+            <% }) %>
+            <% total.forEach(x => { %>
+                <% totalPrice += x; %>
+            <% }) %>
+            <h2>Total : <%= totalPrice %></h2> 
+        <% } else { %>
+                <h2>You Have Nothing on Your Cart!</h2>
+        <% } %>
     </div>
 
     <%- include('footer.ejs') %>
