@@ -23,7 +23,7 @@ const firebaseConfig = {
 
 // const admin = adminInitializeApp(); // FIREBASE ADMIN
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const __dirname = dirname(fileURLToPath(import.meta.url)); // SERVE STATIC FILES 
 const app = express();
 const firestore = initializeApp(firebaseConfig);
 const db = getFirestore(firestore);
@@ -33,7 +33,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // PARSE DATA FROM HTML FORM
 app.use(express.json()); // PARSE DATA FROM FETCH
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname,'css')));
-app.use(express.static(path.join(__dirname,'media'))); // SERVE STATIC FILES
+app.use(express.static(path.join(__dirname,'media'))); // SERVE STATIC FILES ^
 // app.use(checkAuth) // CUSTOM MIDDLEWARE
 
 app.get('/', (req, res) =>{ // --------- NEED PA SI FIREBASE ADMIN PARA MAS MAGING SECURE
@@ -356,9 +356,91 @@ app.get('/gear', async function (req, res) {
     }
 });
 
-app.post('/add-to-cart', (req, res) => {
+app.get('/cart', (req, res) => {
+    onAuthStateChanged(auth, (user) => { // TO BE REFACTORED TO A FUNCTION ?
+        if (user) {
+            // User is signed in, 
+            const uid = user.uid;
+            async function fetchDocument(uid) { // DAPAT MAY ASYNC FUNCTION KAPAG GAGAMIT NG AW(a)IT OR NASA PINAKATAAS NG FUNCTION YUNG AW(a)IT
+            try {
+                // Define the document reference
+                const docRef = doc(db, 'users', uid);
+        
+                // Retrieve the document snapshot
+                const docSnap = await getDoc(docRef);
+                
+                if (docSnap.exists()) {
+                    // Document data is available
+                    const userData = docSnap.data();
+                    res.render('cart.ejs', {uid:uid, user:userData, isLoggedIn : true})
+                } else {
+                    // Document does not exist
+                    console.log("No such document!");
+                }
+            } catch (error) {
+                // Handle potential errors
+                console.error("Error fetching document:", error);
+            }
+        }
+        fetchDocument(uid);
+        } else {
+          // User is signed out
+          // ... -------- TO BE CONTINUED / TO BE HANDLED
+        //   console.log("Please Log In");
+        }
+    });
+})
+
+app.post('/add-to-cart', async function (req, res) {
     console.log(req.body);
-    // TO DO : CONNECT TO DATABASE
+
+    // TO DO : CONNECT TO DATABASE + ADD DATA VALIDATION + ADD VALIDATION WHEN ADDED TO CART
+
+    onAuthStateChanged(auth, async function (user) { // TO BE REFACTORED TO A FUNCTION ?
+        var message
+        if (user) {
+            // User is signed in, 
+            const uid = user.uid;
+
+            const fetchDocument = async (uid) => { // DAPAT MAY ASYNC FUNCTION KAPAG GAGAMIT NG AW(a)IT OR NASA PINAKATAAS NG FUNCTION YUNG AW(a)IT
+                            
+            try {
+
+                // Define the document reference
+                const userDocRef = doc(db, 'users', uid);
+        
+                // Retrieve the document snapshot
+                const docSnap = await getDoc(userDocRef);
+                
+                if (docSnap.exists()) {
+                    // Document data is available ----- GET USERNAME FROM DATABASE BASED ON USERID
+                    const userData = docSnap.data();
+
+                    await addDoc(collection(db, "cart"), {
+                        username: userData.username,
+                        product_name : req.body.title,
+                        price : parseInt(req.body.price),
+                        quantity : req.body.quantity
+                    }); 
+                    res.json({ success: true, message: 'Product added to cart' }); // NEEDED IN FOR ORDER FOR .then(data => { PROMISE TO FIRE
+                } else {
+                    // Document does not exist
+                    console.log("No such document!");
+                }
+            } catch (error) {
+                // Handle potential errors
+                console.error("Error:", error);
+            }
+        }
+        fetchDocument(uid);
+        } else { // ------ TO BE REMOVED/EDITED
+          // User is signed out
+          // ... -------- TO BE CONTINUED
+          // BAWAL MAGREVIEW KAPAG DI NAKASIGN IN
+          message = "Please sign in to write a review"
+          res.redirect(`/review?message=${encodeURIComponent(message)}`);
+        }
+    });
 })
 
 app.listen(3000, ()  => {

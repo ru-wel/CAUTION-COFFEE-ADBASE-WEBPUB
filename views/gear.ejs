@@ -159,37 +159,36 @@
                     let parts = price.split('PHP'); // SPLIT WORD 'PHP'
                     let newPrice = parts[1].trim(); // TRIM REMAINING PRICE INLUCDING WHITESPACE
 
-                    console.log(title)
-                    console.log(newPrice);
-                    console.log(currentQuantity);
-
                     const product = {
                         title : title,
                         price : newPrice,
                         quantity : currentQuantity
                     };
                     
-                    fetch('/add-to-cart', {
+                    fetch('/add-to-cart', { // FETCH ROUTE FROM APPLICATION
                         method: 'POST', 
                         headers: {'Content-Type': 'application/json'},
                         body: JSON.stringify(product) 
                     })
                     .then(response => {
-                        if (!response.ok) {
+                        if (!response.ok) { // ------ EDIT ERROR HANDLING
                             throw new Error('Network response was not ok'); 
                         }
                         return response.json(); 
                     })
-                    .then(data => {
-                        if (data.success) {
+                    .then(data => { // NEEDS res.json FROM APP TO FIRE
+                        if (data.success) { // ------ EDIT ERROR HANDLING
                             alert('Product added to cart successfully!');
-                        } else {
+                        } else { // ------ EDIT ERROR HANDLING
                             alert('Failed to add product to cart.');
                         }
                     })
-                    .catch(error => {
-                        console.error('Error adding product to cart:', error); // Handle errors
+                    .catch(error => { // ------ EDIT ERROR HANDLING
+                        console.error('Error adding product to cart:', error);
                     });
+
+                    quantityFields[i].value = 0;
+                    updateAtcButtonState(i);
                 }
             });
 
