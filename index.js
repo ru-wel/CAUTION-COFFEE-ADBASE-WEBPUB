@@ -1,21 +1,23 @@
-import express from 'express';
-import { initializeApp } from "firebase/app";
+// TO BE REFACTORED //
+
 // import { initializeApp as adminInitializeApp} from 'firebase-admin/app'; // FIREBASE ADMIN
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged} from "firebase/auth"; // TO BE REFACTORED?
-import { getFirestore, doc, setDoc, getDoc, addDoc, collection, getDocs, query, where, updateDoc, arrayUnion} from "firebase/firestore"; // TO BE REFACTORED? POSSIBLY : import * as firestore from 'firebase/firestore';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged} from "firebase/auth"; 
+import { doc, setDoc, getDoc, addDoc, collection, getDocs, query, where, updateDoc, arrayUnion} from "firebase/firestore"; 
+
+// TO BE REFACTORED //
+
+import express from 'express';
 import bodyParser from 'body-parser';
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 
-import { firebaseConfig, db, auth } from "./src/db_config.js"; // DB CONFIG MODULE
+import { db, auth } from "./src/db_config.js"; // DB CONFIG MODULE
+import signIn from "./src/login.js";
 
 // const admin = adminInitializeApp(); // FIREBASE ADMIN
 
 const __dirname = dirname(fileURLToPath(import.meta.url)); // SERVE STATIC FILES
 const app = express();
-// const firestore = initializeApp(firebaseConfig);
-// const db = getFirestore(firestore);
-// const auth = getAuth(firestore);
 
 app.use(bodyParser.urlencoded({ extended: true })); // PARSE DATA FROM HTML FORMS
 app.use(express.json()); // PARSE DATA FROM FETCH
@@ -24,7 +26,16 @@ app.use(express.static(path.join(__dirname,'css')));
 app.use(express.static(path.join(__dirname,'media'))); // SERVE STATIC FILES ^
 // app.use(checkAuth) // CUSTOM MIDDLEWARE
 
-app.get('/', (req, res) =>{ // --------- NEED PA SI FIREBASE ADMIN PARA MAS MAGING SECURE
+
+// SERVICE WORKER //
+
+// if ('serviceWorker' in navigator) {
+//     navigator.serviceWorker.register('./src/svc.js', {scope: '/'});
+// }
+
+// SERVICE WORKER //
+
+app.get('/', async (req, res) =>{ // --------- NEED PA SI FIREBASE ADMIN PARA MAS MAGING SECURE
 
     // const unsubscribe = onAuthStateChanged(auth, (user) => {
     //     if (user) {
@@ -107,22 +118,33 @@ app.get('/login', (req, res) => {
     }
 });
 
-app.post('/login_process', async function (req, res) {
-    signInWithEmailAndPassword(auth, req.body.email, req.body.password)
-    .then((userCredential) => {
-        // Signed in
-        // const user = userCredential.user;
+app.post('/login', async function (req, res) {
+    // signInWithEmailAndPassword(auth, req.body.email, req.body.password)
+    // .then((userCredential) => {
+    //     // Signed in
+    //     // const user = userCredential.user;
+    //     console.log("User logged in successfully!");
+    //     res.redirect("/");
+    // })
+    // .catch((error) => {
+    //     const errorCode = error.code;
+    //     const errorMessage = error.message;
+    //     console.log("An error has occured." `${errorCode} : ${errorMessage}`);
+    // });
+
+    // BUG (NEED TO REFRESH TO LOAD ISLOGGEDIN)
+    try {
+        await signIn(req.body.email, req.body.password);
         console.log("User logged in successfully!");
-        res.redirect("/");
-    })
-    .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log("An error has occured." `${errorCode} : ${errorMessage}`);
-    });
+        res.redirect("/"); // Redirect to profile page or home page
+    } catch (error) {
+        console.error(error.message);
+        res.redirect('/login'); // Redirect back to login page with an error
+    };
+    // BUG (NEED TO REFRESH TO LOAD ISLOGGEDIN)
 });
 
-app.post('/logout', (req, res) => {
+app.post('/logout', async (req, res) => {
     signOut(auth).then(() => {
         // Sign-out successful.
         console.log("User signed out successfully!");
