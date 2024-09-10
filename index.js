@@ -1,25 +1,13 @@
 import express from 'express';
 import { initializeApp } from "firebase/app";
 // import { initializeApp as adminInitializeApp} from 'firebase-admin/app'; // FIREBASE ADMIN
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth"; // TO BE REFACTORED?
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, getIdToken } from "firebase/auth"; // TO BE REFACTORED?
 import { getFirestore, doc, setDoc, getDoc, addDoc, collection, getDocs, query, where, updateDoc, arrayUnion} from "firebase/firestore"; // TO BE REFACTORED? POSSIBLY : import * as firestore from 'firebase/firestore';
 import bodyParser from 'body-parser';
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
-import dotenv from 'dotenv';
 
-dotenv.config(); // PROCESS .ENV FILE
-
-const firebaseConfig = {
-  apiKey: process.env.API_KEY,
-  authDomain: process.env.AUTH_DOMAIN,
-  databaseURL: process.env.DATABASE_URL,
-  projectId: process.env.PROJECT_ID,
-  storageBucket: process.env.STORAGE_BUCKET,
-  messagingSenderId: process.env.SENDER_ID,
-  appId: process.env.APP_ID,
-  measurementId: process.env.MEASUREMENT_ID
-};
+import firebaseConfig from "./db_config.js"; // DB CONFIG MODULE
 
 // const admin = adminInitializeApp(); // FIREBASE ADMIN
 
@@ -502,5 +490,7 @@ app.listen(3000, ()  => {
 // app.listen(PORT, () => { 
 //     console.log(`Listening at Port ${PORT}`);
 // });
+
+
 
 
