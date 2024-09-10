@@ -1,3 +1,6 @@
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 import dotenv from 'dotenv';
 
 dotenv.config(); // PROCESS .ENV FILE
@@ -13,6 +16,10 @@ const firebaseConfig = {
   measurementId: process.env.MEASUREMENT_ID
 };
 
-export default firebaseConfig;
+const firestore = initializeApp(firebaseConfig);
+const db = getFirestore(firestore);
+const auth = getAuth(firestore);
+
+export { firebaseConfig, db, auth } ;
 
 // PORT NUMBER TO BE ADDED

@@ -1,21 +1,21 @@
 import express from 'express';
 import { initializeApp } from "firebase/app";
 // import { initializeApp as adminInitializeApp} from 'firebase-admin/app'; // FIREBASE ADMIN
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, getIdToken } from "firebase/auth"; // TO BE REFACTORED?
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged} from "firebase/auth"; // TO BE REFACTORED?
 import { getFirestore, doc, setDoc, getDoc, addDoc, collection, getDocs, query, where, updateDoc, arrayUnion} from "firebase/firestore"; // TO BE REFACTORED? POSSIBLY : import * as firestore from 'firebase/firestore';
 import bodyParser from 'body-parser';
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 
-import firebaseConfig from "./db_config.js"; // DB CONFIG MODULE
+import { firebaseConfig, db, auth } from "./src/db_config.js"; // DB CONFIG MODULE
 
 // const admin = adminInitializeApp(); // FIREBASE ADMIN
 
-const __dirname = dirname(fileURLToPath(import.meta.url)); // SERVE STATIC FILES 
+const __dirname = dirname(fileURLToPath(import.meta.url)); // SERVE STATIC FILES
 const app = express();
-const firestore = initializeApp(firebaseConfig);
-const db = getFirestore(firestore);
-const auth = getAuth(firestore);
+// const firestore = initializeApp(firebaseConfig);
+// const db = getFirestore(firestore);
+// const auth = getAuth(firestore);
 
 app.use(bodyParser.urlencoded({ extended: true })); // PARSE DATA FROM HTML FORMS
 app.use(express.json()); // PARSE DATA FROM FETCH
@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname,'media'))); // SERVE STATIC FILES ^
 // app.use(checkAuth) // CUSTOM MIDDLEWARE
 
 app.get('/', (req, res) =>{ // --------- NEED PA SI FIREBASE ADMIN PARA MAS MAGING SECURE
-    
+
     // const unsubscribe = onAuthStateChanged(auth, (user) => {
     //     if (user) {
     //       // User is signed in
@@ -57,9 +57,9 @@ app.get('/signup', (req, res) => {
 
 app.post('/signup_process', async function (req, res) {
 
-    var data = { 
+    var data = {
         fName: req.body.fName,
-        lName: req.body.lName, 
+        lName: req.body.lName,
         email: req.body.email,
         username: req.body.uName,
         password: req.body.password
@@ -70,7 +70,7 @@ app.post('/signup_process', async function (req, res) {
         const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
         const user = userCredential.user;
         const userID = user.uid;
-    
+
         // Add user data to Firestore ------ WALA PANG ERROR HANDLING
         await setDoc(doc(db, "users", userID), {
             fName: data.fName,
@@ -110,7 +110,7 @@ app.get('/login', (req, res) => {
 app.post('/login_process', async function (req, res) {
     signInWithEmailAndPassword(auth, req.body.email, req.body.password)
     .then((userCredential) => {
-        // Signed in 
+        // Signed in
         // const user = userCredential.user;
         console.log("User logged in successfully!");
         res.redirect("/");
@@ -125,7 +125,7 @@ app.post('/login_process', async function (req, res) {
 app.post('/logout', (req, res) => {
     signOut(auth).then(() => {
         // Sign-out successful.
-        console.log("User signed out successfully!");        
+        console.log("User signed out successfully!");
         res.redirect("/");
     }).catch((error) => {
         // An error happened.
@@ -138,16 +138,16 @@ app.post('/logout', (req, res) => {
 app.get('/profile', (req, res) => {
     onAuthStateChanged(auth, (user) => { // TO BE REFACTORED TO A FUNCTION ?
         if (user) {
-            // User is signed in, 
+            // User is signed in,
             const uid = user.uid;
             async function fetchDocument(uid) { // DAPAT MAY ASYNC FUNCTION KAPAG GAGAMIT NG AW(a)IT OR NASA PINAKATAAS NG FUNCTION YUNG AW(a)IT
             try {
                 // Define the document reference
                 const docRef = doc(db, 'users', uid);
-        
+
                 // Retrieve the document snapshot
                 const docSnap = await getDoc(docRef);
-        
+
                 if (docSnap.exists()) {
                     // Document data is available
                     const userData = docSnap.data();
@@ -188,7 +188,7 @@ app.get('/review', async function (req, res) {
         } else {
             res.render('review.ejs', { reviews, isLoggedIn : false, message : req.query.message});
         }
-        
+
     } catch (error) {
         console.error("Error fetching reviews:", error);
         res.status(500).send("Error fetching reviews"); // <------------- POSSIBLE ERROR HANDLING (SEND STATUS CODES)
@@ -210,18 +210,18 @@ app.post('/review_process', async function (req, res) {
     onAuthStateChanged(auth, async function (user) { // TO BE REFACTORED TO A FUNCTION ?
         var message
         if (user) {
-            // User is signed in, 
+            // User is signed in,
             const uid = user.uid;
             async function fetchDocument(uid) { // DAPAT MAY ASYNC FUNCTION KAPAG GAGAMIT NG AW(a)IT OR NASA PINAKATAAS NG FUNCTION YUNG AW(a)IT
-                            
+
             try {
 
                 // Define the document reference
                 const userDocRef = doc(db, 'users', uid);
-        
+
                 // Retrieve the document snapshot
                 const docSnap = await getDoc(userDocRef);
-                
+
                 if (docSnap.exists()) {
                     // Document data is available ----- GET USERNAME FROM DATABASE BASED ON USERID
                     const userData = docSnap.data();
@@ -231,7 +231,7 @@ app.post('/review_process', async function (req, res) {
                         rating: data.rating,
                         message: data.message,
                         dateCreated: data.date
-                    }); 
+                    });
                     console.log("Review added successfully.");
 
                     // UPDATE USER DATABASE WITH NEW REVIEW
@@ -239,7 +239,7 @@ app.post('/review_process', async function (req, res) {
                     const currentReviews = userData.reviews || []; // IF WALANG LAMAN YUNG REVIEWS ARRAY, CREATE NEW ARRAY
 
                     currentReviews.push({  // APPEND NEW REVIEW TO THE CREATED ARRAY ^
-                        reviewID: docRef.id,  
+                        reviewID: docRef.id,
                         rating: data.rating,
                         message: data.message,
                         dateCreated: data.date
@@ -287,7 +287,7 @@ app.get('/merch', async function (req, res) {
         } else {
             res.render('merch.ejs', { merch, isLoggedIn : false, message : req.query.message});
         }
-        
+
     } catch (error) {
         console.error("Error fetching merch:", error);
         res.status(500).send("Error fetching merch"); // <------------- POSSIBLE ERROR HANDLING (SEND STATUS CODES)
@@ -312,7 +312,7 @@ app.get('/menu', async function (req, res) {
         } else {
             res.render('menu.ejs', { menu, isLoggedIn : false, message : req.query.message});
         }
-        
+
     } catch (error) {
         console.error("Error fetching menu:", error);
         res.status(500).send("Error fetching menu"); // <------------- POSSIBLE ERROR HANDLING (SEND STATUS CODES)
@@ -337,7 +337,7 @@ app.get('/gear', async function (req, res) {
         } else {
             res.render('gear.ejs', { gear, isLoggedIn : false, message : req.query.message});
         }
-        
+
     } catch (error) {
         console.error("Error fetching gear:", error);
         res.status(500).send("Error fetching gear"); // <------------- POSSIBLE ERROR HANDLING (SEND STATUS CODES)
@@ -347,19 +347,19 @@ app.get('/gear', async function (req, res) {
 app.get('/cart', (req, res) => {
     onAuthStateChanged(auth, (user) => { // TO BE REFACTORED TO A FUNCTION ?
         if (user) {
-            // User is signed in, 
+            // User is signed in,
             const uid = user.uid;
             async function fetchDocument(uid) { // DAPAT MAY ASYNC FUNCTION KAPAG GAGAMIT NG AW(a)IT OR NASA PINAKATAAS NG FUNCTION YUNG AW(a)IT
             try {
                 // Define the document reference
                 const docRef = doc(db, 'users', uid);
-        
+
                 // Retrieve the document snapshot
                 const docSnap = await getDoc(docRef);
                 const username = docSnap.data().username;
                 const cartQuery = query(collection(db, 'cart'), where('username', '==', username)); // FIND CART OF THE USER IN DB
                 const cartSnap = await getDocs(cartQuery);
-                
+
                 if (!cartSnap.empty){
                     let cartID;
                     cartSnap.forEach((doc) => {
@@ -377,7 +377,7 @@ app.get('/cart', (req, res) => {
                         console.log("No such document!");
                     }
                 } else { res.render('cart.ejs', {cart : "", isLoggedIn : true} )}
-                
+
             } catch (error) {
                 // Handle potential errors
                 console.error("Error fetching document:", error);
@@ -399,19 +399,19 @@ app.post('/add-to-cart', async function (req, res) {
     onAuthStateChanged(auth, async function (user) { // TO BE REFACTORED TO A FUNCTION ?
         var message // TO BE REMOVED
         if (user) {
-            // User is signed in, 
+            // User is signed in,
             const uid = user.uid;
 
             const fetchDocument = async (uid) => { // DAPAT MAY ASYNC FUNCTION KAPAG GAGAMIT NG AW(a)IT OR NASA PINAKATAAS NG FUNCTION YUNG AW(a)IT
-                            
+
             try {
 
                 // Define the document reference
                 const userDocRef = doc(db, 'users', uid);
-        
+
                 // Retrieve the document snapshot
                 const docSnap = await getDoc(userDocRef);
-                
+
                 if (docSnap.exists()) {
                     // Document data is available ----- GET USERNAME FROM DATABASE BASED ON USERID
                     const userData = docSnap.data();
@@ -419,7 +419,7 @@ app.post('/add-to-cart', async function (req, res) {
 
                     const cartQuery = query(collection(db, 'cart'), where('username', '==', username)); // FIND CART OF THE USER IN DB
                     const cartSnap = await getDocs(cartQuery);
-                    
+
                     if (!cartSnap.empty) { // USER ALREADY HAS CART IN DB
 
                         // UPDATE EXISTING CART
@@ -427,7 +427,7 @@ app.post('/add-to-cart', async function (req, res) {
                         cartSnap.forEach((doc) => {
                             cartID = doc.id;
                         });
-                        
+
                         const cartRef = doc(db, "cart", cartID)
                         const cartDoc = await getDoc(cartRef);
                         const cartData = cartDoc.data();
@@ -456,7 +456,7 @@ app.post('/add-to-cart', async function (req, res) {
                                 price : parseInt(req.body.price),
                                 quantity : req.body.quantity
                             }]
-                        }); 
+                        });
                     }
                     res.json({ success: true, message: 'Product added to cart' }); // NEEDED IN FOR ORDER FOR .then(data => { PROMISE TO FIRE
                 } else {
@@ -487,7 +487,7 @@ app.listen(3000, ()  => {
 
 // const PORT = process.env.PORT || 3000; // KAPAG IHOHOST NA, ILAGAY SA .ENV FILE UNG PORT NUMBER GIVEN BY HOSTING ITSELF
 
-// app.listen(PORT, () => { 
+// app.listen(PORT, () => {
 //     console.log(`Listening at Port ${PORT}`);
 // });
 
