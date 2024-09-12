@@ -1,8 +1,7 @@
 // TO BE REFACTORED //
 
-// import { initializeApp as adminInitializeApp} from 'firebase-admin/app'; // FIREBASE ADMIN
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged} from "firebase/auth"; 
-import { doc, setDoc, getDoc, addDoc, collection, getDocs, query, where, updateDoc, arrayUnion} from "firebase/firestore"; 
+import { doc, setDoc, getDoc, addDoc, collection, getDocs, query, where, updateDoc, arrayUnion, limit, orderBy} from "firebase/firestore"; 
 
 // TO BE REFACTORED //
 
@@ -14,8 +13,6 @@ import { fileURLToPath } from "url";
 import { db, auth } from "./src/db_config.js"; // DB CONFIG MODULE
 import signIn from "./src/login.js";
 
-// const admin = adminInitializeApp(); // FIREBASE ADMIN
-
 const __dirname = dirname(fileURLToPath(import.meta.url)); // SERVE STATIC FILES
 const app = express();
 
@@ -26,33 +23,31 @@ app.use(express.static(path.join(__dirname,'css')));
 app.use(express.static(path.join(__dirname,'media'))); // SERVE STATIC FILES ^
 // app.use(checkAuth) // CUSTOM MIDDLEWARE
 
-
-// SERVICE WORKER //
-
-// if ('serviceWorker' in navigator) {
-//     navigator.serviceWorker.register('./src/svc.js', {scope: '/'});
-// }
-
-// SERVICE WORKER //
-
 app.get('/', async (req, res) =>{ // --------- NEED PA SI FIREBASE ADMIN PARA MAS MAGING SECURE
 
-    // const unsubscribe = onAuthStateChanged(auth, (user) => {
-    //     if (user) {
-    //       // User is signed in
-    //         res.render('index.ejs', {email:user.email, isLoggedIn : true}) // EMAIL FOR PLACEHOLDER ONLY
-    //     } else {
-    //         res.render('index.ejs', {isLoggedIn : false});
-    //     }
-    //     unsubscribe();
-    // });
+    try {
+        // Retrieve all documents from the "reviews" collection
+        const q = query(collection(db, "reviews"), orderBy("dateCreated", "desc"), limit(3));
 
-    const user = auth.currentUser;
-    if (user) {
-        // User is signed in
-        res.render('index.ejs', {email:user.email, isLoggedIn : true}) // EMAIL FOR PLACEHOLDER ONLY : isLoggedIn TO BE REFACTORED
-    } else {
-        res.render('index.ejs', {isLoggedIn : false});
+        const querySnapshot = await getDocs(q);
+        const reviews = [];
+
+        // Collect all reviews in an array
+        querySnapshot.forEach((doc) => {
+            reviews.push(doc.data());
+        });
+
+        const user = auth.currentUser;
+        if (user) {
+            // User is signed in
+            res.render('index.ejs', { email:user.email, reviews, isLoggedIn : true, message : req.query.message }); // EMAIL FOR PLACEHOLDER ONLY : isLoggedIn TO BE REFACTORED
+        } else {
+            res.render('index.ejs', { reviews, isLoggedIn : false, message : req.query.message});
+        }
+
+    } catch (error) {
+        console.error("Error fetching reviews:", error);
+        res.status(500).send("Error fetching reviews"); // <------------- POSSIBLE ERROR HANDLING (SEND STATUS CODES)
     }
 });
 

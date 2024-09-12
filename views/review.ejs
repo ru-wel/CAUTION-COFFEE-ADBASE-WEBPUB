@@ -45,7 +45,59 @@
 
     <%- include('header.ejs') %>
 
-    <h2>WRITE A REVIEW</h2>
+    <!-- CUSTOMER REVIEW -->
+    <section class="bg-light py-5 py-xl-8">
+        <div class="container-fluid"> 
+        <div class="row justify-content-md-center">
+            <div class="col-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6">
+            <h2 class="fs-6 text-uppercase text-center" style="color: #752329;">Customer Reviews</h2>
+            <p class="display-5 mb-4 mb-md-5 text-center">We deliver what we promise. See what our Customers express about us.</p>
+            <hr class="w-50 mx-auto mb-5 mb-xl-9" style="border-color: #752329;">
+            </div>
+        </div>
+        </div>
+    
+        <div class="container-fluid overflow-hidden"> 
+        <div class="row gy-4 gy-md-0 gx-xxl-5">
+
+            <% if (reviews && reviews.length >= 1) { %> <!-- CHECK IF MAY LAMAN BA YUNG REVIEWS DATABASE -->
+                <% reviews.forEach(reviews => { %>
+                    <% const messages = ['Bean There, Done That', 'A Latte Room for Improvement', 'Just Brew-tiful', 'Brew-tifully Good', 'Perk-fectly Amazing'] %>
+
+                    <!-- REVIEW CARDS -->
+                    <div class="col-12 col-md-4 mb-3">
+                        <div class="card border-0 border-bottom shadow-sm rounded-card" style="border-color: #752329;">
+                            <div class="card-body p-4 p-xxl-5">
+                            <figure>
+                                <figcaption>
+                                <div class="coffee-ratings mb-3" style="color: #752329;">
+                                    <% let rating = reviews.rating %>
+                                    <% for( let i = 0; i < rating; i++ ) { %>
+                                        <i class="fas fa-coffee"></i>
+                                    <% } %>
+                                </div>
+                                <blockquote class="bsb-blockquote-icon mb-4">
+                                    <h5 class="card-title"><%= messages[rating - 1] %></h5> 
+                                    <p class="card-text"><%= reviews.message %></p>
+                                </blockquote>
+                                <h4 class="mb-2"><%= reviews.username %></h4>
+                                <p class="card-text"><%= reviews.dateCreated %></p>
+                                </figcaption>
+                            </figure>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- REVIEW CARDS -->
+
+                <% }) %>
+            <% } %>
+
+        </div>
+        </div>
+    </section>
+    <!-- CUSTOMER REVIEW -->
+
+    <!-- <h2>WRITE A REVIEW (TO BE REMOVED)</h2>
     
     <form action="/review_process" method="POST" id="reviewForm">
 
@@ -95,24 +147,46 @@
 
         <button type="submit">Submit</button>
 
-    </form>
+    </form> -->
 
-    <hr>
+    <!-- WRITE REVIEW -->
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Submit Your Review</h2>
+        <div class="card-review p-4 mb-5 shadow-sm review-box">
 
-    <h2>USER REVIEWS</h2>
+            <form action="/review_process" method="POST" id="reviewForm">
+                
+                <div class="mb-3">
+                    <label for="rating" class="form-label">Your Rating</label>
+                    <select id="rating" name="rating" class="form-select">
+                        <option value="1">☕ Bean There, Done That (Poor)</option>
+                        <option value="2">☕☕ A Latte Room for Improvement (Fair)</option>
+                        <option value="3">☕☕☕ Just Brew-tiful (Satisfactory)</option>
+                        <option value="4">☕☕☕☕ Brew-tifully Good (Very Good)</option>
+                        <option value="5">☕☕☕☕☕ Perk-fectly Amazing (Excellent)</option>
+                    </select>
+                </div>
 
-    <% if (reviews && reviews.length >= 1) { %> <!-- CHECK IF MAY LAMAN BA YUNG REVIEWS DATABASE -->
-        <h2>Reviews</h2>
-        <% reviews.forEach(reviews => { %>  <!-- ADD LIMIT SOON PARA PAG DUMAMI YUNG MGA REVIEWS -->
-            <div>
-                <h3>Username: <%= reviews.username %></h3>
-                <h3>Rating: <%= reviews.rating %></h3>    
-                <h3>Message: <%= reviews.message %></h3>
-                <h3>Date: <%= reviews.dateCreated %></h3>
-                <br> <!-- FOR DISPLAY PURPOSES ONLY -->
-            </div>
-        <% }) %>
-    <% } %>
+                <% if (message) { %>
+                    <div class="alert alert-danger col-2" role="alert">
+                        <%= message %>
+                    </div>
+                <% } %>
+                
+                <div class="mb-3">
+                    <label for="review" class="form-label">Your Review
+                        <span id="current">0</span>
+                        <span id="maximum">/ 300</span>
+                    </label>
+                    <textarea id="review" name="message" rows="4" cols="50" maxlength="300" required class="form-control" placeholder="Write your review..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-dark w-100 submit-btn">Submit Review</button>
+            </form>    
+        </div>
+    </div>
+    <!-- WRITE REVIEW -->
+
 
     <%- include('footer.ejs') %>
 
