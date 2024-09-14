@@ -12,6 +12,7 @@ import { fileURLToPath } from "url";
 
 import { db, auth } from "./src/db_config.js"; // DB CONFIG MODULE
 import signIn from "./src/login.js";
+import products from "./src/products.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url)); // SERVE STATIC FILES
 const app = express();
@@ -190,7 +191,10 @@ app.get('/profile', (req, res) => {
 app.get('/review', async function (req, res) {
     try {
         // Retrieve all documents from the "reviews" collection
-        const querySnapshot = await getDocs(collection(db, "reviews"));
+        // const querySnapshot = await getDocs(collection(db, "reviews"));
+
+        const q = query(collection(db, "reviews"), orderBy("dateCreated", "desc"));
+        const querySnapshot = await getDocs(q);
         const reviews = [];
 
         // Collect all reviews in an array
@@ -497,6 +501,94 @@ app.post('/add-to-cart', async function (req, res) {
         }
     });
 })
+
+app.get('/search', (req, res) => {
+    
+    const product = [];
+    const query = req.query.query;
+    products.forEach(item => {
+        const newitem = item.name.toLowerCase();
+        if (newitem.includes(query)){
+            product.push(item);
+        }
+    })
+    
+    const user = auth.currentUser;
+    
+    if (user) {
+        // User is signed in
+        res.render('search.ejs', { product, query, isLoggedIn : true, message : req.query.message }); // isLoggedIn TO BE REFACTORED
+    } else {
+        res.render('search.ejs', { product, query, isLoggedIn : false, message : req.query.message});
+    }
+})
+
+// app.get('/search', async (req, res) =>{
+//     try {
+//         // Retrieve all documents from the "reviews" collection
+//         const menuSnapshot = await getDocs(collection(db, "menu"));
+//         const gearSnapshot = await getDocs(collection(db, "cnbgear"));
+//         const merchSnapshot = await getDocs(collection(db, "merchandise"));
+
+//         const products = [];
+
+//         // Collect all menus in an array
+//         // menuSnapshot.forEach((doc) => {
+//         //     products.push(doc.data());
+//         // });
+
+//         menuSnapshot.forEach((doc) => {
+//             const menu = [];
+//             menu.push(doc.data());
+//             menu.forEach(menuDocument => {
+//                 if (menuDocument.Signature){
+//                     menuDocument.Signature.forEach(item => {
+//                         products.push(item);
+//                     })
+//                 }
+//                 if (menuDocument.Non_Coffee){
+//                     menuDocument.Non_Coffee.forEach(item => {
+//                         products.push(item);
+//                     })
+//                 }
+//                 if (menuDocument.Best_Sellers){
+//                     menuDocument.Best_Sellers.forEach(item => {
+//                         products.push(item);
+//                     })
+//                 }
+//                 if (menuDocument.Sandwiches){
+//                     menuDocument.Sandwiches.forEach(item => {
+//                         products.push(item);
+//                     })
+//                 }
+//             })
+//         })
+
+//         // Collect all gears in an array
+//         // gearSnapshot.forEach((doc) => {
+//         //     products.push(doc.data());
+//         // });
+
+//         // // Collect all merch in an array
+//         // merchSnapshot.forEach((doc) => {
+//         //     products.push(doc.data());
+//         // });
+
+//         // console.log(products);
+
+//         const user = auth.currentUser;
+//         if (user) {
+//             // User is signed in
+//             res.render('search.ejs', { products, isLoggedIn : true, message : req.query.message }); // EMAIL FOR PLACEHOLDER ONLY : isLoggedIn TO BE REFACTORED
+//         } else {
+//             res.render('search.ejs', { products, isLoggedIn : false, message : req.query.message});
+//         }
+
+//     } catch (error) {
+//         console.error("Error fetching menu:", error);
+//         res.status(500).send("Error fetching menu"); // <------------- POSSIBLE ERROR HANDLING (SEND STATUS CODES)
+//     }
+// })
 
 app.listen(3000, ()  => {
     console.log("Listening at Port 3000");
