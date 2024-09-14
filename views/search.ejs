@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HOME | CAUTION COFFEE</title>
+    <title>SEARCH | CAUTION COFFEE</title>
     <link rel="icon" href="./media/favicon-l.png" type="image/png">
 
     <!-- STYLE LINKS -->
@@ -31,22 +31,25 @@
     </div>
 
     <div class="container">
-        <% if (product && product.length >= 1) { %> <!-- CHECK IF MAY LAMAN BA YUNG REVIEWS DATABASE -->
-            <h2 style="text-align: center;">Search Results For: "<%= query %>"</h2>
-            <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
-                <% product.forEach(product => { %>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="./media/<%= product.image %>" class="img-fluid" alt="Caution T-Shirt (Black)">
-                            <div class="card-body">
-                                <h5 class="card-title"><%= product.name %></h5>
-                                <p class="card-text">PHP <%= product.price %></p>
+        <% if (query) { %>
+            <% if (product && product.length >= 1) { %> <!-- CHECK IF MAY LAMAN BA YUNG REVIEWS DATABASE -->
+                <h2 style="text-align: center;">Search Results For: "<%= query %>"</h2>
+                <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                    <% product.forEach(product => { %>
+                        <div class="col">
+                            <div class="card h-100">
+                                <img src="./media/<%= product.image %>" class="img-fluid" alt="Caution T-Shirt (Black)">
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= product.name %></h5>
+                                    <p class="card-text">PHP <%= product.price %></p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                <% }) %>
-            </div>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <h2 style="text-transform: capitalize; text-align: center;">sorry we can't find what you're looking for.</h2>
+            <% } %>
         <% } %>
     </div>
 
@@ -54,12 +57,5 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-
-    <!-- <script>
-        document.getElementById('search').addEventListener('click', () => {
-            console.log(document.getElementById('query').value);
-        })
-
-    </script> -->
 
 </body>

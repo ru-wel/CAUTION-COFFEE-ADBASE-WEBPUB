@@ -502,7 +502,7 @@ app.post('/add-to-cart', async function (req, res) {
     });
 })
 
-app.get('/search', (req, res) => {
+app.get('/search', (req, res) => { 
     
     const product = [];
     const query = req.query.query;
@@ -523,72 +523,15 @@ app.get('/search', (req, res) => {
     }
 })
 
-// app.get('/search', async (req, res) =>{
-//     try {
-//         // Retrieve all documents from the "reviews" collection
-//         const menuSnapshot = await getDocs(collection(db, "menu"));
-//         const gearSnapshot = await getDocs(collection(db, "cnbgear"));
-//         const merchSnapshot = await getDocs(collection(db, "merchandise"));
-
-//         const products = [];
-
-//         // Collect all menus in an array
-//         // menuSnapshot.forEach((doc) => {
-//         //     products.push(doc.data());
-//         // });
-
-//         menuSnapshot.forEach((doc) => {
-//             const menu = [];
-//             menu.push(doc.data());
-//             menu.forEach(menuDocument => {
-//                 if (menuDocument.Signature){
-//                     menuDocument.Signature.forEach(item => {
-//                         products.push(item);
-//                     })
-//                 }
-//                 if (menuDocument.Non_Coffee){
-//                     menuDocument.Non_Coffee.forEach(item => {
-//                         products.push(item);
-//                     })
-//                 }
-//                 if (menuDocument.Best_Sellers){
-//                     menuDocument.Best_Sellers.forEach(item => {
-//                         products.push(item);
-//                     })
-//                 }
-//                 if (menuDocument.Sandwiches){
-//                     menuDocument.Sandwiches.forEach(item => {
-//                         products.push(item);
-//                     })
-//                 }
-//             })
-//         })
-
-//         // Collect all gears in an array
-//         // gearSnapshot.forEach((doc) => {
-//         //     products.push(doc.data());
-//         // });
-
-//         // // Collect all merch in an array
-//         // merchSnapshot.forEach((doc) => {
-//         //     products.push(doc.data());
-//         // });
-
-//         // console.log(products);
-
-//         const user = auth.currentUser;
-//         if (user) {
-//             // User is signed in
-//             res.render('search.ejs', { products, isLoggedIn : true, message : req.query.message }); // EMAIL FOR PLACEHOLDER ONLY : isLoggedIn TO BE REFACTORED
-//         } else {
-//             res.render('search.ejs', { products, isLoggedIn : false, message : req.query.message});
-//         }
-
-//     } catch (error) {
-//         console.error("Error fetching menu:", error);
-//         res.status(500).send("Error fetching menu"); // <------------- POSSIBLE ERROR HANDLING (SEND STATUS CODES)
-//     }
-// })
+app.get('/feature', (req, res) => {
+    const user = auth.currentUser;
+        if (user) {
+            // User is signed in
+            res.render('feature.ejs', { isLoggedIn : true, message : req.query.message }); // EMAIL FOR PLACEHOLDER ONLY : isLoggedIn TO BE REFACTORED
+        } else {
+            res.render('feature.ejs', { isLoggedIn : false, message : req.query.message});
+        }
+});
 
 app.listen(3000, ()  => {
     console.log("Listening at Port 3000");
