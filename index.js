@@ -1,7 +1,7 @@
 // TO BE REFACTORED //
 
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged} from "firebase/auth"; 
-import { doc, setDoc, getDoc, addDoc, collection, getDocs, query, where, updateDoc, arrayUnion, limit, orderBy} from "firebase/firestore"; 
+import { doc, setDoc, getDoc, addDoc, collection, getDocs, query, where, updateDoc, arrayUnion, limit, orderBy, onSnapshot} from "firebase/firestore"; 
 
 // TO BE REFACTORED //
 
@@ -406,9 +406,7 @@ app.get('/cart', (req, res) => {
         }
         fetchDocument(uid);
         } else {
-          // User is signed out
-          // ... -------- TO BE CONTINUED / TO BE HANDLED
-        //   console.log("Please Log In");
+          res.status(404).send("Please Log In to Access Your Cart")
         }
     });
 })
@@ -480,6 +478,75 @@ app.post('/add-to-cart', async function (req, res) {
                         });
                     }
                     res.json({ success: true, message: 'Product added to cart' }); // NEEDED IN FOR ORDER FOR .then(data => { PROMISE TO FIRE
+                } else {
+                    // Document does not exist
+                    console.log("No such document!");
+                }
+            } catch (error) {
+                // Handle potential errors
+                console.error("Error:", error);
+            }
+        }
+        fetchDocument(uid);
+        } else { // ------ TO BE REMOVED/EDITED
+          // User is signed out
+          // ... -------- TO BE CONTINUED
+          // BAWAL MAG ADD TO CART KAPAG DI NAKASIGN IN
+
+          // NOT POSSIBLE ATA TO KASE DI NMN FORM SUBMIT YUNG ADD TO CART UNLESS MAKAGAWA NG FETCH SA ELSE
+        //   message = "Please sign in to add to cart"
+        //   res.redirect(`/gear?message=${encodeURIComponent(message)}`);
+        }
+    });
+})
+
+app.patch('/cart', async function (req, res) {
+
+    onAuthStateChanged(auth, async function (user) { // TO BE REFACTORED TO A FUNCTION ?
+        if (user) {
+            // User is signed in,
+            const uid = user.uid;
+
+            const fetchDocument = async (uid) => { // DAPAT MAY ASYNC FUNCTION KAPAG GAGAMIT NG AW(a)IT OR NASA PINAKATAAS NG FUNCTION YUNG AW(a)IT
+
+            try {
+
+                // Define the document reference
+                const userDocRef = doc(db, 'users', uid);
+
+                // Retrieve the document snapshot
+                const docSnap = await getDoc(userDocRef);
+
+                if (docSnap.exists()) {
+                    // Document data is available ----- GET USERNAME FROM DATABASE BASED ON USERID
+                    const userData = docSnap.data();
+                    const username = userData.username;
+
+                    const cartQuery = query(collection(db, 'cart'), where('username', '==', username)); // FIND CART OF THE USER IN DB
+                    const cartSnap = await getDocs(cartQuery);
+
+                    if (!cartSnap.empty) { // USER ALREADY HAS CART IN DB
+
+                        // UPDATE EXISTING CART
+                        let cartID;
+                        cartSnap.forEach((doc) => {
+                            cartID = doc.id;
+                        });
+
+                        const cartRef = doc(db, "cart", cartID)
+                        const cartDoc = await getDoc(cartRef);
+                        const cartData = cartDoc.data();
+                        const products = cartData.products
+
+                        products[req.body.index].quantity = parseInt(req.body.quantity);
+                        await updateDoc(cartRef, {
+                            products: products
+                        });
+                    } else {
+                        // Document does not exist
+                        console.log("No such document!");
+                    }
+                    res.json({ success: true, message: 'Cart updated successfully' }); // NEEDED IN FOR ORDER FOR .then(data => { PROMISE TO FIRE
                 } else {
                     // Document does not exist
                     console.log("No such document!");

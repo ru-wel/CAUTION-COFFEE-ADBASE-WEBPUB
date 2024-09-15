@@ -21,21 +21,46 @@
 
     <div style="text-align: center;">
         <h1>CART</h1>
+        <br> <!-- FOR DISPLAY PURPOSES ONLY -->
         <% if (cart.products && cart.products.length > 0) { %> <!-- CHECK IF MAY REVIEWS BA YUNG USER -->
             <% var total = []%>
             <% var totalPrice = 0%>
-            <% cart.products.forEach(products => { %>
-                <div>
-                    <h3>Product: <%= products.product_name %></h3>    
-                    <h3>Price: <%= products.price %></h3>
-                    <h3>Quantity: <%= products.quantity %></h3>
-                    <br> <!-- FOR DISPLAY PURPOSES ONLY -->
+            
+            <div class="row">
+                <table style="text-align: center;">
+                    <tr>
+                        <th>Product</th>
+                        <th>Unit Price</th>
+                        <th>Quantity</th>
+                        <th>Total Price</th>
+                        <th>Actions</th>
+                    </tr>
+
+                <% cart.products.forEach(products => { %>
+                    <tr>
+                        <td><%= products.product_name %></td>    
+                        <td>PHP <%= products.price %></td>
+                        <td>
+                            <button class="btn btn-dark minus" hidden>-</button>
+                            <div style="display: inline-block;" class="quantity"><%= products.quantity %></div>
+                            <button class="btn btn-dark plus" hidden>+</button>
+                            <button class="btn btn-success save" hidden>SAVE</button>
+                        </td>
+                        <td>PHP <%= products.price * products.quantity %></td>
+                        <td>
+                            <button class="btn btn-secondary edit">Edit</button>
+                            <button class="btn btn-danger remove">Remove</button>
+                        </td>
+                        <br> <!-- FOR DISPLAY PURPOSES ONLY -->
+                    </tr>
                     <% total.push(products.price * products.quantity) %>
-                </div>
-            <% }) %>
+                <% }) %>
+                </table>
+            </div>
             <% total.forEach(x => { %>
                 <% totalPrice += x; %>
             <% }) %>
+            <br> <!-- FOR DISPLAY PURPOSES ONLY -->
             <h2>Total : <%= totalPrice %></h2> 
         <% } else { %>
                 <h2>You Have Nothing on Your Cart!</h2>
@@ -43,6 +68,90 @@
     </div>
 
     <%- include('footer.ejs') %>
+
+    <script>
+
+        let editButtons = document.getElementsByClassName("edit");
+        let plusButtons = document.getElementsByClassName("plus");
+        let minusButtons = document.getElementsByClassName("minus");
+        let saveButtons = document.getElementsByClassName("save");
+        let quantityFields = document.getElementsByClassName("quantity");
+
+        for (let i = 0; i < editButtons.length; i++) {
+            editButtons[i].addEventListener("click", () =>{
+                minusButtons[i].removeAttribute("hidden", "");
+                plusButtons[i].removeAttribute("hidden", "");
+
+                const origQuantity = parseInt(quantityFields[i].innerText);
+
+                // MINUS BUTTONS
+                minusButtons[i].addEventListener("click", () => {
+                    let currentQuantity = parseInt(quantityFields[i].innerText);
+                    if (currentQuantity > 1) {
+                        quantityFields[i].innerText = currentQuantity - 1;
+                        updateSaveButtonState(i)
+                    }
+                });
+
+                // PLUS BUTTONS
+                plusButtons[i].addEventListener("click", () => {
+                    let currentQuantity = parseInt(quantityFields[i].innerText);
+                    quantityFields[i].innerText = currentQuantity + 1;
+                    updateSaveButtonState(i)
+                });
+
+                // SAVE BUTTONS
+                saveButtons[i].addEventListener("click", (event) => {
+                    let currentQuantity = parseInt(quantityFields[i].innerText);
+
+                    const updateQuantity = {
+                        index : parseInt(i),
+                        quantity : currentQuantity
+                    };
+
+                    fetch('/cart', { // FETCH ROUTE FROM APPLICATION
+                            method: 'PATCH', 
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify(updateQuantity) 
+                    })
+                    .then(response => {
+                        if (!response.ok) { // ------ EDIT ERROR HANDLING
+                            throw new Error('Network response was not ok'); 
+                        }
+                        return response.json(); 
+                    })
+                    .then(data => { // NEEDS res.json FROM APP TO FIRE
+                        if (data.success) { // ------ EDIT ERROR HANDLING
+                            alert('Cart updated successfully!');
+                            location.reload();
+                        } else { // ------ EDIT ERROR HANDLING
+                            alert('Failed to update cart.');
+                        }
+                    })
+                    .catch(error => { // ------ EDIT ERROR HANDLING
+                        console.error('Error updating cart:', error);
+                    });
+
+                    saveButtons[i].setAttribute("hidden", "");
+                    minusButtons[i].setAttribute("hidden", "");
+                    plusButtons[i].setAttribute("hidden", "");
+                    location.reload();
+                })
+
+                function updateSaveButtonState(i) {
+                    let currentQuantity = parseInt(quantityFields[i].innerText)
+                    if (currentQuantity != origQuantity) {
+                        saveButtons[i].removeAttribute("hidden", "");
+                    } 
+                    else {
+                        saveButtons[i].setAttribute("hidden", "");
+                    }
+                }
+            })
+            
+        }
+
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
