@@ -638,6 +638,9 @@ app.get('/search', (req, res) => {
     
     const product = [];
     const query = req.query.query;
+
+    // QUERY VALIDATION 
+
     products.forEach(item => {
         const newitem = item.name.toLowerCase();
         if (newitem.includes(query)){
