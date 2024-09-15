@@ -38,7 +38,7 @@
 
                 <% cart.products.forEach(products => { %>
                     <tr>
-                        <td><%= products.product_name %></td>    
+                        <td class="title"><%= products.product_name %></td>    
                         <td>PHP <%= products.price %></td>
                         <td>
                             <button class="btn btn-dark minus" hidden>-</button>
@@ -69,16 +69,65 @@
 
     <%- include('footer.ejs') %>
 
-    <script>
+    <!-- <script>
 
         let editButtons = document.getElementsByClassName("edit");
         let plusButtons = document.getElementsByClassName("plus");
         let minusButtons = document.getElementsByClassName("minus");
         let saveButtons = document.getElementsByClassName("save");
         let quantityFields = document.getElementsByClassName("quantity");
+        let removeButtons = document.getElementsByClassName("remove");
+        let titleFields = document.getElementsByClassName("title");
 
         for (let i = 0; i < editButtons.length; i++) {
+
+            removeButtons[i].addEventListener("click", () => {
+                const title = titleFields[i].innerText;
+
+                const removeItem = {
+                    index : parseInt(i),
+                    title : title
+                };
+
+                fetch('/cart', { // FETCH ROUTE FROM APPLICATION
+                    method: 'DELETE', 
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(removeItem) 
+                }) 
+                .then(response => {
+                    if (!response.ok) { // ------ EDIT ERROR HANDLING
+                        throw new Error('Network response was not ok'); 
+                    }
+                    return response.json(); 
+                })
+                .then(data => { // NEEDS res.json FROM APP TO FIRE
+                    if (data.success) { // ------ EDIT ERROR HANDLING
+                        alert('Item removed successfully!');
+                        location.reload();
+                    } else { // ------ EDIT ERROR HANDLING
+                        alert('Failed to remove item.');
+                        location.reload();
+                    }
+                })
+                .catch(error => { // ------ EDIT ERROR HANDLING
+                    console.error('Error removing product', error);
+                });
+
+                location.reload();
+            })
+
             editButtons[i].addEventListener("click", () =>{
+
+                function updateSaveButtonState(i) {
+                    let currentQuantity = parseInt(quantityFields[i].innerText)
+                    if (currentQuantity != origQuantity) {
+                        saveButtons[i].removeAttribute("hidden", "");
+                    } 
+                    else {
+                        saveButtons[i].setAttribute("hidden", "");
+                    }
+                }
+
                 minusButtons[i].removeAttribute("hidden", "");
                 plusButtons[i].removeAttribute("hidden", "");
 
@@ -137,22 +186,120 @@
                     plusButtons[i].setAttribute("hidden", "");
                     location.reload();
                 })
-
-                function updateSaveButtonState(i) {
-                    let currentQuantity = parseInt(quantityFields[i].innerText)
-                    if (currentQuantity != origQuantity) {
-                        saveButtons[i].removeAttribute("hidden", "");
-                    } 
-                    else {
-                        saveButtons[i].setAttribute("hidden", "");
-                    }
-                }
             })
-            
         }
 
-    </script>
+    </script> -->
 
+    <script>
+        let editButtons = document.getElementsByClassName("edit");
+        let plusButtons = document.getElementsByClassName("plus");
+        let minusButtons = document.getElementsByClassName("minus");
+        let saveButtons = document.getElementsByClassName("save");
+        let quantityFields = document.getElementsByClassName("quantity");
+        let removeButtons = document.getElementsByClassName("remove");
+        let titleFields = document.getElementsByClassName("title");
+    
+        for (let i = 0; i < editButtons.length; i++) {
+            removeButtons[i].addEventListener("click", () => {
+                const title = titleFields[i].innerText;
+    
+                const removeItem = {
+                    index: parseInt(i),
+                    title: title
+                };
+    
+                fetch('/cart', { // FETCH ROUTE FROM APPLICATION
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(removeItem)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        alert('Item removed successfully!');
+                        location.reload(); // Reload after successful removal
+                    } else {
+                        alert('Failed to remove item.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error removing product:', error);
+                });
+            });
+    
+            editButtons[i].addEventListener("click", () => {
+                function updateSaveButtonState(index) {
+                    let currentQuantity = parseInt(quantityFields[index].innerText);
+                    if (currentQuantity != origQuantity) {
+                        saveButtons[index].removeAttribute("hidden");
+                    } else {
+                        saveButtons[index].setAttribute("hidden", "");
+                    }
+                }
+    
+                let origQuantity = parseInt(quantityFields[i].innerText);
+    
+                minusButtons[i].removeAttribute("hidden");
+                plusButtons[i].removeAttribute("hidden");
+    
+                minusButtons[i].addEventListener("click", () => {
+                    let currentQuantity = parseInt(quantityFields[i].innerText);
+                    if (currentQuantity > 1) {
+                        quantityFields[i].innerText = currentQuantity - 1;
+                        updateSaveButtonState(i);
+                    }
+                });
+    
+                plusButtons[i].addEventListener("click", () => {
+                    let currentQuantity = parseInt(quantityFields[i].innerText);
+                    quantityFields[i].innerText = currentQuantity + 1;
+                    updateSaveButtonState(i);
+                });
+    
+                saveButtons[i].addEventListener("click", () => {
+                    let currentQuantity = parseInt(quantityFields[i].innerText);
+    
+                    const updateQuantity = {
+                        index: parseInt(i),
+                        quantity: currentQuantity
+                    };
+    
+                    fetch('/cart', { // FETCH ROUTE FROM APPLICATION
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(updateQuantity)
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            alert('Cart updated successfully!');
+                            location.reload();
+                        } else {
+                            alert('Failed to update cart.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error updating cart:', error);
+                    });
+    
+                    saveButtons[i].setAttribute("hidden", "");
+                    minusButtons[i].setAttribute("hidden", "");
+                    plusButtons[i].setAttribute("hidden", "");
+                });
+            });
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 

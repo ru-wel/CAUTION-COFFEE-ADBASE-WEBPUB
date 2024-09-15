@@ -406,7 +406,7 @@ app.get('/cart', (req, res) => {
         }
         fetchDocument(uid);
         } else {
-          res.status(404).send("Please Log In to Access Your Cart")
+        //   res.status(404).send("Please Log In to Access Your Cart")
         }
     });
 })
@@ -493,9 +493,7 @@ app.post('/add-to-cart', async function (req, res) {
           // ... -------- TO BE CONTINUED
           // BAWAL MAG ADD TO CART KAPAG DI NAKASIGN IN
 
-          // NOT POSSIBLE ATA TO KASE DI NMN FORM SUBMIT YUNG ADD TO CART UNLESS MAKAGAWA NG FETCH SA ELSE
-        //   message = "Please sign in to add to cart"
-        //   res.redirect(`/gear?message=${encodeURIComponent(message)}`);
+          res.status(404).send("Please Log In to Access Your Cart")
         }
     });
 })
@@ -561,10 +559,77 @@ app.patch('/cart', async function (req, res) {
           // User is signed out
           // ... -------- TO BE CONTINUED
           // BAWAL MAG ADD TO CART KAPAG DI NAKASIGN IN
+          res.status(404).send("Please Log In to Access Your Cart")
+        }
+    });
+})
 
-          // NOT POSSIBLE ATA TO KASE DI NMN FORM SUBMIT YUNG ADD TO CART UNLESS MAKAGAWA NG FETCH SA ELSE
-        //   message = "Please sign in to add to cart"
-        //   res.redirect(`/gear?message=${encodeURIComponent(message)}`);
+app.delete('/cart', async function (req, res) {
+
+    onAuthStateChanged(auth, async function (user) { // TO BE REFACTORED TO A FUNCTION ?
+        if (user) {
+            // User is signed in,
+            const uid = user.uid;
+
+            const fetchDocument = async (uid) => { // DAPAT MAY ASYNC FUNCTION KAPAG GAGAMIT NG AW(a)IT OR NASA PINAKATAAS NG FUNCTION YUNG AW(a)IT
+
+            try {
+
+                // Define the document reference
+                const userDocRef = doc(db, 'users', uid);
+
+                // Retrieve the document snapshot
+                const docSnap = await getDoc(userDocRef);
+
+                if (docSnap.exists()) {
+                    // Document data is available ----- GET USERNAME FROM DATABASE BASED ON USERID
+                    const userData = docSnap.data();
+                    const username = userData.username;
+
+                    const cartQuery = query(collection(db, 'cart'), where('username', '==', username)); // FIND CART OF THE USER IN DB
+                    const cartSnap = await getDocs(cartQuery);
+
+                    if (!cartSnap.empty) { // USER ALREADY HAS CART IN DB
+
+                        // UPDATE EXISTING CART
+                        let cartID;
+                        cartSnap.forEach((doc) => {
+                            cartID = doc.id;
+                        });
+
+                        const cartRef = doc(db, "cart", cartID)
+                        const cartDoc = await getDoc(cartRef);                    
+                        const data = cartDoc.data();
+                        
+                        const updatedItems = data.products.filter(product => product.product_name !== req.body.title);
+
+                        // Update the document with the new array
+                        await updateDoc(cartRef, {
+                            products : updatedItems 
+                        });
+
+                    } else {
+                        // Document does not exist
+                        console.log("No such document!");
+                        res.json({ success: false, message: 'Cart not found' });
+                    }
+                    res.json({ success: true, message: 'Item removed successfully' }); // NEEDED IN FOR ORDER FOR .then(data => { PROMISE TO FIRE
+                } else {
+                    // Document does not exist
+                    console.log("No such document!");
+                    res.json({ success: false, message: 'Cart not found' });
+                }
+            } catch (error) {
+                // Handle potential errors
+                console.error("Error:", error);
+            }
+        }
+        fetchDocument(uid);
+        } else { // ------ TO BE REMOVED/EDITED
+          // User is signed out
+          // ... -------- TO BE CONTINUED
+          // BAWAL MAG ADD TO CART KAPAG DI NAKASIGN IN
+          res.status(404).send("Please Log In to Access Your Cart")
         }
     });
 })
@@ -608,7 +673,7 @@ app.listen(3000, ()  => {
 
 // app.listen(PORT, () => {
 //     console.log(`Listening at Port ${PORT}`);
-// });
+// })
 
 
 
