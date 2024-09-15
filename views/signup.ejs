@@ -46,10 +46,10 @@
     <br>
     <a href="/login"><button type="button">Login</button></a> -->
 
-    <section class="p-3 p-md-4 p-xl-5" style="background-color: #f0f0f0;">
+    <section class="p-3 p-md-4 p-xl-5" style="background-color:#E8E8E1 ">
         <div class="container">
           <div class="card-signup border-light-subtle shadow-sm">
-            <div class="row g-0">
+            <div class="row g-0" style = "background-color: #F0F0F0;">
               <div class="col-12 col-md-6" style="background-image: url('./media/signup-bg.png'); background-size: cover; background-position: center;">
                 <div class="d-flex align-items-center justify-content-center h-100">
                   <div class="col-10 col-xl-8 py-3">
@@ -64,7 +64,7 @@
                   <div class="row">
                     <div class="col-12">
                       <div class="mb-5">
-                        <h2 class="h3">Registration</h2>
+                        <h2 style = "font-weight: 900; color:#752329">Registration</h2>
                         <h3 class="fs-6 fw-normal text-secondary m-0">Enter your details to register</h3>
                       </div>
                     </div>
@@ -75,35 +75,37 @@
                     <div class="row gy-3 gy-md-4 overflow-hidden">
                       <div class="col-12">
                         <label for="firstName" class="form-label">First Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="fName" id="firstName" placeholder="First Name" required>
+                        <input type="text" class="form-control" name="fName" id="firstName" placeholder="First Name" style = "border-color: #752329;" required>
                       </div>
+
                       <div class="col-12">
                         <label for="lastName" class="form-label">Last Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="lName" id="lastName" placeholder="Last Name" required>
+                        <input type="text" class="form-control" name="lName" id="lastName" placeholder="Last Name" style = "border-color: #752329;" required>
                       </div>
+                      
                       <div class="col-12">
                         <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
+                        <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" style = "border-color: #752329;" required>
                       </div>
                       <div class="col-12">
                         <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="uName" id="username" placeholder="Username" required>
+                        <input type="text" class="form-control" name="uName" id="username" placeholder="Username" style = "border-color: #752329;" required>
                       </div>
                       <div class="col-12">
                         <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
-                        <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Password" style = "border-color: #752329;" required>
                       </div>
-                      <div class="col-12">
+                      <!--<div class="col-12">
                         <div class="form-check">
                           <input class="form-check-input" type="checkbox" value="" name="iAgree" id="iAgree" required>
                           <label class="form-check-label text-secondary" for="iAgree">
                             I agree to the <a href="#!" class="link-primary text-decoration-none">terms and conditions</a>
                           </label>
                         </div>
-                      </div>
+                      </div>-->
                       <div class="col-12">
-                        <div class="d-grid">
-                          <button class="btn bsb-btn-xl btn-primary" style="background-color: #292323; border-color: #292323;" type="submit">Sign up</button>
+                        <div class="">
+                          <button data-mdb-button-init data-mdb-ripple-init class="btn btn-dark btn-lg btn-block" type="submit" style="background-color: #752329;">Sign up</button>
                         </div>
                       </div>
                     </div>
@@ -113,10 +115,10 @@
                   <div class="row">
                     <div class="col-12">
                       <hr class="mt-5 mb-4 border-secondary-subtle">
-                      <p class="m-0 text-secondary text-center">Already have an account? <a href="/login" class="link-primary text-decoration-none">Sign in</a></p>
+                      <p class="m-0 text-secondary text-center">Already have an account? <a href="/login" class="link-primary text-decoration-none" style = "color: #752329 !important;">Sign in</a></p>
                     </div>
                   </div>
-                  <div class="row">
+                  <!--<div class="row">
                     <div class="col-12">
                       <p class="mt-5 mb-4">Or sign in with</p>
                       <div class="d-flex gap-3 flex-column flex-xl-row">
@@ -140,7 +142,7 @@
                         </a>
                       </div>
                     </div>
-                  </div>
+                  </div>-->
                 </div>
               </div>
             </div>
