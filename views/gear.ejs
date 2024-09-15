@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,207 +20,239 @@
 
     <%- include('header.ejs') %>
 
-    <section class="coffeenbrewgear">
-        <div class="container">
-            <br><h2 style="text-align: center;">BREW GEAR</h2>
-            <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
-                <% gear.reverse().forEach(gear => { %>
-                    <% if (gear.category === "brew_gear") { %>
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="">
-                                <div class="card-body">
-                                    <h5 class="card-title"><%= gear.gearName %></h5>
-                                    <p class="card-text">PHP <%= gear.price %></p>
-                                    <button class="btn btn-dark minus">-</button>
-                                    <input type="number" name="" id=""class="quantity" value="0" style="display: inline-block; width: 35.41px ;height: 38px; background-color: #e8e8e1; margin: none;">
-                                    <button class="btn btn-dark plus">+</button>
-                                    <button class="btn btn-dark atc">ADD TO CART</button>
+        <section class="coffeenbrewgear">
+            <div class="container"><br>
+                < <h2 style="text-align: center; font-size: 50px; font-family: 'Playfair Display', serif; font-weight: 900; color: #752329;">COFFEE & BREW</h2><br>
+                    <hr>
+                    <br>
+                    <h2 style="text-align: center; font-family: 'Playfair Display', serif; font-weight: 600;">BREW GEAR</h2>
+                    <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                        <% gear.reverse().forEach(gear => { %>
+                            <% if (gear.category === "brew_gear") { %>
+                                <div class="col">
+                                    <div class="card h-100">
+                                        <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="">
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <%= gear.gearName %>
+                                            </h5>
+                                            <p class="card-text">PHP
+                                                <%= gear.price %>
+                                            </p>
+                                            <button class="btn btn-dark minus">-</button>
+                                            <input type="number" name="" id="" class="quantity" value="0" style="display: inline-block; width: 35.41px ;height: 38px; background-color: #e8e8e1; margin: none;">
+                                            <button class="btn btn-dark plus">+</button>
+                                            <button class="btn btn-dark atc">ADD TO CART</button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    <% } %>
-                <% }) %>
-            </div>
+                                <% } %>
+                                    <% }) %>
+                    </div>
 
-            <br><hr><br><h2 style="text-align: center;">COFFEE BEANS</h2>
-            <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
-                <% gear.reverse().forEach(gear => { %>
-                    <% if (gear.category === "beans") { %>
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="">
-                                <div class="card-body">
-                                    <h5 class="card-title"><%= gear.gearName %></h5>
-                                    <p class="card-text">PHP <%= gear.price %></p>
-                                    <button class="btn btn-dark minus">-</button>
-                                    <input type="number" name="" id=""class="quantity" value="0" style="display: inline-block; width: 35.41px ;height: 38px; background-color: #e8e8e1; margin: none;">
-                                    <button class="btn btn-dark plus">+</button>
-                                    <button class="btn btn-dark atc">ADD TO CART</button>
+                    <br>
+                    <hr><br>
+                    <h2 style="text-align: center; font-family: 'Playfair Display', serif; font-weight: 600;">COFFEE BEANS</h2>
+                    <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                        <% gear.reverse().forEach(gear => { %>
+                            <% if (gear.category === "beans") { %>
+                                <div class="col">
+                                    <div class="card h-100">
+                                        <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="">
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <%= gear.gearName %>
+                                            </h5>
+                                            <p class="card-text">PHP
+                                                <%= gear.price %>
+                                            </p>
+                                            <button class="btn btn-dark minus">-</button>
+                                            <input type="number" name="" id="" class="quantity" value="0" style="display: inline-block; width: 35.41px ;height: 38px; background-color: #e8e8e1; margin: none;">
+                                            <button class="btn btn-dark plus">+</button>
+                                            <button class="btn btn-dark atc">ADD TO CART</button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    <% } %>
-                <% }) %>
-            </div>
+                                <% } %>
+                                    <% }) %>
+                    </div>
 
-            <br><hr><br><h2 style="text-align: center;">TORANI SYRUPS</h2>
-            <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
-                <% gear.reverse().forEach(gear => { %>
-                    <% if (gear.category === "syrups") { %>
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="">
-                                <div class="card-body">
-                                    <h5 class="card-title"><%= gear.gearName %></h5>
-                                    <p class="card-text">PHP <%= gear.price %></p>
-                                    <button class="btn btn-dark minus">-</button>
-                                    <input type="number" name="" id=""class="quantity" value="0" style="display: inline-block; width: 35.41px ;height: 38px; background-color: #e8e8e1; margin: none;">
-                                    <button class="btn btn-dark plus">+</button>
-                                    <button class="btn btn-dark atc">ADD TO CART</button>
+                    <br>
+                    <hr><br>
+                    <h2 style="text-align: center; font-family: 'Playfair Display', serif; font-weight: 600;">TORANI SYRUPS</h2>
+                    <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                        <% gear.reverse().forEach(gear => { %>
+                            <% if (gear.category === "syrups") { %>
+                                <div class="col">
+                                    <div class="card h-100">
+                                        <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="">
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <%= gear.gearName %>
+                                            </h5>
+                                            <p class="card-text">PHP
+                                                <%= gear.price %>
+                                            </p>
+                                            <button class="btn btn-dark minus">-</button>
+                                            <input type="number" name="" id="" class="quantity" value="0" style="display: inline-block; width: 35.41px ;height: 38px; background-color: #e8e8e1; margin: none;">
+                                            <button class="btn btn-dark plus">+</button>
+                                            <button class="btn btn-dark atc">ADD TO CART</button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    <% } %>
-                <% }) %>
-            </div>
+                                <% } %>
+                                    <% }) %>
+                    </div>
 
-            <br><hr><br><h2 style="text-align: center;">MILKS</h2>
-            <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
-                <% gear.reverse().forEach(gear => { %>
-                    <% if (gear.category === "milk") { %>
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="">
-                                <div class="card-body">
-                                    <h5 class="card-title"><%= gear.gearName %></h5>
-                                    <p class="card-text">PHP <%= gear.price %></p>
-                                    <button class="btn btn-dark minus">-</button>
-                                    <input type="number" name="" id=""class="quantity" value="0" style="display: inline-block; width: 35.41px ;height: 38px; background-color: #e8e8e1; margin: none;">
-                                    <button class="btn btn-dark plus">+</button>
-                                    <button class="btn btn-dark atc">ADD TO CART</button>
+                    <br>
+                    <hr><br>
+                    <h2 style="text-align: center; font-family: 'Playfair Display', serif; font-weight: 600;">MILKS</h2>
+                    <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                        <% gear.reverse().forEach(gear => { %>
+                            <% if (gear.category === "milk") { %>
+                                <div class="col">
+                                    <div class="card h-100">
+                                        <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="">
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <%= gear.gearName %>
+                                            </h5>
+                                            <p class="card-text">PHP
+                                                <%= gear.price %>
+                                            </p>
+                                            <button class="btn btn-dark minus">-</button>
+                                            <input type="number" name="" id="" class="quantity" value="0" style="display: inline-block; width: 35.41px ;height: 38px; background-color: #e8e8e1; margin: none;">
+                                            <button class="btn btn-dark plus">+</button>
+                                            <button class="btn btn-dark atc">ADD TO CART</button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    <% } %>
-                <% }) %>
-            </div>
+                                <% } %>
+                                    <% }) %>
+                    </div>
 
-            <br><hr><br><h2 style="text-align: center;">CUPS</h2>
-            <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
-                <% gear.forEach(gear => { %>
-                    <% if (gear.category === "cups") { %>
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="">
-                                <div class="card-body">
-                                    <h5 class="card-title"><%= gear.gearName %></h5>
-                                    <p class="card-text">PHP <%= gear.price %></p>
-                                    <button class="btn btn-dark minus">-</button>
-                                    <input type="number" name="" id=""class="quantity" value="0" style="display: inline-block; width: 35.41px ;height: 38px; background-color: #e8e8e1; margin: none;">
-                                    <button class="btn btn-dark plus">+</button>
-                                    <button class="btn btn-dark atc">ADD TO CART</button>
+                    <br>
+                    <hr><br>
+                    <h2 style="text-align: center; font-family: 'Playfair Display', serif; font-weight: 600;">CUPS</h2>
+                    <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                        <% gear.forEach(gear => { %>
+                            <% if (gear.category === "cups") { %>
+                                <div class="col">
+                                    <div class="card h-100">
+                                        <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="">
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <%= gear.gearName %>
+                                            </h5>
+                                            <p class="card-text">PHP
+                                                <%= gear.price %>
+                                            </p>
+                                            <button class="btn btn-dark minus">-</button>
+                                            <input type="number" name="" id="" class="quantity" value="0" style="display: inline-block; width: 35.41px ;height: 38px; background-color: #e8e8e1; margin: none;">
+                                            <button class="btn btn-dark plus">+</button>
+                                            <button class="btn btn-dark atc">ADD TO CART</button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    <% } %>
-                <% }) %>
+                                <% } %>
+                                    <% }) %>
+                    </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <%- include('footer.ejs') %>
+        <%- include('footer.ejs') %>
 
-    <!-- ADD TO CART CODE -->
-    <script>
-        
-        let atcButtons = document.getElementsByClassName("atc");
-        let quantityFields = document.getElementsByClassName("quantity");
-        let plusButtons = document.getElementsByClassName("plus");
-        let minusButtons = document.getElementsByClassName("minus");
+            <!-- ADD TO CART CODE -->
+            <script>
+                let atcButtons = document.getElementsByClassName("atc");
+                let quantityFields = document.getElementsByClassName("quantity");
+                let plusButtons = document.getElementsByClassName("plus");
+                let minusButtons = document.getElementsByClassName("minus");
 
-        for (let i = 0; i < quantityFields.length; i++) {
-            if (quantityFields[i].value == 0) {
-                atcButtons[i].setAttribute("disabled", "");
-            }
-
-            minusButtons[i].addEventListener("click", () => {
-                let currentQuantity = parseInt(quantityFields[i].value);
-                if (currentQuantity > 0) {
-                    quantityFields[i].value = currentQuantity - 1;
-                }
-                updateAtcButtonState(i);
-            });
-
-            plusButtons[i].addEventListener("click", () => {
-                let currentQuantity = parseInt(quantityFields[i].value);
-                quantityFields[i].value = currentQuantity + 1;
-                updateAtcButtonState(i);
-            });
-
-            atcButtons[i].addEventListener("click", (event) => {
-                let currentQuantity = parseInt(quantityFields[i].value);
-                if (currentQuantity > 0){
-                    let title = event.target.parentElement.getElementsByClassName("card-title")[0].innerHTML;
-                    let price = event.target.parentElement.getElementsByClassName("card-text")[0].innerHTML;
-                    let parts = price.split('PHP'); // SPLIT WORD 'PHP'
-                    let newPrice = parts[1].trim(); // TRIM REMAINING PRICE INLUCDING WHITESPACE
-
-                    const product = {
-                        title : title,
-                        price : newPrice,
-                        quantity : currentQuantity
-                    };
-
-                    if ('<%- isLoggedIn %>' === 'true') {
-                        fetch('/add-to-cart', { // FETCH ROUTE FROM APPLICATION
-                            method: 'POST', 
-                            headers: {'Content-Type': 'application/json'},
-                            body: JSON.stringify(product) 
-                        })
-                        .then(response => {
-                            if (!response.ok) { // ------ EDIT ERROR HANDLING
-                                throw new Error('Network response was not ok'); 
-                            }
-                            return response.json(); 
-                        })
-                        .then(data => { // NEEDS res.json FROM APP TO FIRE
-                            if (data.success) { // ------ EDIT ERROR HANDLING
-                                alert('Product added to cart successfully!');
-                            } else { // ------ EDIT ERROR HANDLING
-                                alert('Failed to add product to cart.');
-                            }
-                        })
-                        .catch(error => { // ------ EDIT ERROR HANDLING
-                            console.error('Error adding product to cart:', error);
-                        });
-                    } else {
-                        alert('Please Sign In to Add to Cart');
-                        location.reload();
+                for (let i = 0; i < quantityFields.length; i++) {
+                    if (quantityFields[i].value == 0) {
+                        atcButtons[i].setAttribute("disabled", "");
                     }
-                    quantityFields[i].value = 0;
-                    updateAtcButtonState(i);
-                }
-            });
 
-            function updateAtcButtonState(i) {
-                let currentQuantity = parseInt(quantityFields[i].value);
-                if (currentQuantity > 0) {
-                    atcButtons[i].removeAttribute("disabled");
-                } else {
-                    atcButtons[i].setAttribute("disabled", "");
-                }
-            }
-        }
-        
-    </script>
+                    minusButtons[i].addEventListener("click", () => {
+                        let currentQuantity = parseInt(quantityFields[i].value);
+                        if (currentQuantity > 0) {
+                            quantityFields[i].value = currentQuantity - 1;
+                        }
+                        updateAtcButtonState(i);
+                    });
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script>
-        document.getElementById('home').removeAttribute("class", 'active');
-        document.getElementById('home').setAttribute("class", "nav-link")
-        document.getElementById('products').setAttribute("class", 'nav-link active');
-    </script>
+                    plusButtons[i].addEventListener("click", () => {
+                        let currentQuantity = parseInt(quantityFields[i].value);
+                        quantityFields[i].value = currentQuantity + 1;
+                        updateAtcButtonState(i);
+                    });
+
+                    atcButtons[i].addEventListener("click", (event) => {
+                        let currentQuantity = parseInt(quantityFields[i].value);
+                        if (currentQuantity > 0) {
+                            let title = event.target.parentElement.getElementsByClassName("card-title")[0].innerHTML;
+                            let price = event.target.parentElement.getElementsByClassName("card-text")[0].innerHTML;
+                            let parts = price.split('PHP'); // SPLIT WORD 'PHP'
+                            let newPrice = parts[1].trim(); // TRIM REMAINING PRICE INLUCDING WHITESPACE
+
+                            const product = {
+                                title: title,
+                                price: newPrice,
+                                quantity: currentQuantity
+                            };
+
+                            if ('<%- isLoggedIn %>' === 'true') {
+                                fetch('/add-to-cart', { // FETCH ROUTE FROM APPLICATION
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify(product)
+                                    })
+                                    .then(response => {
+                                        if (!response.ok) { // ------ EDIT ERROR HANDLING
+                                            throw new Error('Network response was not ok');
+                                        }
+                                        return response.json();
+                                    })
+                                    .then(data => { // NEEDS res.json FROM APP TO FIRE
+                                        if (data.success) { // ------ EDIT ERROR HANDLING
+                                            alert('Product added to cart successfully!');
+                                        } else { // ------ EDIT ERROR HANDLING
+                                            alert('Failed to add product to cart.');
+                                        }
+                                    })
+                                    .catch(error => { // ------ EDIT ERROR HANDLING
+                                        console.error('Error adding product to cart:', error);
+                                    });
+                            } else {
+                                alert('Please Sign In to Add to Cart');
+                                location.reload();
+                            }
+                            quantityFields[i].value = 0;
+                            updateAtcButtonState(i);
+                        }
+                    });
+
+                    function updateAtcButtonState(i) {
+                        let currentQuantity = parseInt(quantityFields[i].value);
+                        if (currentQuantity > 0) {
+                            atcButtons[i].removeAttribute("disabled");
+                        } else {
+                            atcButtons[i].setAttribute("disabled", "");
+                        }
+                    }
+                }
+            </script>
+
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+            <script>
+                document.getElementById('home').removeAttribute("class", 'active');
+                document.getElementById('home').setAttribute("class", "nav-link")
+                document.getElementById('products').setAttribute("class", 'nav-link active');
+            </script>
 </body>
+
 </html>
