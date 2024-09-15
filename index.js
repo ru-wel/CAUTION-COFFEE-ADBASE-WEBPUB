@@ -318,20 +318,111 @@ app.get('/merch', async function (req, res) {
 app.get('/menu', async function (req, res) {
     try {
         // Retrieve all documents from the "reviews" collection
-        const querySnapshot = await getDocs(collection(db, "menu"));
+        
+        const sort = req.query.filter
+        let isFiltered = false;
         const menu = [];
+        const filteredMenu = [];
 
-        // Collect all reviews in an array
-        querySnapshot.forEach((doc) => {
-            menu.push(doc.data());
-        });
+        if (!sort) { // isFiltered is false
+            const querySnapshot = await getDocs(collection(db, "menu"));
+            // Collect all menu items in an array
+            querySnapshot.forEach((doc) => {
+                menu.push(doc.data());
+            });
+        } 
+        else if (sort === 'atoz') {
+            isFiltered = true;
+            const querySnapshot = await getDocs(collection(db, "menu"));
+            querySnapshot.forEach((doc) => {
+                filteredMenu.push(doc.data());
+            });
+
+            filteredMenu.forEach(category => {
+                // Iterate over each category
+                for (let key in category) {
+                    // Append all items to the single array
+                    category[key].forEach(item => {
+                        menu.push(item);
+                    });
+                }
+            });
+
+            menu.sort((a, b) => {
+                if (a.menuName < b.menuName) {
+                    return -1;
+                }
+                if (a.menuName > b.menuName) {
+                    return 1;
+                }
+                return 0;
+            });
+        }
+        else if (sort === 'pricelth') { // Sort by price in ascending order
+            isFiltered = true;
+            const querySnapshot = await getDocs(collection(db, "menu"));
+            querySnapshot.forEach((doc) => {
+                filteredMenu.push(doc.data());
+            });
+
+            filteredMenu.forEach(category => {
+                // Iterate over each category
+                for (let key in category) {
+                    // Append all items to the single array
+                    category[key].forEach(item => {
+                        menu.push(item);
+                    });
+                }
+            });
+
+            // Sort menu items by price in ascending order
+            menu.sort((a, b) => {
+                if (a.price < b.price) {
+                    return -1;
+                }
+                if (a.price > b.price) {
+                    return 1;
+                }
+                return 0;
+            });
+        }
+        else if (sort === 'pricehtl') { // Sort by price in ascending order
+            isFiltered = true;
+            const querySnapshot = await getDocs(collection(db, "menu"));
+            querySnapshot.forEach((doc) => {
+                filteredMenu.push(doc.data());
+            });
+
+            filteredMenu.forEach(category => {
+                // Iterate over each category
+                for (let key in category) {
+                    // Append all items to the single array
+                    category[key].forEach(item => {
+                        menu.push(item);
+                    });
+                }
+            });
+
+            // Sort menu items by price in ascending order
+            menu.sort((a, b) => {
+                if (a.price > b.price) {
+                    return -1; // a comes before b
+                }
+                if (a.price < b.price) {
+                    return 1; // a comes after b
+                }
+                return 0; // a and b are equal
+            });
+        }
+            
+        // console.log(menu);
 
         const user = auth.currentUser;
         if (user) {
             // User is signed in
-            res.render('menu.ejs', { menu, isLoggedIn : true, message : req.query.message }); // EMAIL FOR PLACEHOLDER ONLY : isLoggedIn TO BE REFACTORED
+            res.render('menu.ejs', { menu, isLoggedIn : true, isFiltered, message : req.query.message }); // EMAIL FOR PLACEHOLDER ONLY : isLoggedIn TO BE REFACTORED
         } else {
-            res.render('menu.ejs', { menu, isLoggedIn : false, message : req.query.message});
+            res.render('menu.ejs', { menu, isLoggedIn : false, isFiltered, message : req.query.message});
         }
 
     } catch (error) {
