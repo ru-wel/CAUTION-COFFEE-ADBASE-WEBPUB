@@ -415,8 +415,6 @@ app.get('/menu', async function (req, res) {
             });
         }
             
-        // console.log(menu);
-
         const user = auth.currentUser;
         if (user) {
             // User is signed in
@@ -433,21 +431,78 @@ app.get('/menu', async function (req, res) {
 
 app.get('/gear', async function (req, res) {
     try {
-        // Retrieve all documents from the "reviews" collection
-        const querySnapshot = await getDocs(collection(db, "cnbgear"));
+
+        const sort = req.query.filter
+        let isFiltered = false;
         const gear = [];
 
-        // Collect all reviews in an array
-        querySnapshot.forEach((doc) => {
-            gear.push(doc.data());
-        });
+        if (!sort) { // isFiltered is false
+            const querySnapshot = await getDocs(collection(db, "cnbgear"));
+            // Collect all menu items in an array
+            querySnapshot.forEach((doc) => {
+                gear.push(doc.data());
+            });
+        } 
+        else if (sort === 'atoz') {
+            isFiltered = true;
+            const querySnapshot = await getDocs(collection(db, "cnbgear"));
+            querySnapshot.forEach((doc) => {
+                gear.push(doc.data());
+            });
+
+            gear.sort((a, b) => {
+                if (a.gearName < b.gearName) {
+                    return -1;
+                }
+                if (a.gearName > b.gearName) {
+                    return 1;
+                }
+                return 0;
+            });
+        }
+        else if (sort === 'pricelth') { // Sort by price in ascending order
+            isFiltered = true;
+            const querySnapshot = await getDocs(collection(db, "cnbgear"));
+            querySnapshot.forEach((doc) => {
+                gear.push(doc.data());
+            });
+
+            // Sort menu items by price in ascending order
+            gear.sort((a, b) => {
+                if (a.price < b.price) {
+                    return -1;
+                }
+                if (a.price > b.price) {
+                    return 1;
+                }
+                return 0;
+            });
+        }
+        else if (sort === 'pricehtl') { // Sort by price in ascending order
+            isFiltered = true;
+            const querySnapshot = await getDocs(collection(db, "cnbgear"));
+            querySnapshot.forEach((doc) => {
+                gear.push(doc.data());
+            });
+
+            // Sort menu items by price in ascending order
+            gear.sort((a, b) => {
+                if (a.price > b.price) {
+                    return -1; // a comes before b
+                }
+                if (a.price < b.price) {
+                    return 1; // a comes after b
+                }
+                return 0; // a and b are equal
+            });
+        }
 
         const user = auth.currentUser;
         if (user) {
             // User is signed in
-            res.render('gear.ejs', { gear, isLoggedIn : true, message : req.query.message }); // EMAIL FOR PLACEHOLDER ONLY : isLoggedIn TO BE REFACTORED
+            res.render('gear.ejs', { gear, isLoggedIn : true, isFiltered, message : req.query.message }); // EMAIL FOR PLACEHOLDER ONLY : isLoggedIn TO BE REFACTORED
         } else {
-            res.render('gear.ejs', { gear, isLoggedIn : false, message : req.query.message});
+            res.render('gear.ejs', { gear, isLoggedIn : false, isFiltered, message : req.query.message});
         }
 
     } catch (error) {

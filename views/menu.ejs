@@ -22,7 +22,7 @@
     <section class="menu">
 
         <div style="display: inline-block;">
-            <form action="/menu" method="get">
+            <form action="/menu" method="get" id="formsort">
                 <label for="filter">Sort By:</label>
                 <select id="filter" name="filter">
                     <option value="">Default</option>
@@ -125,7 +125,7 @@
             <!-- FILTERED DISPLAY -->
             <div class="container"><br>
                 <hr>
-                <h2 style="text-align: center;">SORT BY : A-Z (PLACEHOLDER)</h2>
+                <!-- <h2 style="text-align: center;" id="sort">SORT BY : </h2> -->
                 <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">            
                 <% menu.forEach(menuDocument => { %>
                     <div class="col">
