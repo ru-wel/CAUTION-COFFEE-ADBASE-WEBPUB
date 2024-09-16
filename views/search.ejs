@@ -19,15 +19,15 @@
 
     <%- include('header.ejs') %>
 
-    <div style="text-align: center;">
+    <div style="text-align: center;" >
         <br>
         <form action="/search" method="get">
-            <label for="">SEARCH HERE</label>
-            <input type="text" name="query" id="query"required>
+            <input class="me-2" type="text" placeholder="Search" name = "query" id = "query" aria-label="Search" style="padding: 10px; width: 40%;">
+            <button class="btn btn-success" style = "background-color: #752329; padding:10px; " id = "search" type="submit" style = "padding: 10px">Search</button>
+            
             <br><br>
-            <button type="submit" class="btn btn-dark" id="search">SEARCH</button>
         </form>
-        <br><br>
+        
     </div>
 
     <div class="container">

@@ -10,6 +10,7 @@
     <!-- STYLE LINKS -->
     <link rel="stylesheet" href="./css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/bs-brain@2.0.4/components/testimonials/testimonial-3/assets/css/testimonial-3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -52,7 +53,7 @@
             <div class="container-fluid">
                 <div class="row justify-content-md-center">
                     <div class="col-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6">
-                        <h2 class="fs-6 text-uppercase text-center" style="color: #752329;">Customer Reviews</h2>
+                        <h2 class="fs-6 text-uppercase text-center" style="color: #752329; font-weight: 900;">Customer Reviews</h2>
                         <p class="display-5 mb-4 mb-md-5 text-center">We deliver what we promise. See what our Customers express about us.</p>
                         <hr class="w-50 mx-auto mb-5 mb-xl-9" style="border-color: #752329; ">
                     </div>
@@ -98,7 +99,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- REVIEW CARDS -->
+                                
+                                <blockquote class="bsb-blockquote-icon mb-4">
+                                    <h5 class="card-title"><%= messages[rating - 1] %></h5> 
+                                    <p class="card-text" style="font-family: 'Poppins', sans-serif; font-weight: 400; font-style: normal;"><%= reviews.message %></p>
+                                </blockquote>
+                                <h4 class="mb-2"><%= reviews.username %></h4>
+                                <p class="card-text"><%= reviews.dateCreated %></p>
+                                </figcaption>
+                            </figure>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- REVIEW CARDS -->
 
                                 <% }) %>
                                     <% } %>
@@ -160,10 +173,10 @@
 
     </form> -->
 
-        <!-- WRITE REVIEW -->
-        <div class="container my-5">
-            <h2 class="text-center mb-4">Submit Your Review</h2>
-            <div class="card-review p-4 mb-5 shadow-sm review-box">
+    <!-- WRITE REVIEW -->
+    <div class="container my-5" style ="background-color: #E8E8E1" >
+        <h2 class="text-center mb-4" style="color: #752329; font-weight: 900;">Submit Your Review</h2>
+        <div class="card-review p-4 mb-5 shadow-sm review-box">
 
                 <form action="/review_process" method="POST" id="reviewForm">
 
@@ -176,6 +189,13 @@
                         <option value="4">☕☕☕☕ Brew-tifully Good (Very Good)</option>
                         <option value="5">☕☕☕☕☕ Perk-fectly Amazing (Excellent)</option>
                     </select>
+
+                </div>
+
+                <% if (message) { %>
+                    <div class="alert alert-danger col-2" role="alert" >
+                        <%= message %>
+
                     </div>
 
                     <% if (message) { %>
@@ -189,12 +209,13 @@
                         <span id="current">0</span>
                         <span id="maximum">/ 300</span>
                     </label>
-                                <textarea id="review" name="message" rows="4" cols="50" maxlength="300" required class="form-control" placeholder="Write your review..."></textarea>
-                            </div>
 
-                            <button type="submit" class="btn btn-dark w-100 submit-btn">Submit Review</button>
-                </form>
-            </div>
+                    <textarea id="review" name="message" rows="4" cols="50" maxlength="300" required class="form-control" placeholder="Write your review..." ></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-dark submit-btn" style = "margin: 0 auto; display: block; background-color: #752329;">Submit Review</button>
+            </form>    
+
         </div>
         <!-- WRITE REVIEW -->
 
