@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,9 +21,10 @@
 
     <%- include('header.ejs') %>
 
-    <% if (isLoggedIn) { %>
-        <h2 style="text-align: center;">Hello <%= email %> (PLACEHOLDER ONLY)</h2>
-    <% } %>
+        <% if (isLoggedIn) { %>
+            <h2 style="text-align: center;">Hello
+                <%= email %> (PLACEHOLDER ONLY)</h2>
+            <% } %>
 
     <!-- CAROUSEL START -->
     <div id="carousel" class="carousel slide" data-bs-ride="carousel">
@@ -58,62 +60,57 @@
         </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+                    <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
         </button>
-    </div>
-    <!-- CAROUSEL END -->
+                </div>
+                <!-- CAROUSEL END -->
 
-    <!-- BEST SELLERS START -->
-    <section class="best-sellers">
-        <div class="container">
-          <br>
-          <h2 class="text-center">OUR BEST SELLERS</h2>
-          <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
-            <div class="col">
-              <div class="card h-100">
-                <img src="./media/breakfast2.png" class="img-fluid" alt="Breakfast Latte">
-                <div class="card-body">
-                  <h5 class="card-title">Breakfast Latte</h5>
-                  <p class="card-text">PHP 160</p>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100">
-                <img src="./media/toasted.png" class="img-fluid" alt="Toasted Vanilla Oat Shakerato">
-                <div class="card-body">
-                  <h5 class="card-title">Toasted Vanilla Oat Shakerato</h5>
-                  <p class="card-text">PHP 170</p>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100">
-                <img src="./media/choco.png" class="img-fluid" alt="Chocolate Cereal">
-                <div class="card-body">
-                  <h5 class="card-title">Chocolate Cereal</h5>
-                  <p class="card-text">PHP 160</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="text-center">
-            <a href="/menu" class="btn btn-dark">MENU</a>
-          </div>
-        </div>
-    </section>
-    <!-- BEST SELLERS END -->
-
-    <!-- DIVIDER -->
-    <div class="container my-5">
-        <hr class="my-4">
-    </div>
-    <!-- DIVIDER -->
+                <!-- BEST SELLERS START -->
+                <section class="best-sellers">
+                    <div class=" container ">
+                        <br>
+                        <h2 class="text-center mt-3 " style="font-size: 50px; font-family: 'Playfair Display', serif; font-weight: 900; color: #752329 ">OUR BEST SELLERS</h2>
+                        <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center ">
+                            <div class="col ">
+                                <div class="card h-100 ">
+                                    <img src="./media/breakfast2.png " class="img-fluid " alt="Breakfast Latte ">
+                                    <div class="card-body ">
+                                        <h5 class="card-title ">Breakfast Latte</h5>
+                                        <p class="card-text ">PHP 160</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col ">
+                                <div class="card h-100 ">
+                                    <img src="./media/toasted.png " class="img-fluid " alt="Toasted Vanilla Oat Shakerato ">
+                                    <div class="card-body ">
+                                        <h5 class="card-title ">Toasted Vanilla Oat Shakerato</h5>
+                                        <p class="card-text ">PHP 170</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col ">
+                                <div class="card h-100 ">
+                                    <img src="./media/choco.png " class="img-fluid " alt="Chocolate Cereal ">
+                                    <div class="card-body ">
+                                        <h5 class="card-title ">Chocolate Cereal</h5>
+                                        <p class="card-text ">PHP 160</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center ">
+                            <a href="/menu " class="btn btn-dark ">MENU</a>
+                        </div>
+                    </div>
+                </section>
+                <!-- BEST SELLERS END -->
 
     <!-- CUSTOMER REVIEW START -->
     <section class="bg-light py-5 py-xl-8"> 
@@ -121,80 +118,121 @@
         <div class="row justify-content-md-center">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6">
             <h2 class="fs-4 text-uppercase text-center" style="color: #752329; font-weight: 900;">Customer Review</h2>
-            <p class="display-5 mb-4 mb-md-5 text-center" style="font-size: 2.25rem;">We deliver what we promise. See what our Customers express about us.<p>
+            <p class="display-5 mb-4 mb-md-5 text-center" style="font-size: 2.25rem;">We deliver what we promise. See what our Customers express about us.</p>
             <hr class="w-50 mx-auto mb-5 mb-xl-9" style="border: none; border-top: 1px solid #752329;">
             </div>
         </div>
         </div><div class="container-fluid overflow-hidden"> 
         <div class="row gy-4 gy-md-0 gx-xxl-5">
 
-             <!-- REVIEW CARDS -->
-            <!-- <div class="col-12 col-md-4">
-            <div class="card border-0 border-bottom shadow-sm rounded-card" style="border-color: #752329;">
-                <div class="card-body p-4 p-xxl-5">
+                <!-- DIVIDER -->
+                <div class="container my-5 ">
+                    <hr class="my-4 ">
+                </div>
+                <!-- DIVIDER -->
+
+                            <!-- REVIEW CARDS -->
+                            <!-- <div class="col-12 col-md-4 ">
+            <div class="card border-0 border-bottom shadow-sm rounded-card " style="border-color: #752329; ">
+                <div class="card-body p-4 p-xxl-5 ">
                 <figure>
                     <figcaption>
-                    <div class="coffee-ratings mb-3" style="color: #752329;">
-                        <i class="fas fa-coffee"></i>
-                        <i class="fas fa-coffee"></i>
+                    <div class="coffee-ratings mb-3 " style="color: #752329; ">
+                        <i class="fas fa-coffee "></i>
+                        <i class="fas fa-coffee "></i>
                     </div>
-                    <blockquote class="bsb-blockquote-icon mb-4">
-                        <h5 class="card-title">A Latte Room for Improvement</h5>
-                        <p class="card-text">The coffee is okay but could use a little more refinement.</p>
+                    <blockquote class="bsb-blockquote-icon mb-4 ">
+                        <h5 class="card-title ">A Latte Room for Improvement</h5>
+                        <p class="card-text ">The coffee is okay but could use a little more refinement.</p>
                     </blockquote>
-                    <h4 class="mb-2">Luna Lovegood</h4>
+                    <h4 class="mb-2 ">Luna Lovegood</h4>
                     </figcaption>
                 </figure>
                 </div>
             </div>
             </div>
         
-            <div class="col-12 col-md-4">
-            <div class="card border-0 border-bottom shadow-sm rounded-card" style="border-color: #752329;">
-                <div class="card-body p-4 p-xxl-5">
+            <div class="col-12 col-md-4 ">
+            <div class="card border-0 border-bottom shadow-sm rounded-card " style="border-color: #752329; ">
+                <div class="card-body p-4 p-xxl-5 ">
                 <figure>
                     <figcaption>
-                    <div class="coffee-ratings mb-3" style="color: #752329;">
-                        <i class="fas fa-coffee"></i>
-                        <i class="fas fa-coffee"></i>
-                        <i class="fas fa-coffee"></i>
+                    <div class="coffee-ratings mb-3 " style="color: #752329; ">
+                        <i class="fas fa-coffee "></i>
+                        <i class="fas fa-coffee "></i>
+                        <i class="fas fa-coffee "></i>
                     </div>
-                    <blockquote class="bsb-blockquote-icon mb-4">
-                        <h5 class="card-title">Just Brew-tiful</h5>
-                        <p class="card-text">A satisfying cup of coffee that leaves you content.</p>
+                    <blockquote class="bsb-blockquote-icon mb-4 ">
+                        <h5 class="card-title ">Just Brew-tiful</h5>
+                        <p class="card-text ">A satisfying cup of coffee that leaves you content.</p>
                     </blockquote>
-                    <h4 class="mb-2">Cedric Digory</h4>
+                    <h4 class="mb-2 ">Cedric Digory</h4>
                     </figcaption>
                 </figure>
                 </div>
             </div>
             </div>
         
-            <div class="col-12 col-md-4">
-            <div class="card border-0 border-bottom shadow-sm rounded-card" style="border-color: #752329;">
-                <div class="card-body p-4 p-xxl-5">
+            <div class="col-12 col-md-4 ">
+            <div class="card border-0 border-bottom shadow-sm rounded-card " style="border-color: #752329; ">
+                <div class="card-body p-4 p-xxl-5 ">
                 <figure>
                     <figcaption>
-                    <div class="coffee-ratings mb-3" style="color: #752329;">
-                        <i class="fas fa-coffee"></i>
-                        <i class="fas fa-coffee"></i>
-                        <i class="fas fa-coffee"></i>
-                        <i class="fas fa-coffee"></i>
+                    <div class="coffee-ratings mb-3 " style="color: #752329; ">
+                        <i class="fas fa-coffee "></i>
+                        <i class="fas fa-coffee "></i>
+                        <i class="fas fa-coffee "></i>
+                        <i class="fas fa-coffee "></i>
                     </div>
-                    <blockquote class="bsb-blockquote-icon mb-4">
-                        <h5 class="card-title">Brew-tifully Good</h5>
-                        <p class="card-text">A very good coffee experience with great flavors!</p>
+                    <blockquote class="bsb-blockquote-icon mb-4 ">
+                        <h5 class="card-title ">Brew-tifully Good</h5>
+                        <p class="card-text ">A very good coffee experience with great flavors!</p>
                     </blockquote>
-                    <h4 class="mb-2">Albus Dumbledore</h4>
+                    <h4 class="mb-2 ">Albus Dumbledore</h4>
                     </figcaption>
                 </figure>
                 </div>
             </div>
             </div> -->
-            <!-- REVIEW CARDS -->
+                            <!-- REVIEW CARDS -->
 
-            <% if (reviews && reviews.length >= 1) { %> <!-- CHECK IF MAY LAMAN BA YUNG REVIEWS DATABASE -->
-                <% reviews.forEach(reviews => { %>
+                            <% if (reviews && reviews.length >= 1) { %>
+                                <!-- CHECK IF MAY LAMAN BA YUNG REVIEWS DATABASE -->
+                                <% reviews.forEach(reviews => { %>
+
+                                    <!-- REVIEW CARDS -->
+                                    <div class="col-12 col-md-4 ">
+                                        <div class="card border-0 border-bottom shadow-sm rounded-card " style="border-color: #752329; background-color: #e8e8e1 ">
+                                            <div class="card-body p-4 p-xxl-5 ">
+                                                <figure>
+                                                    <figcaption>
+                                                        <div class="coffee-ratings mb-3 " style="color: #752329; ">
+                                                            <% let rating = reviews.rating %>
+                                                                <% for( let i = 0; i < rating; i++ ) { %>
+                                                                    <i class="fas fa-coffee "></i>
+                                                                    <% } %>
+                                                        </div>
+                                                        <blockquote class="bsb-blockquote-icon mb-4 ">
+                                                            <h5 class="card-title ">A Latte Room for Improvement</h5>
+                                                            <p class="card-text ">
+                                                                <%= reviews.message %>
+                                                            </p>
+                                                        </blockquote>
+                                                        <h4 class="mb-2 ">
+                                                            <%= reviews.username %>
+                                                        </h4>
+                                                        <p class="card-text ">
+                                                            <%= reviews.dateCreated %>
+                                                        </p>
+                                                    </figcaption>
+                                                </figure>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- REVIEW CARDS -->
+
+                                    <% }) %>
+                                        <% } %>
 
                     <!-- REVIEW CARDS -->
                     <div class="col-12 col-md-4">
@@ -219,60 +257,55 @@
                             </div>
                         </div>
                     </div>
-                     <!-- REVIEW CARDS -->
 
-                <% }) %>
-            <% } %>
-                    
-        </div>
-        </div>
-        
-        <!-- Button -->
-        <div class="text-center mt-5">
-        <a href="/review" class="btn btn-primary" style="background-color: #752329; border-color: #752329;">
+                    <!-- Button -->
+                    <div class="text-center mt-5 ">
+                        <a href="/review " class="btn btn-primary " style="background-color: #752329; border-color: #752329; ">
             See Reviews
         </a>
-        </div>
-    </section>
-    <!-- CUSTOMER REVIEW END -->
+                    </div>
+                </section>
+                <!-- CUSTOMER REVIEW END -->
 
-    <!-- LOCATION START -->
-    <section id="location" style="background-color: #752329; padding:20px; color: #F5F5DC;">
-        <br>
-        <div class="container">
-        <div class="row featurette">
-            <h2 style="text-align: center; color: #F5F5DC;">VISIT US!</h2>
-            <hr class="featurette-divider" style="border: none; border-top: 1px solid #F5F5DC;">
-            <div class="col-md-6" style="text-align: center;">
-            <br>
-            <h5 style="color: #F5F5DC;">Location:</h5>
-            <p>Angeles-Magalang Rd., Pulung Cacutud, <br>Angeles City, Philippines</p>
-            <br>
-            <h5 style="color: #F5F5DC;">Business Hours</h5>
-            <p>Open from 8:00 AM to 12:00 MN Monday to Sunday <br> for dining, takeout, & delivery.</p>
-            <br>
-            <h5 style="color: #F5F5DC;">Contact Us</h5>
-            <p>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F5F5DC" class="bi bi-telephone-fill" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/>
+                <!-- LOCATION START -->
+                <section id="location " style="background-color: #752329; padding:20px; color: #F5F5DC; ">
+                    <br>
+                    <div class="container ">
+                        <div class="row featurette ">
+                            <h2 style="text-align: center; color: #F5F5DC; font-family: 'Playfair Display', serif; font-weight: 900; ">VISIT US!</h2>
+                            <hr class="featurette-divider " style="border: none; border-top: 1px solid #F5F5DC; ">
+                            <div class="col-md-6 " style="text-align: center; ">
+                                <br>
+                                <h5 style="color: #F5F5DC; ">Location:</h5>
+                                <p>Angeles-Magalang Rd., Pulung Cacutud, <br>Angeles City, Philippines</p>
+                                <br>
+                                <h5 style="color: #F5F5DC; ">Business Hours</h5>
+                                <p>Open from 8:00 AM to 12:00 MN Monday to Sunday <br> for dining, takeout, & delivery.</p>
+                                <br>
+                                <h5 style="color: #F5F5DC; ">Contact Us</h5>
+                                <p>
+                                    <svg xmlns="http://www.w3.org/2000/svg " width="16 " height="16 " fill="#F5F5DC " class="bi bi-telephone-fill " viewBox="0 0 16 16 ">
+                <path fill-rule="evenodd " d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905
+                                    1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z "/>
                 </svg> 0998 541 7793
-            </p>
-            <br>
-            <a class="btn btn-dark" href="https://maps.app.goo.gl/6ZX9fPgftfGR6XVG6" target="_blank" role="button">Get Directions</a>
-            </div>
-            <div class="col-md-6" style="text-align: center;">
-            <img src="./media/location.JPG" alt="Location Image" class="img-fluid" style="max-width: 100%; height: auto;">
-            </div>
-        </div>
-        </div>
-        <br>
-    </section>
-    <!-- LOCATION END -->
+                                </p>
+                                <br>
+                                <a class="btn btn-dark " href="https://maps.app.goo.gl/6ZX9fPgftfGR6XVG6 " target="_blank " role="button ">Get Directions</a>
+                            </div>
+                            <div class="col-md-6 " style="text-align: center; ">
+                                <img src="./media/location.JPG " alt="Location Image " class="img-fluid " style="max-width: 100%; height: auto; ">
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                </section>
+                <!-- LOCATION END -->
 
-    <%- include('footer.ejs') %>
-    
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+                <%- include('footer.ejs') %>
+
+                    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js "></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js " integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz " crossorigin="anonymous "></script>
 
 </body>
+
 </html>
