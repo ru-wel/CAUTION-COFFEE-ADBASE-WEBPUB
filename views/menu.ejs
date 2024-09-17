@@ -21,7 +21,7 @@
 
     <section class="menu">
 
-        <div style="display: inline-block; padding: 20px;">
+        <div style="display: inline-block; padding: 0 0 0 40px;" >
             <form action="/menu" method="get" id="formsort">
                 <br>
                 <label for="filter">Sort By:</label>
@@ -31,13 +31,13 @@
                     <option value="pricelth">Price: Low to High</option>
                     <option value="pricehtl">Price: High to Low</option>
                 </select>
-                <button class="btn btn-dark">SORT</button>
+                <button class="btn btn-dark" style ="background-color: #752329;">SORT</button>
             </form>
         </div>     
 
         <% if (!isFiltered) { %>
             <!-- DEFAULT DISPLAY -->
-            <div class="container"><br>
+            <div class="container">
                 <h2 style="text-align: center; font-weight:900; color:#752329">DRINKS</h2><br>
                 <hr>
                 <h3 style="text-align: center; font-weight: 900; color:#82383e">SIGNATURE COFFEE</h3>
@@ -59,12 +59,19 @@
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class = "modal-title" id = "exampleModalLabel<%= i %>" style = "font-weight:900">MERCHANDISE</h5>
+                                            <h5 class = "modal-title" id = "exampleModalLabel<%= i %>" style = "font-weight:900; color:#752329 ">COFFEE DRINKS</h5>
                                             <button type = "button" class = "btn-close" data-bs-dismiss="modal" aria-label = "Close"></button>
                                         </div>
                                         <div class = "modal-body">
                                             <div class="row">
-                                                <img src="./media/<%= menuDocument.Signature[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
+                                                <div class="col col-7">
+                                                    <img src="./media/<%= menuDocument.Signature[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
+                                                </div>
+                                                <div class="col col-5">
+                                                    <br><br><br><br><br>
+                                                    <h5 class="card-title"><%= menuDocument.Signature[i].menuName %></h5>
+                                                    <p class="card-text">PHP <%= menuDocument.Signature[i].price %></p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -83,7 +90,7 @@
                             <% for( let i = 0; i < menuDocument.Non_Coffee.length; i++ ) { %>
                                 <div class="col">
                                     <div class="card h-100">
-                                        <img src="./media/<%= menuDocument.Non_Coffee[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
+                                        <img src="./media/<%= menuDocument.Non_Coffee[i].menuImage %>" class="img-fluid" alt="Non-Coffee Drinks">
                                         <div class="card-body">
                                             <h5 class="card-title"><%= menuDocument.Non_Coffee[i].menuName %></h5>
                                             <p class="card-text">PHP <%= menuDocument.Non_Coffee[i].price %></p>
@@ -95,12 +102,19 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class = "modal-title" id = "exampleModalLabel<%= i+3 %>" style = "font-weight:900">MERCHANDISE</h5>
+                                                <h5 class = "modal-title" id = "exampleModalLabel<%= i+3 %>" style = "font-weight:900; color:#752329">NON-COFFEE DRINKS</h5>
                                                 <button type = "button" class = "btn-close" data-bs-dismiss="modal" aria-label = "Close"></button>
                                             </div>
                                             <div class = "modal-body">
                                                 <div class="row">
-                                                    <img src="./media/<%= menuDocument.Non_Coffee[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
+                                                    <div class="col col-7">
+                                                        <img src="./media/<%= menuDocument.Non_Coffee[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
+                                                    </div>
+                                                    <div class="col col-5">
+                                                        <br><br><br><br><br>
+                                                        <h5 class="card-title"><%= menuDocument.Non_Coffee[i].menuName %></h5>
+                                                        <p class="card-text">PHP <%= menuDocument.Non_Coffee[i].price %></p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -121,7 +135,7 @@
                             <% for( let i = 0; i < menuDocument.Best_Sellers.length; i++ ) { %>
                                 <div class="col">
                                     <div class="card h-100">
-                                        <img src="./media/<%= menuDocument.Best_Sellers[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
+                                        <img src="./media/<%= menuDocument.Best_Sellers[i].menuImage %>" class="img-fluid" alt="Food Best Sellers">
                                         <div class="card-body">
                                             <h5 class="card-title"><%= menuDocument.Best_Sellers[i].menuName %></h5>
                                             <p class="card-text">PHP <%= menuDocument.Best_Sellers[i].price %></p>
@@ -133,12 +147,19 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class = "modal-title" id = "exampleModalLabel<%= i+6 %>" style = "font-weight:900">MERCHANDISE</h5>
+                                                <h5 class = "modal-title" id = "exampleModalLabel<%= i+6 %>" style = "font-weight:900; color:#752329">FOOD - BEST SELLERS</h5>
                                                 <button type = "button" class = "btn-close" data-bs-dismiss="modal" aria-label = "Close"></button>
                                             </div>
                                             <div class = "modal-body">
                                                 <div class="row">
-                                                    <img src="./media/<%= menuDocument.Best_Sellers[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
+                                                    <div class="col col-7">
+                                                        <img src="./media/<%= menuDocument.Best_Sellers[i].menuImage %>" class="img-fluid" alt="Food Best Sellers">
+                                                    </div>
+                                                    <div class="col col-5">
+                                                        <br><br><br><br><br>
+                                                        <h5 class="card-title"><%= menuDocument.Best_Sellers[i].menuName %></h5>
+                                                        <p class="card-text">PHP <%= menuDocument.Best_Sellers[i].price %></p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -158,7 +179,7 @@
                             <% for( let i = 0; i < menuDocument.Sandwiches.length; i++ ) { %>
                                 <div class="col">
                                     <div class="card h-100">
-                                        <img src="./media/<%= menuDocument.Sandwiches[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
+                                        <img src="./media/<%= menuDocument.Sandwiches[i].menuImage %>" class="img-fluid" alt="Food Sandwiches">
                                         <div class="card-body">
                                             <h5 class="card-title"><%= menuDocument.Sandwiches[i].menuName %></h5>
                                             <p class="card-text">PHP <%= menuDocument.Sandwiches[i].price %></p>
@@ -167,15 +188,22 @@
                                     </div>
                                 </div>
                                 <div class="modal fade" id = "productView<%= i+9 %>" tabindex = "-1" aria-labelledby = "exampleModalLabel<%= i+9 %>" aria-hidden = "true">
-                                    <div class="modal-dialog modal-lg">
+                                    <div class="modal-dialog modal-lg modal-dark">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class = "modal-title" id = "exampleModalLabel<%= i+9 %>" style = "font-weight:900">MERCHANDISE</h5>
+                                                <h5 class = "modal-title" id = "exampleModalLabel<%= i+9 %>" style = "font-weight:900; color:#752329">MERCHANDISE</h5>
                                                 <button type = "button" class = "btn-close" data-bs-dismiss="modal" aria-label = "Close"></button>
                                             </div>
                                             <div class = "modal-body">
                                                 <div class="row">
-                                                    <img src="./media/<%= menuDocument.Sandwiches[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
+                                                    <div class="col col-7">
+                                                        <img src="./media/<%= menuDocument.Sandwiches[i].menuImage %>" class="img-fluid" alt="Food Sandwiches">
+                                                    </div>
+                                                    <div class="col col-5">
+                                                        <br><br><br><br><br>
+                                                        <h5 class="card-title"><%= menuDocument.Sandwiches[i].menuName %></h5>
+                                                        <p class="card-text">PHP <%= menuDocument.Sandwiches[i].price %></p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
