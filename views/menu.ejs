@@ -253,20 +253,15 @@
                 <% } else { %>
                     <!-- FILTERED DISPLAY -->
                     <div class="container"><br>
-                        <hr>
-                        <!-- <h2 style="text-align: center;" id="sort">SORT BY : </h2> -->
+                    <hr>
                         <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
                             <% for( let i = 0; i < menu.length; i++ ) { %>
                                 <div class="col">
-                                    <div class="card h-100">
-                                        <img src="./media/<%= menu[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
+                                    <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
+                                        <img src="./media/<%= menu[i].menuImage %>" class="img-fluid" alt="Coffee Drinks" style="width: 100%; height: auto; display: block; border-radius: 6px; border: 2px solid #bbb;">
                                         <div class="card-body">
-                                            <h5 class="card-title" style="color: #E8E8E1">
-                                                <%= menu[i].menuName %>
-                                            </h5>
-                                            <p class="card-text" style="color: #E8E8E1">PHP
-                                                <%= menu[i].price %>
-                                            </p>
+                                            <h5 class="card-title" style="color: #E8E8E1"><%= menu[i].menuName %></h5>
+                                            <p class="card-text" style="color: #E8E8E1">PHP <%= menu[i].price %></p>
                                             <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle="modal" data-bs-target="#productView<%= i %>">Quick View</button>
                                         </div>
                                     </div>
@@ -275,21 +270,32 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel<%= i %>" style="font-weight:900">MERCHANDISE</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel<%= i %>" style="font-weight:900">MENU</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="row">
-                                                    <img src="./media/<%= menu[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
+                                                    <div class="col col-7">
+                                                        <img src="./media/<%= menu[i].menuImage %>" class="img-fluid" alt="Caution Coffee Brew Gear">
+                                                    </div>
+                                                    <div class="col col-5">
+                                                        <br><br><br><br><br>
+                                                        <h5>
+                                                            <%= menu[i].menuName %>
+                                                        </h5>
+                                                        <p>PHP
+                                                            <%= menu[i].price %>
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <% } %>
+                            <% } %>
                         </div>
                     </div>
-                    <% } %>
+                <% } %>  
 
         </section>
 
