@@ -20,112 +20,164 @@
     <%- include('header.ejs') %>
 
     <section class="coffeenbrewgear">
-        <div class="container">
-            <br><h2 style="text-align: center;">BREW GEAR</h2>
-            <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
-                <% gear.reverse().forEach(gear => { %>
-                    <% if (gear.category === "brew_gear") { %>
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="">
-                                <div class="card-body">
-                                    <h5 class="card-title"><%= gear.gearName %></h5>
-                                    <p class="card-text">PHP <%= gear.price %></p>
-                                    <button class="btn btn-dark minus">-</button>
-                                    <input type="number" name="" id=""class="quantity" value="0" style="display: inline-block; width: 35.41px ;height: 38px; background-color: #e8e8e1; margin: none;">
-                                    <button class="btn btn-dark plus">+</button>
-                                    <button class="btn btn-dark atc">ADD TO CART</button>
-                                </div>
-                            </div>
-                        </div>
-                    <% } %>
-                <% }) %>
-            </div>
 
-            <br><hr><br><h2 style="text-align: center;">COFFEE BEANS</h2>
-            <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
-                <% gear.reverse().forEach(gear => { %>
-                    <% if (gear.category === "beans") { %>
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="">
-                                <div class="card-body">
-                                    <h5 class="card-title"><%= gear.gearName %></h5>
-                                    <p class="card-text">PHP <%= gear.price %></p>
-                                    <button class="btn btn-dark minus">-</button>
-                                    <input type="number" name="" id=""class="quantity" value="0" style="display: inline-block; width: 35.41px ;height: 38px; background-color: #e8e8e1; margin: none;">
-                                    <button class="btn btn-dark plus">+</button>
-                                    <button class="btn btn-dark atc">ADD TO CART</button>
-                                </div>
-                            </div>
-                        </div>
-                    <% } %>
-                <% }) %>
-            </div>
+        <div style="display: inline-block;">
+            <form action="/gear" method="get" id="formsort">
+                <label for="filter">Sort By:</label>
+                <select id="filter" name="filter">
+                    <option value="">Default</option>
+                    <option value="atoz">A to Z</option>
+                    <option value="pricelth">Price: Low to High</option>
+                    <option value="pricehtl">Price: High to Low</option>
+                </select>
+                <button class="btn btn-dark">SORT</button>
+            </form>
+        </div>     
 
-            <br><hr><br><h2 style="text-align: center;">TORANI SYRUPS</h2>
-            <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
-                <% gear.reverse().forEach(gear => { %>
-                    <% if (gear.category === "syrups") { %>
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="">
-                                <div class="card-body">
-                                    <h5 class="card-title"><%= gear.gearName %></h5>
-                                    <p class="card-text">PHP <%= gear.price %></p>
-                                    <button class="btn btn-dark minus">-</button>
-                                    <input type="number" name="" id=""class="quantity" value="0" style="display: inline-block; width: 35.41px ;height: 38px; background-color: #e8e8e1; margin: none;">
-                                    <button class="btn btn-dark plus">+</button>
-                                    <button class="btn btn-dark atc">ADD TO CART</button>
+        <% if (!isFiltered) { %>
+            <!-- DEFAULT DISPLAY -->
+            <div class="container">
+                <h1 style = "font-weight: 900; text-align:center; color:#752329">BREW & COFFEE</h1>
+                <hr>
+                <br><h2 style="text-align: center; font-weight:900; color:#82383e">BREW GEAR</h2>
+                <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                    <% gear.reverse().forEach(gear => { %>
+                        <% if (gear.category === "brew_gear") { %>
+                            <div class="col">
+                                <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
+                                    <div style="border: 2px solid #bbb; border-radius: 8px; margin: 10px;">
+                                        <img src="./media/<%= gear.gearImage %>" class="img-fluid" style="width: 100%; height: auto; display: block; border-radius: 6px;" alt="">
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="color: #f5f5dc;"><%= gear.gearName %></h5>
+                                        <p class="card-text" style="color: #f5f5dc;">PHP <%= gear.price %></p>
+                                        <button class="btn btn-dark minus" style="background-color: #e8e8e1; color: #000000;">-</button>
+                                        <input type="number" name="" id=""class="quantity" value="0" style="display: inline-block; width: 35.41px ;height: 38px; background-color: #e8e8e1; margin: none;">
+                                        <button class="btn btn-dark plus" style="background-color: #e8e8e1; color: #000000;">+</button>
+                                        <button class="btn btn-dark atc" style="background-color: #ECDCAC; color: #000000;">ADD TO CART</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    <% } %>
-                <% }) %>
-            </div>
+                        <% } %>
+                    <% }) %>
+                </div>
 
-            <br><hr><br><h2 style="text-align: center;">MILKS</h2>
-            <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
-                <% gear.reverse().forEach(gear => { %>
-                    <% if (gear.category === "milk") { %>
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="">
-                                <div class="card-body">
-                                    <h5 class="card-title"><%= gear.gearName %></h5>
-                                    <p class="card-text">PHP <%= gear.price %></p>
-                                    <button class="btn btn-dark minus">-</button>
-                                    <input type="number" name="" id=""class="quantity" value="0" style="display: inline-block; width: 35.41px ;height: 38px; background-color: #e8e8e1; margin: none;">
-                                    <button class="btn btn-dark plus">+</button>
-                                    <button class="btn btn-dark atc">ADD TO CART</button>
+                <br><hr><br><h2 style="text-align: center; font-weight: 900; color:#82383e">COFFEE BEANS</h2>
+                <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                    <% gear.reverse().forEach(gear => { %>
+                        <% if (gear.category === "beans") { %>
+                            <div class="col">
+                                <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
+                                    <div style="border: 2px solid #bbb; border-radius: 8px; margin: 10px;">
+                                        <img src="./media/<%= gear.gearImage %>" class="img-fluid" style="width: 100%; height: auto; display: block; border-radius: 6px;" alt="">
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="color: #f5f5dc;"><%= gear.gearName %></h5>
+                                        <p class="card-text" style="color: #f5f5dc;">PHP <%= gear.price %></p>
+                                        <button class="btn btn-dark minus" style="background-color: #e8e8e1; color: #000000;">-</button>
+                                        <input type="number" name="" id=""class="quantity" value="0" style="display: inline-block; width: 35.41px ;height: 38px; background-color: #e8e8e1; margin: none;">
+                                        <button class="btn btn-dark plus" style="background-color: #e8e8e1; color: #000000;">+</button>
+                                        <button class="btn btn-dark atc" style="background-color: #ECDCAC; color: #000000;">ADD TO CART</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    <% } %>
-                <% }) %>
-            </div>
+                        <% } %>
+                    <% }) %>
+                </div>
 
-            <br><hr><br><h2 style="text-align: center;">CUPS</h2>
-            <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
-                <% gear.forEach(gear => { %>
-                    <% if (gear.category === "cups") { %>
+                <br><hr><br><h2 style="text-align: center; font-weight: 900; color:#82383e">TORANI SYRUPS</h2>
+                <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                    <% gear.reverse().forEach(gear => { %>
+                        <% if (gear.category === "syrups") { %>
+                            <div class="col">
+                                <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
+                                    <div style="border: 2px solid #bbb; border-radius: 8px; margin: 10px;">
+                                        <img src="./media/<%= gear.gearImage %>" class="img-fluid" style="width: 100%; height: auto; display: block; border-radius: 6px;" alt="">
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="color: #f5f5dc;"><%= gear.gearName %></h5>
+                                        <p class="card-text" style="color: #f5f5dc;">PHP <%= gear.price %></p>
+                                        <button class="btn btn-dark minus" style="background-color: #e8e8e1; color: #000000;">-</button>
+                                        <input type="number" name="" id=""class="quantity" value="0" style="display: inline-block; width: 35.41px ;height: 38px; background-color: #e8e8e1; margin: none;">
+                                        <button class="btn btn-dark plus" style="background-color: #e8e8e1; color: #000000;">+</button>
+                                        <button class="btn btn-dark atc" style="background-color: #ECDCAC; color: #000000;">ADD TO CART</button>
+                                    </div>
+                                </div>
+                            </div>
+                        <% } %>
+                    <% }) %>
+                </div>
+
+                <br><hr><br><h2 style="text-align: center; font-weight: 900; color:#82383e">MILKS</h2>
+                <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                    <% gear.reverse().forEach(gear => { %>
+                        <% if (gear.category === "milk") { %>
+                            <div class="col">
+                                <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
+                                    <div style="border: 2px solid #bbb; border-radius: 8px; margin: 10px;">
+                                        <img src="./media/<%= gear.gearImage %>" class="img-fluid" style="width: 100%; height: auto; display: block; border-radius: 6px;" alt="">
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="color: #f5f5dc;"><%= gear.gearName %></h5>
+                                        <p class="card-text" style="color: #f5f5dc;">PHP <%= gear.price %></p>
+                                        <button class="btn btn-dark minus" style="background-color: #e8e8e1; color: #000000;">-</button>
+                                        <input type="number" name="" id=""class="quantity" value="0" style="display: inline-block; width: 35.41px ;height: 38px; background-color: #e8e8e1; margin: none;">
+                                        <button class="btn btn-dark plus" style="background-color: #e8e8e1; color: #000000;">+</button>
+                                        <button class="btn btn-dark atc" style="background-color: #ECDCAC; color: #000000;">ADD TO CART</button>
+                                    </div>
+                                </div>
+                            </div>
+                        <% } %>
+                    <% }) %>
+                </div>
+
+                <br><hr><br><h2 style="text-align: center; font-weight: 900; color:#82383e">CUPS</h2>
+                <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                    <% gear.forEach(gear => { %>
+                        <% if (gear.category === "cups") { %>
+                            <div class="col">
+                                <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
+                                    <div style="border: 2px solid #bbb; border-radius: 8px; margin: 10px;">
+                                        <img src="./media/<%= gear.gearImage %>" class="img-fluid" style="width: 100%; height: auto; display: block; border-radius: 6px;" alt="">
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="color: #f5f5dc;"><%= gear.gearName %></h5>
+                                        <p class="card-text" style="color: #f5f5dc;">PHP <%= gear.price %></p>
+                                        <button class="btn btn-dark minus" style="background-color: #e8e8e1; color: #000000;">-</button>
+                                        <input type="number" name="" id=""class="quantity" value="0" style="display: inline-block; width: 35.41px ;height: 38px; background-color: #e8e8e1; margin: none;">
+                                        <button class="btn btn-dark plus" style="background-color: #e8e8e1; color: #000000;">+</button>
+                                        <button class="btn btn-dark atc" style="background-color: #ECDCAC; color: #000000;">ADD TO CART</button>
+                                    </div>
+                                </div>
+                            </div>
+                        <% } %>
+                    <% }) %>
+                </div>
+            </div>
+        <% } else { %>
+            <div class="container">
+                <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                    <% gear.forEach(gearDocument => { %>
                         <div class="col">
-                            <div class="card h-100">
-                                <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="">
+                            <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
+                                <div style="border: 2px solid #bbb; border-radius: 8px; margin: 10px;">
+                                    <img src="./media/<%= gearDocument.gearImage %>" class="img-fluid" alt="" style="width: 100%; height: auto; display: block; border-radius: 6px;">
+                                </div>
                                 <div class="card-body">
-                                    <h5 class="card-title"><%= gear.gearName %></h5>
-                                    <p class="card-text">PHP <%= gear.price %></p>
-                                    <button class="btn btn-dark minus">-</button>
+                                    <h5 class="card-title" style="color: #f5f5dc;"><%= gearDocument.gearName %></h5>
+                                    <p class="card-text" style="color: #f5f5dc;">PHP <%= gearDocument.price %></p>
+                                    <button class="btn btn-dark minus" style="background-color: #e8e8e1; color: #000000;">-</button>
                                     <input type="number" name="" id=""class="quantity" value="0" style="display: inline-block; width: 35.41px ;height: 38px; background-color: #e8e8e1; margin: none;">
-                                    <button class="btn btn-dark plus">+</button>
-                                    <button class="btn btn-dark atc">ADD TO CART</button>
+                                    <button class="btn btn-dark plus" style="background-color: #e8e8e1; color: #000000;">+</button>
+                                    <button class="btn btn-dark atc" style="background-color: #ECDCAC; color: #000000;">ADD TO CART</button>
                                 </div>
                             </div>
                         </div>
-                    <% } %>
-                <% }) %>
+                    <% }) %>        
+                </div>
             </div>
-        </div>
+        <% } %>  
+
     </section>
 
     <%- include('footer.ejs') %>
@@ -216,10 +268,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
     <script>
         document.getElementById('home').removeAttribute("class", 'active');
         document.getElementById('home').setAttribute("class", "nav-link")
-        document.getElementById('products').setAttribute("class", 'nav-link active');
+        document.getElementById('products').setAttribute("class", 'nav-link dropdown-toggle active');
     </script>
 </body>
 </html>

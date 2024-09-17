@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://unpkg.com/bs-brain@2.0.4/components/testimonials/testimonial-3/assets/css/testimonial-3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"></link>
+
 </head>
 
 <body>
@@ -68,128 +69,6 @@
     </div>
 
     <%- include('footer.ejs') %>
-
-    <!-- <script>
-
-        let editButtons = document.getElementsByClassName("edit");
-        let plusButtons = document.getElementsByClassName("plus");
-        let minusButtons = document.getElementsByClassName("minus");
-        let saveButtons = document.getElementsByClassName("save");
-        let quantityFields = document.getElementsByClassName("quantity");
-        let removeButtons = document.getElementsByClassName("remove");
-        let titleFields = document.getElementsByClassName("title");
-
-        for (let i = 0; i < editButtons.length; i++) {
-
-            removeButtons[i].addEventListener("click", () => {
-                const title = titleFields[i].innerText;
-
-                const removeItem = {
-                    index : parseInt(i),
-                    title : title
-                };
-
-                fetch('/cart', { // FETCH ROUTE FROM APPLICATION
-                    method: 'DELETE', 
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(removeItem) 
-                }) 
-                .then(response => {
-                    if (!response.ok) { // ------ EDIT ERROR HANDLING
-                        throw new Error('Network response was not ok'); 
-                    }
-                    return response.json(); 
-                })
-                .then(data => { // NEEDS res.json FROM APP TO FIRE
-                    if (data.success) { // ------ EDIT ERROR HANDLING
-                        alert('Item removed successfully!');
-                        location.reload();
-                    } else { // ------ EDIT ERROR HANDLING
-                        alert('Failed to remove item.');
-                        location.reload();
-                    }
-                })
-                .catch(error => { // ------ EDIT ERROR HANDLING
-                    console.error('Error removing product', error);
-                });
-
-                location.reload();
-            })
-
-            editButtons[i].addEventListener("click", () =>{
-
-                function updateSaveButtonState(i) {
-                    let currentQuantity = parseInt(quantityFields[i].innerText)
-                    if (currentQuantity != origQuantity) {
-                        saveButtons[i].removeAttribute("hidden", "");
-                    } 
-                    else {
-                        saveButtons[i].setAttribute("hidden", "");
-                    }
-                }
-
-                minusButtons[i].removeAttribute("hidden", "");
-                plusButtons[i].removeAttribute("hidden", "");
-
-                const origQuantity = parseInt(quantityFields[i].innerText);
-
-                // MINUS BUTTONS
-                minusButtons[i].addEventListener("click", () => {
-                    let currentQuantity = parseInt(quantityFields[i].innerText);
-                    if (currentQuantity > 1) {
-                        quantityFields[i].innerText = currentQuantity - 1;
-                        updateSaveButtonState(i)
-                    }
-                });
-
-                // PLUS BUTTONS
-                plusButtons[i].addEventListener("click", () => {
-                    let currentQuantity = parseInt(quantityFields[i].innerText);
-                    quantityFields[i].innerText = currentQuantity + 1;
-                    updateSaveButtonState(i)
-                });
-
-                // SAVE BUTTONS
-                saveButtons[i].addEventListener("click", (event) => {
-                    let currentQuantity = parseInt(quantityFields[i].innerText);
-
-                    const updateQuantity = {
-                        index : parseInt(i),
-                        quantity : currentQuantity
-                    };
-
-                    fetch('/cart', { // FETCH ROUTE FROM APPLICATION
-                            method: 'PATCH', 
-                            headers: {'Content-Type': 'application/json'},
-                            body: JSON.stringify(updateQuantity) 
-                    })
-                    .then(response => {
-                        if (!response.ok) { // ------ EDIT ERROR HANDLING
-                            throw new Error('Network response was not ok'); 
-                        }
-                        return response.json(); 
-                    })
-                    .then(data => { // NEEDS res.json FROM APP TO FIRE
-                        if (data.success) { // ------ EDIT ERROR HANDLING
-                            alert('Cart updated successfully!');
-                            location.reload();
-                        } else { // ------ EDIT ERROR HANDLING
-                            alert('Failed to update cart.');
-                        }
-                    })
-                    .catch(error => { // ------ EDIT ERROR HANDLING
-                        console.error('Error updating cart:', error);
-                    });
-
-                    saveButtons[i].setAttribute("hidden", "");
-                    minusButtons[i].setAttribute("hidden", "");
-                    plusButtons[i].setAttribute("hidden", "");
-                    location.reload();
-                })
-            })
-        }
-
-    </script> -->
 
     <script>
         let editButtons = document.getElementsByClassName("edit");
@@ -297,8 +176,9 @@
                     minusButtons[i].setAttribute("hidden", "");
                     plusButtons[i].setAttribute("hidden", "");
                 });
-            });
+            });    
         }
+
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>

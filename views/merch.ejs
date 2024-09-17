@@ -31,26 +31,99 @@
                         <div class="card-body">
                             <h5 class="card-title"><%= merch[0].merchName %></h5>
                             <p class="card-text">PHP <%= merch[0].price %></p>
+                            <button type = "button" class = "btn btn-md" style = " margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle ="modal" data-bs-target = "#productView">Quick View</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id = "productView" tabindex = "-1" aria-labelledby = "exampleModalLabel" aria-hidden = "true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class = "modal-title" id = "exampleModalLabel" style = "font-weight:900">MERCHANDISE</h5>
+                                <button type = "button" class = "btn-close" data-bs-dismiss="modal" aria-label = "Close"></button>
+                            </div>
+                            <div class = "modal-body">
+                                <div class="row">
+                                    <div class="col col-7">
+                                        <img src="./media/<%= merch[0].merchImage %>" class="img-fluid" alt="Caution T-Shirt (Black)">
+                                    </div>
+                                    <div class="col col-5"> 
+                                        <br><br><br><br><br>
+                                        <h5><%= merch[0].merchName %></h5>
+                                        <p>PHP <%= merch[0].price %></p>
+                                        
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="col">
                     <div class="card h-100">
-                        <img src="./media/<%= merch[2].merchImage %>" class="img-fluid" alt="Caution T-Shirt (Black)">
+                        <img src="./media/<%= merch[2].merchImage %>" class="img-fluid" alt="Caution T-Shirt (Beige)">
                         <div class="card-body">
                             <h5 class="card-title"><%= merch[2].merchName %></h5>
                             <p class="card-text">PHP <%= merch[2].price %></p>
+                            <button type = "button" class = "btn btn-md" style = " margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle ="modal" data-bs-target = "#productView2">Quick View</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id = "productView2" tabindex = "-1" aria-labelledby = "exampleModalLabel2" aria-hidden = "true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class = "modal-title" id = "exampleModalLabel2" style = "font-weight:900">MERCHANDISE</h5>
+                                <button type = "button" class = "btn-close" data-bs-dismiss="modal" aria-label = "Close"></button>
+                            </div>
+                            <div class = "modal-body">
+                                <div class="row">
+                                    <div class="col col-7">
+                                        <img src="./media/<%= merch[2].merchImage %>" class="img-fluid" alt="Caution T-Shirt (Black)">
+                                    </div>
+                                    <div class="col col-5"> 
+                                        <br><br><br><br><br>
+                                        <h5><%= merch[2].merchName %></h5>
+                                        <p>PHP <%= merch[2].price %></p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="col">
                     <div class="card h-100">
-                        <img src="./media/<%= merch[1].merchImage %>" class="img-fluid" alt="Caution T-Shirt (Black)">
+                        <img src="./media/<%= merch[1].merchImage %>" class="img-fluid" alt="Caution Sticker">
                         <div class="card-body">
                             <h5 class="card-title"><%= merch[1].merchName %></h5>
                             <p class="card-text">PHP <%= merch[1].price %></p>
+                            <button type = "button" class = "btn btn-md" style = " margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle ="modal" data-bs-target = "#productView3">Quick View</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id = "productView3" tabindex = "-1" aria-labelledby = "exampleModalLabel3" aria-hidden = "true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class = "modal-title" id = "exampleModalLabel3" style = "font-weight:900">MERCHANDISE</h5>
+                                <button type = "button" class = "btn-close" data-bs-dismiss="modal" aria-label = "Close"></button>
+                            </div>
+                            <div class = "modal-body">
+                                <div class="row">
+                                    <div class="col col-7">
+                                        <img src="./media/<%= merch[1].merchImage %>" class="img-fluid" alt="Caution T-Shirt (Black)">
+                                    </div>
+                                    <div class="col col-5"> 
+                                        <br><br><br><br><br>
+                                        <h5><%= merch[1].merchName %></h5>
+                                        <p>PHP <%= merch[1].price %></p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -66,7 +139,7 @@
     <script>
         document.getElementById('home').removeAttribute("class", 'active');
         document.getElementById('home').setAttribute("class", "nav-link")
-        document.getElementById('products').setAttribute("class", 'nav-link active');
+        document.getElementById('products').setAttribute("class", 'nav-link dropdown-toggle active');
     </script>
 </body>
 </html>
