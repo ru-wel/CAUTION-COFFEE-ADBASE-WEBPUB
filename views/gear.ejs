@@ -38,6 +38,7 @@
         <% if (!isFiltered) { %>
             <!-- DEFAULT DISPLAY -->
             <div class="container">
+                <br>
                 <h1 style = "font-weight: 900; text-align:center; color:#752329">BREW & COFFEE</h1>
                 <hr>
                 <br><h2 style="text-align: center; font-weight:900; color:#82383e">BREW GEAR</h2>
@@ -48,7 +49,7 @@
                             <div class="col">
                                 <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
                                     <div style="border: 2px solid #bbb; border-radius: 8px; margin: 10px;">
-                                        <img src="./media/<%= gear.gearImage %>" class="img-fluid" style="width: 100%; height: auto; display: block; border-radius: 6px;" alt="">
+                                        <img src="./media/<%= gear.gearImage %>" class="img-fluid" style="width: 100%; height: auto; display: block; border-radius: 6px;" alt="Brew Gear">
                                     </div>
                                     <div class="card-body">
                                         <h5 class="card-title" style="color: #f5f5dc;"><%= gear.gearName %></h5>
@@ -56,8 +57,16 @@
                                         <button class="btn btn-dark minus" style="background-color: #e8e8e1; color: #000000;">-</button>
                                         <input type="number" name="" id="" class="quantity" value="0" style="display: inline-block; width: 35.41px; height: 38px; background-color: #e8e8e1;">
                                         <button class="btn btn-dark plus" style="background-color: #e8e8e1; color: #000000;">+</button>
-                                        <button class="btn btn-dark atc" style="background-color: #ECDCAC; color: #000000;">ADD TO CART</button>
-                                        <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex %>">Quick View</button>
+                                        
+                                        <button class="btn btn-dark atc desk-tab-btn" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
+                                        <br><br>
+                                        <button type="button" class="btn btn-md desk-tab-btn" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex %>">Quick View</button>
+                                        <!--<div class="mob-btn">
+                                            <br>
+                                            <button class="btn btn-dark atc" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
+                                            <br><br>
+                                            <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex %>">Quick View</button>
+                                        </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -65,13 +74,13 @@
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel<%= modalIndex %>" style="font-weight:900; color:#752329">COFFEE DRINKS</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel<%= modalIndex %>" style="font-weight:900; color:#752329">BREW GEAR</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col col-7">
-                                                    <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="Coffee Drinks">
+                                                    <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="Brew Gear">
                                                 </div>
                                                 <div class="col col-5">
                                                     <br><br><br><br><br>
@@ -96,7 +105,7 @@
                             <div class="col">
                                 <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
                                     <div style="border: 2px solid #bbb; border-radius: 8px; margin: 10px;">
-                                        <img src="./media/<%= gear.gearImage %>" class="img-fluid" style="width: 100%; height: auto; display: block; border-radius: 6px;" alt="">
+                                        <img src="./media/<%= gear.gearImage %>" class="img-fluid" style="width: 100%; height: auto; display: block; border-radius: 6px;" alt="Coffee Beans">
                                     </div>
                                     <div class="card-body">
                                         <h5 class="card-title" style="color: #f5f5dc;"><%= gear.gearName %></h5>
@@ -104,8 +113,15 @@
                                         <button class="btn btn-dark minus" style="background-color: #e8e8e1; color: #000000;">-</button>
                                         <input type="number" name="" id="" class="quantity" value="0" style="display: inline-block; width: 35.41px; height: 38px; background-color: #e8e8e1;">
                                         <button class="btn btn-dark plus" style="background-color: #e8e8e1; color: #000000;">+</button>
-                                        <button class="btn btn-dark atc" style="background-color: #ECDCAC; color: #000000;">ADD TO CART</button>
-                                        <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex2 %>">Quick View</button>
+                                        <button class="btn btn-dark atc desk-tab-btn" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
+                                        <br><br>
+                                        <button type="button" class="btn btn-md desk-tab-btn" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex2 %>">Quick View</button>
+                                        <!--<div class="mob-btn">
+                                            <br>
+                                            <button class="btn btn-dark atc" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
+                                            <br><br>
+                                            <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex2 %>">Quick View</button>
+                                        </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -119,7 +135,7 @@
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col col-7">
-                                                    <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="Coffee Drinks">
+                                                    <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="Coffee Beans">
                                                 </div>
                                                 <div class="col col-5">
                                                     <br><br><br><br><br>
@@ -144,7 +160,7 @@
                             <div class="col">
                                 <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
                                     <div style="border: 2px solid #bbb; border-radius: 8px; margin: 10px;">
-                                        <img src="./media/<%= gear.gearImage %>" class="img-fluid" style="width: 100%; height: auto; display: block; border-radius: 6px;" alt="">
+                                        <img src="./media/<%= gear.gearImage %>" class="img-fluid" style="width: 100%; height: auto; display: block; border-radius: 6px;" alt="Torani Syrups">
                                     </div>
                                     <div class="card-body">
                                         <h5 class="card-title" style="color: #f5f5dc;"><%= gear.gearName %></h5>
@@ -152,8 +168,15 @@
                                         <button class="btn btn-dark minus" style="background-color: #e8e8e1; color: #000000;">-</button>
                                         <input type="number" name="" id="" class="quantity" value="0" style="display: inline-block; width: 35.41px; height: 38px; background-color: #e8e8e1;">
                                         <button class="btn btn-dark plus" style="background-color: #e8e8e1; color: #000000;">+</button>
-                                        <button class="btn btn-dark atc" style="background-color: #ECDCAC; color: #000000;">ADD TO CART</button>
-                                        <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex3 %>">Quick View</button>
+                                        <button class="btn btn-dark atc desk-tab-btn" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
+                                        <br><br>
+                                        <button type="button" class="btn btn-md desk-tab-btn" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex3 %>">Quick View</button>
+                                        <!--<div class="mob-btn">
+                                            <br>
+                                            <button class="btn btn-dark atc" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
+                                            <br><br>
+                                            <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex3 %>">Quick View</button>
+                                        </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -167,7 +190,7 @@
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col col-7">
-                                                    <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="Coffee Drinks">
+                                                    <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="Torani Syrup">
                                                 </div>
                                                 <div class="col col-5">
                                                     <br><br><br><br><br>
@@ -192,7 +215,7 @@
                             <div class="col">
                                 <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
                                     <div style="border: 2px solid #bbb; border-radius: 8px; margin: 10px;">
-                                        <img src="./media/<%= gear.gearImage %>" class="img-fluid" style="width: 100%; height: auto; display: block; border-radius: 6px;" alt="">
+                                        <img src="./media/<%= gear.gearImage %>" class="img-fluid" style="width: 100%; height: auto; display: block; border-radius: 6px;" alt="Milks">
                                     </div>
                                     <div class="card-body">
                                         <h5 class="card-title" style="color: #f5f5dc;"><%= gear.gearName %></h5>
@@ -200,8 +223,15 @@
                                         <button class="btn btn-dark minus" style="background-color: #e8e8e1; color: #000000;">-</button>
                                         <input type="number" name="" id="" class="quantity" value="0" style="display: inline-block; width: 35.41px; height: 38px; background-color: #e8e8e1;">
                                         <button class="btn btn-dark plus" style="background-color: #e8e8e1; color: #000000;">+</button>
-                                        <button class="btn btn-dark atc" style="background-color: #ECDCAC; color: #000000;">ADD TO CART</button>
-                                        <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex4 %>">Quick View</button>
+                                        <button class="btn btn-dark atc desk-tab-btn" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
+                                        <br><br>
+                                        <button type="button" class="btn btn-md desk-tab-btn" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex4 %>">Quick View</button>
+                                        <!--<div class="mob-btn">
+                                            <br>
+                                            <button class="btn btn-dark atc" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
+                                            <br><br>
+                                            <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex4 %>">Quick View</button>
+                                        </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -215,7 +245,7 @@
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col col-7">
-                                                    <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="Coffee Drinks">
+                                                    <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="Milks">
                                                 </div>
                                                 <div class="col col-5">
                                                     <br><br><br><br><br>
@@ -240,7 +270,7 @@
                             <div class="col">
                                 <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
                                     <div style="border: 2px solid #bbb; border-radius: 8px; margin: 10px;">
-                                        <img src="./media/<%= gear.gearImage %>" class="img-fluid" style="width: 100%; height: auto; display: block; border-radius: 6px;" alt="">
+                                        <img src="./media/<%= gear.gearImage %>" class="img-fluid" style="width: 100%; height: auto; display: block; border-radius: 6px;" alt="Cup">
                                     </div>
                                     <div class="card-body">
                                         <h5 class="card-title" style="color: #f5f5dc;"><%= gear.gearName %></h5>
@@ -248,8 +278,15 @@
                                         <button class="btn btn-dark minus" style="background-color: #e8e8e1; color: #000000;">-</button>
                                         <input type="number" name="" id="" class="quantity" value="0" style="display: inline-block; width: 35.41px; height: 38px; background-color: #e8e8e1;">
                                         <button class="btn btn-dark plus" style="background-color: #e8e8e1; color: #000000;">+</button>
-                                        <button class="btn btn-dark atc" style="background-color: #ECDCAC; color: #000000;">ADD TO CART</button>
-                                        <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex5 %>">Quick View</button>
+                                        <button class="btn btn-dark atc desk-tab-btn" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
+                                        <br><br>
+                                        <button type="button" class="btn btn-md desk-tab-btn" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex5 %>">Quick View</button>
+                                        <!--<div class="mob-btn">
+                                            <br>
+                                            <button class="btn btn-dark atc" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
+                                            <br><br>
+                                            <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex5 %>">Quick View</button>
+                                        </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -263,7 +300,7 @@
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col col-7">
-                                                    <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="Coffee Drinks">
+                                                    <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="Cups">
                                                 </div>
                                                 <div class="col col-5">
                                                     <br><br><br><br><br>
@@ -294,8 +331,15 @@
                                     <button class="btn btn-dark minus" style="background-color: #e8e8e1; color: #000000;">-</button>
                                     <input type="number" name="" id="" class="quantity" value="0" style="display: inline-block; width: 35.41px; height: 38px; background-color: #e8e8e1;">
                                     <button class="btn btn-dark plus" style="background-color: #e8e8e1; color: #000000;">+</button>
-                                    <button class="btn btn-dark atc" style="background-color: #ECDCAC; color: #000000;">ADD TO CART</button>
-                                    <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle="modal" data-bs-target="#productView<%= i %>">Quick View</button>
+                                    <button class="btn btn-dark atc desk-tab-btn" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
+                                    <br><br>
+                                    <button type="button" class="btn btn-md desk-tab-btn" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= i %>">Quick View</button>
+                                    <!--<div class="mob-btn">
+                                        <br>
+                                        <button class="btn btn-dark atc" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
+                                        <br><br>
+                                        <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= i %>">Quick View</button>-->
+                                    </div>
                                 </div>
                             </div>
                         </div>

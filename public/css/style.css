@@ -37,13 +37,11 @@ button {
   object-fit: cover;
 }
 
-footer{
-    background-color: #e8e8e1;
+footer {
+    margin-top: 0;
 }
 
-#location{
-    background-color: #e8e8e1;
-}
+
 
 .coffeenbrewgear input[type=number]::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -57,16 +55,23 @@ button:focus {
   outline: revert;
 }
 
+
 #logo{
-    width: 200px;
-    height: 50px;
+  width: 200px;
+  height: 50px;
 }
+
 
 @media only screen and (min-width: 990px) {
 
     #navbarSupportedContent, #navbar3{
       display: none !important;
     }
+
+    /*.mob-btn{
+      display: none !important;
+    }*/
+
 
     #navbar1, #navbar2{
       display: flex !important;
@@ -84,6 +89,18 @@ button:focus {
 
     #threeIcons{
       display: none;
+    }
+
+    .tab-phone-logo{
+      display:none !important;
+    }
+
+    /*.mob-btn{
+      display: none !important;
+    }*/
+
+    .tab-btn{
+      display:none important;
     }
 
 }
@@ -105,6 +122,28 @@ button:focus {
       align-items: center;
       height: 124px;
     }
+
+    /*.desk-tab-btn{
+      display: none !important;
+    }*/
+
+    /*.desk-logo{
+      display:none !important;
+    }
+
+    .tab-phone-logo{
+      max-width: 100%;
+    }*/
+
+    .infographic{
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 60%; 
+      max-width: 750px;
+    }
+
+    
 }
 
 @media (max-width: 767px) {
@@ -112,4 +151,21 @@ button:focus {
       width: 50px !important;
       height: 50px !important;
     }
+
+    /*.desk-logo{
+      display:none !important;
+    }*/
+
+    /*.desk-tab-btn{
+      display: none !important;
+    }*/
+
+    .infographic{
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 65%; 
+      max-width: 750px;
+    }
+
 }
