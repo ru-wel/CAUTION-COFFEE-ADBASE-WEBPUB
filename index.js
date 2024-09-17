@@ -115,18 +115,6 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', async function (req, res) {
-    // signInWithEmailAndPassword(auth, req.body.email, req.body.password)
-    // .then((userCredential) => {
-    //     // Signed in
-    //     // const user = userCredential.user;
-    //     console.log("User logged in successfully!");
-    //     res.redirect("/");
-    // })
-    // .catch((error) => {
-    //     const errorCode = error.code;
-    //     const errorMessage = error.message;
-    //     console.log("An error has occured." `${errorCode} : ${errorMessage}`);
-    // });
 
     // BUG (NEED TO REFRESH TO LOAD ISLOGGEDIN)
     try {
@@ -141,17 +129,17 @@ app.post('/login', async function (req, res) {
 });
 
 app.post('/logout', async (req, res) => {
-    signOut(auth).then(() => {
-        // Sign-out successful.
+    try {
+        await signOut(auth);
         console.log("User signed out successfully!");
         res.redirect("/");
-    }).catch((error) => {
-        // An error happened.
+    } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log("An error has occured." `${errorCode} : ${errorMessage}`);
-    });
-})
+        console.error(`An error occurred during logout: ${errorCode} - ${errorMessage}`);
+        res.status(500).send("An error occurred while logging out.");
+    }
+});
 
 app.get('/profile', (req, res) => {
     onAuthStateChanged(auth, (user) => { // TO BE REFACTORED TO A FUNCTION ?
@@ -559,10 +547,9 @@ app.get('/cart', (req, res) => {
 
 app.post('/add-to-cart', async function (req, res) {
 
-    // TO DO : CONNECT TO DATABASE + ADD DATA VALIDATION + ADD VALIDATION WHEN ADDED TO CART
+    // ADD DATA VALIDATION + ADD VALIDATION WHEN ADDED TO CART
 
     onAuthStateChanged(auth, async function (user) { // TO BE REFACTORED TO A FUNCTION ?
-        var message // TO BE REMOVED
         if (user) {
             // User is signed in,
             const uid = user.uid;
@@ -639,7 +626,7 @@ app.post('/add-to-cart', async function (req, res) {
           // ... -------- TO BE CONTINUED
           // BAWAL MAG ADD TO CART KAPAG DI NAKASIGN IN
 
-          res.status(404).send("Please Log In to Access Your Cart")
+        //   res.status(404).send("Please Log In to Access Your Cart")
         }
     });
 })
@@ -705,7 +692,7 @@ app.patch('/cart', async function (req, res) {
           // User is signed out
           // ... -------- TO BE CONTINUED
           // BAWAL MAG ADD TO CART KAPAG DI NAKASIGN IN
-          res.status(404).send("Please Log In to Access Your Cart")
+        //   res.status(404).send("Please Log In to Access Your Cart")
         }
     });
 })
@@ -775,7 +762,7 @@ app.delete('/cart', async function (req, res) {
           // User is signed out
           // ... -------- TO BE CONTINUED
           // BAWAL MAG ADD TO CART KAPAG DI NAKASIGN IN
-          res.status(404).send("Please Log In to Access Your Cart")
+        //   res.status(404).send("Please Log In to Access Your Cart")
         }
     });
 })
