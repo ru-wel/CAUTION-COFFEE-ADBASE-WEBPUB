@@ -73,7 +73,7 @@
                     <img class="card-img-top" src="./media/CARD2.JPG" alt="Expert Baristas">
                     <div class="card-body">
                       <h4 class="card-title" style="padding: 10px;">Expert Baristas</h4>
-                      <p class="card-text"   style="font-family: 'Poppins', sans-serif; font-weight: 400; font-style: normal;">Our skilled baristas are trained to craft the perfect cup of coffee, providing personalized recommendations and expertly preparing a range of specialty brews.</p>
+                      <p class="card-text"   style="font-family: 'Poppins', sans-serif; font-weight: 400; font-style: normal;">Our skilled baristas are trained to craft the perfect cup of coffee, providing personalized recommendations and expertly preparing a range of specialty brews that would fit your preference.</p>
                     </div>
                   </div>
                 </div>
@@ -82,7 +82,7 @@
                     <img class="card-img-top" src="./media/CARD3.JPG" alt="Cozy Atmosphere with Restroom and Air Conditioning">
                     <div class="card-body">
                       <h4 class="card-title" style="padding: 10px;">Cozy Atmosphere with Restroom and Air Conditioning</h4>
-                      <p class="card-text"  style="font-family: 'Poppins', sans-serif; font-weight: 400; font-style: normal;">Relax in our cozy café with comfortable seating, air conditioning, and a clean, accessible restroom.</p>
+                      <p class="card-text"  style="font-family: 'Poppins', sans-serif; font-weight: 400; font-style: normal;">Relax in our cozy café with comfortable seating, air conditioning, and a clean, accessible restroom. It's a perfect place to study as well. we have everything for you!</p>
                     </div>
                   </div>
                 </div>
@@ -109,7 +109,7 @@
                     <img class="card-img-top" src="./media/CARD6.JPG" alt="Eco-Friendly Practices">
                     <div class="card-body">
                       <h4 class="card-title">Eco-Friendly Practices</h4>
-                      <p class="card-text"style="font-family: 'Poppins', sans-serif; font-weight: 400; font-style: normal;">We are committed to sustainability aiming to reduce our environmental footprint.</p>
+                      <p class="card-text"style="font-family: 'Poppins', sans-serif; font-weight: 400; font-style: normal;">We are committed to sustainability aiming to reduce our environmental footprint. Make the world a better place.</p>
                     </div>
                   </div>
                 </div>
@@ -126,16 +126,16 @@
           <h3 class="display-6" style="font-family: 'Playfair Display', serif; color:#752329; font-weight:900; text-align: center; padding: 10px; ">Snippets of how we make our drinks</h3>
           <div class="row">
             <div class="col col-6">
-              <div class="embed-responsive embed-responsive-16by9" style="padding-bottom:178%; position:relative; display:block; width:100%">
-                <video class="embed-responsive-item" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+              <div class="embed-responsive embed-responsive-9by16" >
+                <video class="embed-responsive-item" style="width: 100%; height: 500px;" 
                     src="./media/VIDEO-WEBPUB-2.mp4" preload="none" controls poster="./media/signin.png">
                     Your browser does not support the video tag.
                 </video>
               </div>
             </div>
             <div class="col col-6">
-              <div class="embed-responsive embed-responsive-16by9" style="padding-bottom:178%; position:relative; display:block; width:100%">
-                <video class="embed-responsive-item" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"  src="./media/VIDEO-WEBPUB-3.mp4" preload="none" controls poster="./media/signin.png">
+              <div class="embed-responsive embed-responsive-9by16" >
+                <video class="embed-responsive-item" style="width: 100%; height: 500px;" src="./media/VIDEO-WEBPUB-3.mp4" preload="none" controls poster="./media/signin.png">
                   Your browser does not support the video tag.
                 </video>
               </div>
@@ -146,18 +146,18 @@
     </div>
 
     <!-- Infographics Section -->
-    <section class="container-fluid my-5" style="background-color: #E8E8E1;  padding: 50px 20px;">
-      <div class="container">
-        
+    <section style="background-color: #E8E8E1;">
+      <div class="container-fluid my-5">
+      <br>
       <h3 class="display-6" style="font-family: 'Playfair Display', serif; font-weight: 700; text-align: center; font-weight: 900; color:#752329; padding-bottom: 20px; ">How We Started</h3>
       <div class="infographic d-flex justify-content-center">
-          <img style="display: block; width: 150%; max-width: 1050px;" src="./media/CAUTION-INFOG.png" alt="Caution Infographic">
+          <img style="display: block; width: 150%; max-width: 1050px;" src="./media/CAUTION-INFOG.png" class="img-fluid infographic" alt="Caution Infographic">
       </div>
       </div>
     </section>
 
     <!-- LOCATION START -->
-    <section id="location" style="background-color: #752329; padding:20px; color: #F5F5DC;">
+    <div id="location" style="background-color: #752329; padding:20px; color: #F5F5DC;">
         <br>
         <div class="container">
         <div class="row featurette">
@@ -181,12 +181,13 @@
             <a class="btn btn-dark" href="https://maps.app.goo.gl/6ZX9fPgftfGR6XVG6" target="_blank" role="button">Get Directions</a>
             </div>
             <div class="col-md-6" style="text-align: center;">
-            <img src="./media/location.JPG" alt="Location Image" class="img-fluid" style="max-width: 100%; height: auto;">
+              <br>
+              <img src="./media/location.JPG" alt="Location Image" class="img-fluid" style="max-width: 100%; height: auto;">
             </div>
         </div>
         </div>
         <br>
-    </section>
+    </div>
     <!-- LOCATION END -->
 
     <%- include('footer.ejs') %>
