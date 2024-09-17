@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,249 +20,288 @@
 
     <%- include('header.ejs') %>
 
-    <section class="menu">
+        <section class="menu">
 
-        <div style="display: inline-block; padding: 0 0 0 40px;" >
-            <form action="/menu" method="get" id="formsort">
-                <br>
-                <label for="filter">Sort By:</label>
-                <select id="filter" name="filter">
+            <div style="display: inline-block; padding: 0 0 0 40px;">
+                <form action="/menu" method="get" id="formsort">
+                    <br>
+                    <label for="filter">Sort By:</label>
+                    <select id="filter" name="filter">
                     <option value="">Default</option>
                     <option value="atoz">A to Z</option>
                     <option value="pricelth">Price: Low to High</option>
                     <option value="pricehtl">Price: High to Low</option>
                 </select>
-                <button class="btn btn-dark" style ="background-color: #752329;">SORT</button>
-            </form>
-        </div>     
-
-        <% if (!isFiltered) { %>
-            <!-- DEFAULT DISPLAY -->
-            <div class="container">
-                <h2 style="text-align: center; font-weight:900; color:#752329">DRINKS</h2><br>
-                <hr>
-                <h3 style="text-align: center; font-weight: 900; color:#82383e">SIGNATURE COFFEE</h3>
-                <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">            
-                <% menu.forEach(menuDocument => { %>
-                    <% if (menuDocument.Signature) { %>
-                        <% for( let i = 0; i < menuDocument.Signature.length; i++ ) { %>
-                            <div class="col">
-                                <div class="card h-100">
-                                    <img src="./media/<%= menuDocument.Signature[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
-                                    <div class="card-body">
-                                        <h5 class="card-title"><%= menuDocument.Signature[i].menuName %></h5>
-                                        <p class="card-text">PHP <%= menuDocument.Signature[i].price %></p>
-                                        <button type = "button" class = "btn btn-md" style = " margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle ="modal" data-bs-target = "#productView<%= i %>">Quick View</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal fade" id = "productView<%= i %>" tabindex = "-1" aria-labelledby = "exampleModalLabel<%= i %>" aria-hidden = "true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class = "modal-title" id = "exampleModalLabel<%= i %>" style = "font-weight:900; color:#752329 ">COFFEE DRINKS</h5>
-                                            <button type = "button" class = "btn-close" data-bs-dismiss="modal" aria-label = "Close"></button>
-                                        </div>
-                                        <div class = "modal-body">
-                                            <div class="row">
-                                                <div class="col col-7">
-                                                    <img src="./media/<%= menuDocument.Signature[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
-                                                </div>
-                                                <div class="col col-5">
-                                                    <br><br><br><br><br>
-                                                    <h5 class="card-title"><%= menuDocument.Signature[i].menuName %></h5>
-                                                    <p class="card-text">PHP <%= menuDocument.Signature[i].price %></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        <% } %>
-                    <% } %>
-                <% }) %>
-                </div>
-
-                <br><hr>
-                <h3 style="text-align: center; font-weight: 900; color:#82383e">SANDWICHES</h3>
-                <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">            
-                    <% menu.forEach(menuDocument => { %>
-                        <% if (menuDocument.Non_Coffee) { %>
-                            <% for( let i = 0; i < menuDocument.Non_Coffee.length; i++ ) { %>
-                                <div class="col">
-                                    <div class="card h-100">
-                                        <img src="./media/<%= menuDocument.Non_Coffee[i].menuImage %>" class="img-fluid" alt="Non-Coffee Drinks">
-                                        <div class="card-body">
-                                            <h5 class="card-title"><%= menuDocument.Non_Coffee[i].menuName %></h5>
-                                            <p class="card-text">PHP <%= menuDocument.Non_Coffee[i].price %></p>
-                                            <button type = "button" class = "btn btn-md" style = " margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle ="modal" data-bs-target = "#productView<%= i+3 %>">Quick View</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal fade" id = "productView<%= i+3 %>" tabindex = "-1" aria-labelledby = "exampleModalLabel<%= i+3 %>" aria-hidden = "true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class = "modal-title" id = "exampleModalLabel<%= i+3 %>" style = "font-weight:900; color:#752329">NON-COFFEE DRINKS</h5>
-                                                <button type = "button" class = "btn-close" data-bs-dismiss="modal" aria-label = "Close"></button>
-                                            </div>
-                                            <div class = "modal-body">
-                                                <div class="row">
-                                                    <div class="col col-7">
-                                                        <img src="./media/<%= menuDocument.Non_Coffee[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
-                                                    </div>
-                                                    <div class="col col-5">
-                                                        <br><br><br><br><br>
-                                                        <h5 class="card-title"><%= menuDocument.Non_Coffee[i].menuName %></h5>
-                                                        <p class="card-text">PHP <%= menuDocument.Non_Coffee[i].price %></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            <% } %>
-                        <% } %>
-                    <% }) %>
-                </div>
-
-                <br><br><br>
-                <h2 style="text-align: center; font-weight:900; color:#752329">FOODS</h2>
-                <br><hr>
-                <h3 style="text-align: center; font-weight: 900; color:#82383e">BEST SELLERS</h3>
-                <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">            
-                    <% menu.forEach(menuDocument => { %>
-                        <% if (menuDocument.Best_Sellers) { %>
-                            <% for( let i = 0; i < menuDocument.Best_Sellers.length; i++ ) { %>
-                                <div class="col">
-                                    <div class="card h-100">
-                                        <img src="./media/<%= menuDocument.Best_Sellers[i].menuImage %>" class="img-fluid" alt="Food Best Sellers">
-                                        <div class="card-body">
-                                            <h5 class="card-title"><%= menuDocument.Best_Sellers[i].menuName %></h5>
-                                            <p class="card-text">PHP <%= menuDocument.Best_Sellers[i].price %></p>
-                                            <button type = "button" class = "btn btn-md" style = " margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle ="modal" data-bs-target = "#productView<%= i+6 %>">Quick View</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal fade" id = "productView<%= i+6 %>" tabindex = "-1" aria-labelledby = "exampleModalLabel<%= i+6 %>" aria-hidden = "true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class = "modal-title" id = "exampleModalLabel<%= i+6 %>" style = "font-weight:900; color:#752329">FOOD - BEST SELLERS</h5>
-                                                <button type = "button" class = "btn-close" data-bs-dismiss="modal" aria-label = "Close"></button>
-                                            </div>
-                                            <div class = "modal-body">
-                                                <div class="row">
-                                                    <div class="col col-7">
-                                                        <img src="./media/<%= menuDocument.Best_Sellers[i].menuImage %>" class="img-fluid" alt="Food Best Sellers">
-                                                    </div>
-                                                    <div class="col col-5">
-                                                        <br><br><br><br><br>
-                                                        <h5 class="card-title"><%= menuDocument.Best_Sellers[i].menuName %></h5>
-                                                        <p class="card-text">PHP <%= menuDocument.Best_Sellers[i].price %></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            <% } %>
-                        <% } %>
-                    <% }) %>
-                </div>
-                
-                <br>
-                <hr>
-                <h3 style="text-align: center; font-weight: 900; color:#82383e">SANDWICHES</h3>
-                <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">            
-                    <% menu.forEach(menuDocument => { %>
-                        <% if (menuDocument.Sandwiches) { %>
-                            <% for( let i = 0; i < menuDocument.Sandwiches.length; i++ ) { %>
-                                <div class="col">
-                                    <div class="card h-100">
-                                        <img src="./media/<%= menuDocument.Sandwiches[i].menuImage %>" class="img-fluid" alt="Food Sandwiches">
-                                        <div class="card-body">
-                                            <h5 class="card-title"><%= menuDocument.Sandwiches[i].menuName %></h5>
-                                            <p class="card-text">PHP <%= menuDocument.Sandwiches[i].price %></p>
-                                            <button type = "button" class = "btn btn-md" style = " margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle ="modal" data-bs-target = "#productView<%= i+9 %>">Quick View</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal fade" id = "productView<%= i+9 %>" tabindex = "-1" aria-labelledby = "exampleModalLabel<%= i+9 %>" aria-hidden = "true">
-                                    <div class="modal-dialog modal-lg modal-dark">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class = "modal-title" id = "exampleModalLabel<%= i+9 %>" style = "font-weight:900; color:#752329">MERCHANDISE</h5>
-                                                <button type = "button" class = "btn-close" data-bs-dismiss="modal" aria-label = "Close"></button>
-                                            </div>
-                                            <div class = "modal-body">
-                                                <div class="row">
-                                                    <div class="col col-7">
-                                                        <img src="./media/<%= menuDocument.Sandwiches[i].menuImage %>" class="img-fluid" alt="Food Sandwiches">
-                                                    </div>
-                                                    <div class="col col-5">
-                                                        <br><br><br><br><br>
-                                                        <h5 class="card-title"><%= menuDocument.Sandwiches[i].menuName %></h5>
-                                                        <p class="card-text">PHP <%= menuDocument.Sandwiches[i].price %></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            <% } %>
-                        <% } %>
-                    <% }) %>
-                </div>
+                    <button class="btn btn-dark" style="background-color: #752329;">SORT</button>
+                </form>
             </div>
-        <% } else { %>
-            <!-- FILTERED DISPLAY -->
-            <div class="container"><br>
-                <hr>
-                <!-- <h2 style="text-align: center;" id="sort">SORT BY : </h2> -->
-                <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">            
-                    <% for( let i = 0; i < menu.length; i++ ) { %>
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="./media/<%= menu[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
-                                <div class="card-body">
-                                    <h5 class="card-title"><%= menu[i].menuName %></h5>
-                                    <p class="card-text">PHP <%= menu[i].price %></p>
-                                    <button type = "button" class = "btn btn-md" style = " margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle ="modal" data-bs-target = "#productView<%= i %>">Quick View</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal fade" id = "productView<%= i %>" tabindex = "-1" aria-labelledby = "exampleModalLabel<%= i %>" aria-hidden = "true">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class = "modal-title" id = "exampleModalLabel<%= i %>" style = "font-weight:900">MERCHANDISE</h5>
-                                        <button type = "button" class = "btn-close" data-bs-dismiss="modal" aria-label = "Close"></button>
+
+            <% if (!isFiltered) { %>
+                <!-- DEFAULT DISPLAY -->
+                <div class="container">
+                    <h2 style="text-align: center; font-weight:900; color:#752329">DRINKS</h2><br>
+                    <hr>
+                    <h3 style="text-align: center; font-weight: 900; color:#82383e">SIGNATURE COFFEE</h3>
+                    <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                        <% menu.forEach(menuDocument => { %>
+                            <% if (menuDocument.Signature) { %>
+                                <% for( let i = 0; i < menuDocument.Signature.length; i++ ) { %>
+                                    <div class="col">
+                                        <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
+                                            <img src="./media/<%= menuDocument.Signature[i].menuImage %>" class="img-fluid" alt="Coffee Drinks" style="width: 100%; height: auto; display: block; border-radius: 6px; border: 2px solid #bbb;">
+                                            <div class="card-body">
+                                                <h5 class="card-title" style="color: #E8E8E1">
+                                                    <%= menuDocument.Signature[i].menuName %>
+                                                </h5>
+                                                <p class="card-text" style="color: #E8E8E1">PHP
+                                                    <%= menuDocument.Signature[i].price %>
+                                                </p>
+                                                <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle="modal" data-bs-target="#productView<%= i %>">Quick View</button>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class = "modal-body">
-                                        <div class="row">
-                                            <img src="./media/<%= menu[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
+                                    <div class="modal fade" id="productView<%= i %>" tabindex="-1" aria-labelledby="exampleModalLabel<%= i %>" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel<%= i %>" style="font-weight:900; color:#752329 ">COFFEE DRINKS</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col col-7">
+                                                            <img src="./media/<%= menuDocument.Signature[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
+                                                        </div>
+                                                        <div class="col col-5">
+                                                            <br><br><br><br><br>
+                                                            <h5 class="card-title">
+                                                                <%= menuDocument.Signature[i].menuName %>
+                                                            </h5>
+                                                            <p class="card-text">PHP
+                                                                <%= menuDocument.Signature[i].price %>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                        <% } %>
+                                            <% }) %>
+                    </div>
+
+                    <br>
+                    <hr>
+                    <h3 style="text-align: center; font-weight: 900; color:#82383e">NON COFFEE</h3>
+                    <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                        <% menu.forEach(menuDocument => { %>
+                            <% if (menuDocument.Non_Coffee) { %>
+                                <% for( let i = 0; i < menuDocument.Non_Coffee.length; i++ ) { %>
+                                    <div class="col">
+                                        <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
+                                            <img src="./media/<%= menuDocument.Non_Coffee[i].menuImage %>" class="img-fluid" alt="Non-Coffee Drinks" style="width: 100%; height: auto; display: block; border-radius: 6px; border: 2px solid #bbb;">
+                                            <div class="card-body">
+                                                <h5 class="card-title" style="color: #E8E8E1">
+                                                    <%= menuDocument.Non_Coffee[i].menuName %>
+                                                </h5>
+                                                <p class="card-text" style="color: #E8E8E1">PHP
+                                                    <%= menuDocument.Non_Coffee[i].price %>
+                                                </p>
+                                                <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle="modal" data-bs-target="#productView<%= i+3 %>">Quick View</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" id="productView<%= i+3 %>" tabindex="-1" aria-labelledby="exampleModalLabel<%= i+3 %>" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel<%= i+3 %>" style="font-weight:900; color:#752329">NON-COFFEE DRINKS</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col col-7">
+                                                            <img src="./media/<%= menuDocument.Non_Coffee[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
+                                                        </div>
+                                                        <div class="col col-5">
+                                                            <br><br><br><br><br>
+                                                            <h5 class="card-title">
+                                                                <%= menuDocument.Non_Coffee[i].menuName %>
+                                                            </h5>
+                                                            <p class="card-text">PHP
+                                                                <%= menuDocument.Non_Coffee[i].price %>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                        <% } %>
+                                            <% }) %>
+                    </div>
+
+                    <br><br><br>
+                    <h2 style="text-align: center; font-weight:900; color:#752329">FOODS</h2>
+                    <br>
+                    <hr>
+                    <h3 style="text-align: center; font-weight: 900; color:#82383e">BEST SELLERS</h3>
+                    <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                        <% menu.forEach(menuDocument => { %>
+                            <% if (menuDocument.Best_Sellers) { %>
+                                <% for( let i = 0; i < menuDocument.Best_Sellers.length; i++ ) { %>
+                                    <div class="col">
+                                        <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
+                                            <img src="./media/<%= menuDocument.Best_Sellers[i].menuImage %>" class="img-fluid" alt="Food Best Sellers" style="width: 100%; height: auto; display: block; border-radius: 6px; border: 2px solid #bbb;">
+                                            <div class="card-body">
+                                                <h5 class="card-title" style="color: #E8E8E1">
+                                                    <%= menuDocument.Best_Sellers[i].menuName %>
+                                                </h5>
+                                                <p class="card-text" style="color: #E8E8E1">PHP
+                                                    <%= menuDocument.Best_Sellers[i].price %>
+                                                </p>
+                                                <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle="modal" data-bs-target="#productView<%= i+6 %>">Quick View</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" id="productView<%= i+6 %>" tabindex="-1" aria-labelledby="exampleModalLabel<%= i+6 %>" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel<%= i+6 %>" style="font-weight:900; color:#752329">FOOD - BEST SELLERS</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col col-7">
+                                                            <img src="./media/<%= menuDocument.Best_Sellers[i].menuImage %>" class="img-fluid" alt="Food Best Sellers">
+                                                        </div>
+                                                        <div class="col col-5">
+                                                            <br><br><br><br><br>
+                                                            <h5 class="card-title">
+                                                                <%= menuDocument.Best_Sellers[i].menuName %>
+                                                            </h5>
+                                                            <p class="card-text">PHP
+                                                                <%= menuDocument.Best_Sellers[i].price %>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                        <% } %>
+                                            <% }) %>
+                    </div>
+
+                    <br>
+                    <hr>
+                    <h3 style="text-align: center; font-weight: 900; color:#82383e">SANDWICHES</h3>
+                    <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                        <% menu.forEach(menuDocument => { %>
+                            <% if (menuDocument.Sandwiches) { %>
+                                <% for( let i = 0; i < menuDocument.Sandwiches.length; i++ ) { %>
+                                    <div class="col">
+                                        <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
+                                            <img src="./media/<%= menuDocument.Sandwiches[i].menuImage %>" class="img-fluid" alt="Food Sandwiches" style="width: 100%; height: auto; display: block; border-radius: 6px; border: 2px solid #bbb;">
+                                            <div class="card-body">
+                                                <h5 class="card-title" style=" color: #E8E8E1 ">
+                                                    <%= menuDocument.Sandwiches[i].menuName %>
+                                                </h5>
+                                                <p class="card-text " style="color: #E8E8E1 ">PHP
+                                                    <%= menuDocument.Sandwiches[i].price %>
+                                                </p>
+                                                <button type="button " class="btn btn-md " style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; " data-bs-toggle="modal " data-bs-target="#productView<%=i +9 %>">Quick View</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" id="productView<%= i+9 %>" tabindex="-1" aria-labelledby="exampleModalLabel<%= i+9 %>" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg modal-dark">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel<%= i+9 %>" style="font-weight:900; color:#752329">FOOD - SANDWICHES</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col col-7">
+                                                            <img src="./media/<%= menuDocument.Sandwiches[i].menuImage %>" class="img-fluid" alt="Food Sandwiches">
+                                                        </div>
+                                                        <div class="col col-5">
+                                                            <br><br><br><br><br>
+                                                            <h5 class="card-title">
+                                                                <%= menuDocument.Sandwiches[i].menuName %>
+                                                            </h5>
+                                                            <p class="card-text">PHP
+                                                                <%= menuDocument.Sandwiches[i].price %>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                        <% } %>
+                                            <% }) %>
+                    </div>
+                </div>
+                <% } else { %>
+                    <!-- FILTERED DISPLAY -->
+                    <div class="container"><br>
+                        <hr>
+                        <!-- <h2 style="text-align: center;" id="sort">SORT BY : </h2> -->
+                        <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                            <% for( let i = 0; i < menu.length; i++ ) { %>
+                                <div class="col">
+                                    <div class="card h-100">
+                                        <img src="./media/<%= menu[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
+                                        <div class="card-body">
+                                            <h5 class="card-title" style="color: #E8E8E1">
+                                                <%= menu[i].menuName %>
+                                            </h5>
+                                            <p class="card-text" style="color: #E8E8E1">PHP
+                                                <%= menu[i].price %>
+                                            </p>
+                                            <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle="modal" data-bs-target="#productView<%= i %>">Quick View</button>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                                <div class="modal fade" id="productView<%= i %>" tabindex="-1" aria-labelledby="exampleModalLabel<%= i %>" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel<%= i %>" style="font-weight:900">MERCHANDISE</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <img src="./media/<%= menu[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } %>
                         </div>
+                    </div>
                     <% } %>
-                </div>
-            </div>      
-        <% } %>      
 
-    </section>
+        </section>
 
-    <%- include('footer.ejs') %>
+        <%- include('footer.ejs') %>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-    <script>
-        document.getElementById('home').removeAttribute("class", 'active');
-        document.getElementById('home').setAttribute("class", "nav-link")
-        document.getElementById('products').setAttribute("class", 'nav-link dropdown-toggle active');
-    </script>
+            <script>
+                document.getElementById('home').removeAttribute("class", 'active');
+                document.getElementById('home').setAttribute("class", "nav-link")
+                document.getElementById('products').setAttribute("class", 'nav-link dropdown-toggle active');
+            </script>
 </body>
+
 </html>
