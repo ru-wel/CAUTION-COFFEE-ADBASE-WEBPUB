@@ -21,8 +21,9 @@
 
     <section class="coffeenbrewgear">
 
-        <div style="display: inline-block;">
+        <div style="display: inline-block; padding: 0 0 0 40px;">
             <form action="/gear" method="get" id="formsort">
+                <br>
                 <label for="filter">Sort By:</label>
                 <select id="filter" name="filter">
                     <option value="">Default</option>
@@ -30,7 +31,7 @@
                     <option value="pricelth">Price: Low to High</option>
                     <option value="pricehtl">Price: High to Low</option>
                 </select>
-                <button class="btn btn-dark">SORT</button>
+                <button class="btn btn-dark" style ="background-color: #752329;">SORT</button>
             </form>
         </div>     
 
@@ -58,6 +59,7 @@
                                     </div>
                                 </div>
                             </div>
+                            
                         <% } %>
                     <% }) %>
                 </div>
