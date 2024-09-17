@@ -33,17 +33,47 @@
             <% if (product && product.length >= 1) { %> <!-- CHECK IF MAY LAMAN BA YUNG REVIEWS DATABASE -->
                 <h2 style="text-align: center;">Search Results For: "<%= query %>"</h2>
                 <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
-                    <% product.forEach(product => { %>
+                    <% for( let i = 0; i < product.length; i++ ) { %>
                         <div class="col">
-                            <div class="card h-100">
-                                <img src="./media/<%= product.image %>" class="img-fluid" alt="Caution T-Shirt (Black)">
+                            <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
+                                <img src="./media/<%= product[i].image %>" class="img-fluid" alt="Coffee Drinks" style="width: 100%; height: auto; display: block; border-radius: 6px; border: 2px solid #bbb;">
                                 <div class="card-body">
-                                    <h5 class="card-title"><%= product.name %></h5>
-                                    <p class="card-text">PHP <%= product.price %></p>
+                                    <h5 class="card-title" style="color: #E8E8E1">
+                                        <%= product[i].name %>
+                                    </h5>
+                                    <p class="card-text" style="color: #E8E8E1">PHP
+                                        <%= product[i].price %>
+                                    </p>
+                                    <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle="modal" data-bs-target="#productView<%= i %>">Quick View</button>
                                 </div>
                             </div>
                         </div>
-                    <% }) %>
+                        <div class="modal fade" id="productView<%= i %>" tabindex="-1" aria-labelledby="exampleModalLabel<%= i %>" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col col-7">
+                                                <img src="./media/<%= product[i].image %>" class="img-fluid" alt="Coffee Drinks">
+                                            </div>
+                                            <div class="col col-5">
+                                                <br><br><br><br><br>
+                                                <h5 class="card-title">
+                                                    <%= product[i].name %>
+                                                </h5>
+                                                <p class="card-text">PHP
+                                                    <%= product[i].price %>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% } %>
                 </div>
             <% } else { %>
                 <h2 style="text-transform: capitalize; text-align: center;">sorry we can't find what you're looking for.</h2>
