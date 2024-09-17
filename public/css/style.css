@@ -143,23 +143,18 @@ button:focus {
       max-width: 750px;
     }
 
-    
 }
 
 @media (max-width: 767px) {
 
-    #logo {
+    #logo-sm{
       width: 50px !important;
       height: 50px !important;
+      display: block;
     }
-
-    /*.desk-logo{
-      display:none !important;
-    }*/
-
-    /*.desk-tab-btn{
-      display: none !important;
-    }*/
+    #logo {
+      display: none;
+    }
 
     .infographic{
       display: block;
@@ -168,4 +163,13 @@ button:focus {
       width: 65%; 
       max-width: 750px;
     }
+}
+
+@media (min-width: 768px) {
+  #logo {
+    display: block;
+  }
+  #logo-sm{
+    display: none;
+  }
 }

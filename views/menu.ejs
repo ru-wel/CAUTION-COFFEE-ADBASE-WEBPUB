@@ -43,7 +43,7 @@
                     <h2 style="text-align: center; font-weight:900; color:#752329">DRINKS</h2><br>
                     <hr>
                     <h3 style="text-align: center; font-weight: 900; color:#82383e">SIGNATURE COFFEE</h3>
-                    <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 p-4 justify-content-center">
                         <% menu.forEach(menuDocument => { %>
                             <% if (menuDocument.Signature) { %>
                                 <% for( let i = 0; i < menuDocument.Signature.length; i++ ) { %>
@@ -81,6 +81,9 @@
                                                             <p class="card-text">PHP
                                                                 <%= menuDocument.Signature[i].price %>
                                                             </p>
+                                                            <p class="card-text">Description: 
+                                                                <%= menuDocument.Signature[i].description %>
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -95,7 +98,7 @@
                     <br>
                     <hr>
                     <h3 style="text-align: center; font-weight: 900; color:#82383e">NON COFFEE</h3>
-                    <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 p-4 justify-content-center">
                         <% menu.forEach(menuDocument => { %>
                             <% if (menuDocument.Non_Coffee) { %>
                                 <% for( let i = 0; i < menuDocument.Non_Coffee.length; i++ ) { %>
@@ -133,6 +136,9 @@
                                                             <p class="card-text">PHP
                                                                 <%= menuDocument.Non_Coffee[i].price %>
                                                             </p>
+                                                            <p class="card-text">Description: 
+                                                                <%= menuDocument.Non_Coffee[i].description %>
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -149,7 +155,7 @@
                     <br>
                     <hr>
                     <h3 style="text-align: center; font-weight: 900; color:#82383e">BEST SELLERS</h3>
-                    <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 p-4 justify-content-center">
                         <% menu.forEach(menuDocument => { %>
                             <% if (menuDocument.Best_Sellers) { %>
                                 <% for( let i = 0; i < menuDocument.Best_Sellers.length; i++ ) { %>
@@ -187,6 +193,9 @@
                                                             <p class="card-text">PHP
                                                                 <%= menuDocument.Best_Sellers[i].price %>
                                                             </p>
+                                                            <p class="card-text">Description: 
+                                                                <%= menuDocument.Best_Sellers[i].description %>
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -201,7 +210,7 @@
                     <br>
                     <hr>
                     <h3 style="text-align: center; font-weight: 900; color:#82383e">SANDWICHES</h3>
-                    <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 p-4 justify-content-center">
                         <% menu.forEach(menuDocument => { %>
                             <% if (menuDocument.Sandwiches) { %>
                                 <% for( let i = 0; i < menuDocument.Sandwiches.length; i++ ) { %>
@@ -239,6 +248,9 @@
                                                             <p class="card-text">PHP
                                                                 <%= menuDocument.Sandwiches[i].price %>
                                                             </p>
+                                                            <p class="card-text">Description: 
+                                                                <%= menuDocument.Sandwiches[i].description %>
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -255,7 +267,7 @@
                     <!-- FILTERED DISPLAY -->
                     <div class="container"><br>
                     <hr>
-                        <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 p-4 justify-content-center">
                             <% for( let i = 0; i < menu.length; i++ ) { %>
                                 <div class="col">
                                     <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
@@ -286,6 +298,9 @@
                                                         </h5>
                                                         <p>PHP
                                                             <%= menu[i].price %>
+                                                        </p>
+                                                        <p class="card-text">Description: 
+                                                            <%= menu[i].description %>
                                                         </p>
                                                     </div>
                                                 </div>

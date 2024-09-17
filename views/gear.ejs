@@ -42,7 +42,7 @@
                 <h1 style = "font-weight: 900; text-align:center; color:#752329">BREW & COFFEE</h1>
                 <hr>
                 <br><h2 style="text-align: center; font-weight:900; color:#82383e">BREW GEAR</h2>
-                <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 p-4 justify-content-center">
                     <% let modalIndex = 0; %>
                     <% gear.reverse().forEach(gear => { %>
                         <% if (gear.category === "brew_gear") { %>
@@ -61,12 +61,6 @@
                                         <button class="btn btn-dark atc desk-tab-btn" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
                                         <br><br>
                                         <button type="button" class="btn btn-md desk-tab-btn" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex %>">Quick View</button>
-                                        <!--<div class="mob-btn">
-                                            <br>
-                                            <button class="btn btn-dark atc" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
-                                            <br><br>
-                                            <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex %>">Quick View</button>
-                                        </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -98,7 +92,7 @@
                 </div>
 
                 <br><hr><br><h2 style="text-align: center; font-weight: 900; color:#82383e">COFFEE BEANS</h2>
-                <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 p-4 justify-content-center">
                     <% let modalIndex2 = 5; %>
                     <% gear.reverse().forEach(gear => { %>
                         <% if (gear.category === "beans") { %>
@@ -116,12 +110,6 @@
                                         <button class="btn btn-dark atc desk-tab-btn" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
                                         <br><br>
                                         <button type="button" class="btn btn-md desk-tab-btn" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex2 %>">Quick View</button>
-                                        <!--<div class="mob-btn">
-                                            <br>
-                                            <button class="btn btn-dark atc" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
-                                            <br><br>
-                                            <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex2 %>">Quick View</button>
-                                        </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -153,7 +141,7 @@
                 </div>
 
                 <br><hr><br><h2 style="text-align: center; font-weight: 900; color:#82383e">TORANI SYRUPS</h2>
-                <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 p-4 justify-content-center">
                     <% let modalIndex3 = 8; %>
                     <% gear.reverse().forEach(gear => { %>
                         <% if (gear.category === "syrups") { %>
@@ -171,12 +159,6 @@
                                         <button class="btn btn-dark atc desk-tab-btn" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
                                         <br><br>
                                         <button type="button" class="btn btn-md desk-tab-btn" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex3 %>">Quick View</button>
-                                        <!--<div class="mob-btn">
-                                            <br>
-                                            <button class="btn btn-dark atc" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
-                                            <br><br>
-                                            <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex3 %>">Quick View</button>
-                                        </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -208,7 +190,7 @@
                 </div>
 
                 <br><hr><br><h2 style="text-align: center; font-weight: 900; color:#82383e">MILKS</h2>
-                <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 p-4 justify-content-center">
                     <% let modalIndex4 = 11; %>
                     <% gear.reverse().forEach(gear => { %>
                         <% if (gear.category === "milk") { %>
@@ -226,12 +208,6 @@
                                         <button class="btn btn-dark atc desk-tab-btn" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
                                         <br><br>
                                         <button type="button" class="btn btn-md desk-tab-btn" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex4 %>">Quick View</button>
-                                        <!--<div class="mob-btn">
-                                            <br>
-                                            <button class="btn btn-dark atc" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
-                                            <br><br>
-                                            <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex4 %>">Quick View</button>
-                                        </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -263,7 +239,7 @@
                 </div>
 
                 <br><hr><br><h2 style="text-align: center; font-weight: 900; color:#82383e">CUPS</h2>
-                <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 p-4 justify-content-center">
                     <% let modalIndex5 = 17; %>
                     <% gear.reverse().forEach(gear => { %>
                         <% if (gear.category === "cups") { %>
@@ -281,12 +257,6 @@
                                         <button class="btn btn-dark atc desk-tab-btn" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
                                         <br><br>
                                         <button type="button" class="btn btn-md desk-tab-btn" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex5 %>">Quick View</button>
-                                        <!--<div class="mob-btn">
-                                            <br>
-                                            <button class="btn btn-dark atc" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
-                                            <br><br>
-                                            <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex5 %>">Quick View</button>
-                                        </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -320,7 +290,7 @@
         <% } else { %>
             <div class="container"><br>
                 <hr>
-                <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 p-4 justify-content-center">
                     <% for( let i = 0; i < gear.length; i++ ) { %>
                         <div class="col">
                             <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
@@ -334,12 +304,6 @@
                                     <button class="btn btn-dark atc desk-tab-btn" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
                                     <br><br>
                                     <button type="button" class="btn btn-md desk-tab-btn" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= i %>">Quick View</button>
-                                    <!--<div class="mob-btn">
-                                        <br>
-                                        <button class="btn btn-dark atc" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
-                                        <br><br>
-                                        <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= i %>">Quick View</button>-->
-                                    </div>
                                 </div>
                             </div>
                         </div>
