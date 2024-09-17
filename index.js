@@ -284,8 +284,8 @@ app.post('/review_process', async function (req, res) {
           // User is signed out
           // ... -------- TO BE CONTINUED
           // BAWAL MAGREVIEW KAPAG DI NAKASIGN IN
-          message = "Please sign in to write a review"
-          res.redirect(`/review?message=${encodeURIComponent(message)}`);
+        //   message = "Please sign in to write a review"
+        //   res.redirect(`/review?message=${encodeURIComponent(message)}`);
         }
     });
 });

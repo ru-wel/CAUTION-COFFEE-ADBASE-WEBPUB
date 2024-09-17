@@ -37,89 +37,153 @@
         <% if (!isFiltered) { %>
             <!-- DEFAULT DISPLAY -->
             <div class="container"><br>
-                <h2 style="text-align: center;">DRINKS</h2><br>
+                <h2 style="text-align: center; font-weight:900; color:#752329">DRINKS</h2><br>
                 <hr>
-                <h2 style="text-align: center;">SIGNATURE COFFEE</h2>
+                <h3 style="text-align: center; font-weight: 900; color:#82383e">SIGNATURE COFFEE</h3>
                 <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">            
                 <% menu.forEach(menuDocument => { %>
                     <% if (menuDocument.Signature) { %>
-                        <% menuDocument.Signature.forEach(item => { %>
+                        <% for( let i = 0; i < menuDocument.Signature.length; i++ ) { %>
                             <div class="col">
                                 <div class="card h-100">
-                                    <img src="./media/<%= item.menuImage %>" class="img-fluid" alt="Caution T-Shirt (Black)">
+                                    <img src="./media/<%= menuDocument.Signature[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
                                     <div class="card-body">
-                                        <h5 class="card-title"><%= item.menuName %></h5>
-                                        <p class="card-text">PHP <%= item.price %></p>
+                                        <h5 class="card-title"><%= menuDocument.Signature[i].menuName %></h5>
+                                        <p class="card-text">PHP <%= menuDocument.Signature[i].price %></p>
+                                        <button type = "button" class = "btn btn-md" style = " margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle ="modal" data-bs-target = "#productView<%= i %>">Quick View</button>
                                     </div>
                                 </div>
                             </div>
-                        <% }) %>
+                            <div class="modal fade" id = "productView<%= i %>" tabindex = "-1" aria-labelledby = "exampleModalLabel<%= i %>" aria-hidden = "true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class = "modal-title" id = "exampleModalLabel<%= i %>" style = "font-weight:900">MERCHANDISE</h5>
+                                            <button type = "button" class = "btn-close" data-bs-dismiss="modal" aria-label = "Close"></button>
+                                        </div>
+                                        <div class = "modal-body">
+                                            <div class="row">
+                                                <img src="./media/<%= menuDocument.Signature[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% } %>
                     <% } %>
                 <% }) %>
                 </div>
 
                 <br><hr>
-                <h2 style="text-align: center;">NON-COFFEE</h2>
+                <h3 style="text-align: center; font-weight: 900; color:#82383e">SANDWICHES</h3>
                 <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">            
                     <% menu.forEach(menuDocument => { %>
                         <% if (menuDocument.Non_Coffee) { %>
-                            <% menuDocument.Non_Coffee.forEach(item => { %>
+                            <% for( let i = 0; i < menuDocument.Non_Coffee.length; i++ ) { %>
                                 <div class="col">
                                     <div class="card h-100">
-                                        <img src="./media/<%= item.menuImage %>" class="img-fluid" alt="Caution T-Shirt (Black)">
+                                        <img src="./media/<%= menuDocument.Non_Coffee[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
                                         <div class="card-body">
-                                            <h5 class="card-title"><%= item.menuName %></h5>
-                                            <p class="card-text">PHP <%= item.price %></p>
+                                            <h5 class="card-title"><%= menuDocument.Non_Coffee[i].menuName %></h5>
+                                            <p class="card-text">PHP <%= menuDocument.Non_Coffee[i].price %></p>
+                                            <button type = "button" class = "btn btn-md" style = " margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle ="modal" data-bs-target = "#productView<%= i+3 %>">Quick View</button>
                                         </div>
                                     </div>
                                 </div>
-                            <% }) %>
+                                <div class="modal fade" id = "productView<%= i+3 %>" tabindex = "-1" aria-labelledby = "exampleModalLabel<%= i+3 %>" aria-hidden = "true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class = "modal-title" id = "exampleModalLabel<%= i+3 %>" style = "font-weight:900">MERCHANDISE</h5>
+                                                <button type = "button" class = "btn-close" data-bs-dismiss="modal" aria-label = "Close"></button>
+                                            </div>
+                                            <div class = "modal-body">
+                                                <div class="row">
+                                                    <img src="./media/<%= menuDocument.Non_Coffee[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% } %>
                         <% } %>
                     <% }) %>
                 </div>
 
                 <br><br><br>
-                <h2 style="text-align: center;">FOODS</h2>
+                <h2 style="text-align: center; font-weight:900; color:#752329">FOODS</h2>
                 <br><hr>
-                <h2 style="text-align: center;">BEST SELLERS</h2>
+                <h3 style="text-align: center; font-weight: 900; color:#82383e">BEST SELLERS</h3>
                 <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">            
                     <% menu.forEach(menuDocument => { %>
                         <% if (menuDocument.Best_Sellers) { %>
-                            <% menuDocument.Best_Sellers.forEach(item => { %>
+                            <% for( let i = 0; i < menuDocument.Best_Sellers.length; i++ ) { %>
                                 <div class="col">
                                     <div class="card h-100">
-                                        <img src="./media/<%= item.menuImage %>" class="img-fluid" alt="Caution T-Shirt (Black)">
+                                        <img src="./media/<%= menuDocument.Best_Sellers[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
                                         <div class="card-body">
-                                            <h5 class="card-title"><%= item.menuName %></h5>
-                                            <p class="card-text">PHP <%= item.price %></p>
+                                            <h5 class="card-title"><%= menuDocument.Best_Sellers[i].menuName %></h5>
+                                            <p class="card-text">PHP <%= menuDocument.Best_Sellers[i].price %></p>
+                                            <button type = "button" class = "btn btn-md" style = " margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle ="modal" data-bs-target = "#productView<%= i+6 %>">Quick View</button>
                                         </div>
                                     </div>
                                 </div>
-                            <% }) %>
+                                <div class="modal fade" id = "productView<%= i+6 %>" tabindex = "-1" aria-labelledby = "exampleModalLabel<%= i+6 %>" aria-hidden = "true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class = "modal-title" id = "exampleModalLabel<%= i+6 %>" style = "font-weight:900">MERCHANDISE</h5>
+                                                <button type = "button" class = "btn-close" data-bs-dismiss="modal" aria-label = "Close"></button>
+                                            </div>
+                                            <div class = "modal-body">
+                                                <div class="row">
+                                                    <img src="./media/<%= menuDocument.Best_Sellers[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% } %>
                         <% } %>
                     <% }) %>
-                </div>  
+                </div>
                 
                 <br>
                 <hr>
-                <h2 style="text-align: center;">SANDWICHES</h2>
+                <h3 style="text-align: center; font-weight: 900; color:#82383e">SANDWICHES</h3>
                 <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">            
                     <% menu.forEach(menuDocument => { %>
                         <% if (menuDocument.Sandwiches) { %>
-                            <% menuDocument.Sandwiches.forEach(item => { %>
+                            <% for( let i = 0; i < menuDocument.Sandwiches.length; i++ ) { %>
                                 <div class="col">
                                     <div class="card h-100">
-                                        <img src="./media/<%= item.menuImage %>" class="img-fluid" alt="Caution T-Shirt (Black)">
+                                        <img src="./media/<%= menuDocument.Sandwiches[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
                                         <div class="card-body">
-                                            <h5 class="card-title"><%= item.menuName %></h5>
-                                            <p class="card-text">PHP <%= item.price %></p>
+                                            <h5 class="card-title"><%= menuDocument.Sandwiches[i].menuName %></h5>
+                                            <p class="card-text">PHP <%= menuDocument.Sandwiches[i].price %></p>
+                                            <button type = "button" class = "btn btn-md" style = " margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle ="modal" data-bs-target = "#productView<%= i+9 %>">Quick View</button>
                                         </div>
                                     </div>
                                 </div>
-                            <% }) %>
+                                <div class="modal fade" id = "productView<%= i+9 %>" tabindex = "-1" aria-labelledby = "exampleModalLabel<%= i+9 %>" aria-hidden = "true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class = "modal-title" id = "exampleModalLabel<%= i+9 %>" style = "font-weight:900">MERCHANDISE</h5>
+                                                <button type = "button" class = "btn-close" data-bs-dismiss="modal" aria-label = "Close"></button>
+                                            </div>
+                                            <div class = "modal-body">
+                                                <div class="row">
+                                                    <img src="./media/<%= menuDocument.Sandwiches[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% } %>
                         <% } %>
                     <% }) %>
-                </div>  
+                </div>
             </div>
         <% } else { %>
             <!-- FILTERED DISPLAY -->
@@ -127,17 +191,33 @@
                 <hr>
                 <!-- <h2 style="text-align: center;" id="sort">SORT BY : </h2> -->
                 <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">            
-                <% menu.forEach(menuDocument => { %>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="./media/<%= menuDocument.menuImage %>" class="img-fluid" alt="Caution T-Shirt (Black)">
-                            <div class="card-body">
-                                <h5 class="card-title"><%= menuDocument.menuName %></h5>
-                                <p class="card-text">PHP <%= menuDocument.price %></p>
+                    <% for( let i = 0; i < menu.length; i++ ) { %>
+                        <div class="col">
+                            <div class="card h-100">
+                                <img src="./media/<%= menu[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= menu[i].menuName %></h5>
+                                    <p class="card-text">PHP <%= menu[i].price %></p>
+                                    <button type = "button" class = "btn btn-md" style = " margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle ="modal" data-bs-target = "#productView<%= i %>">Quick View</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                <% }) %>
+                        <div class="modal fade" id = "productView<%= i %>" tabindex = "-1" aria-labelledby = "exampleModalLabel<%= i %>" aria-hidden = "true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class = "modal-title" id = "exampleModalLabel<%= i %>" style = "font-weight:900">MERCHANDISE</h5>
+                                        <button type = "button" class = "btn-close" data-bs-dismiss="modal" aria-label = "Close"></button>
+                                    </div>
+                                    <div class = "modal-body">
+                                        <div class="row">
+                                            <img src="./media/<%= menu[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% } %>
                 </div>
             </div>      
         <% } %>      
