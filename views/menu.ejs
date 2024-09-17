@@ -206,20 +206,20 @@
                                 <% for( let i = 0; i < menuDocument.Sandwiches.length; i++ ) { %>
                                     <div class="col">
                                         <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
-                                            <img src="./media/<%= menuDocument.Sandwiches[i].menuImage %>" class="img-fluid" alt="Food Sandwiches" style="width: 100%; height: auto; display: block; border-radius: 6px; border: 2px solid #bbb;">
+                                            <img src="./media/<%= menuDocument.Sandwiches[i].menuImage %>" class="img-fluid" alt="Non-Coffee Drinks" style="width: 100%; height: auto; display: block; border-radius: 6px; border: 2px solid #bbb;">
                                             <div class="card-body">
-                                                <h5 class="card-title" style=" color: #E8E8E1 ">
+                                                <h5 class="card-title" style="color: #E8E8E1">
                                                     <%= menuDocument.Sandwiches[i].menuName %>
                                                 </h5>
-                                                <p class="card-text " style="color: #E8E8E1 ">PHP
+                                                <p class="card-text" style="color: #E8E8E1">PHP
                                                     <%= menuDocument.Sandwiches[i].price %>
                                                 </p>
-                                                <button type="button " class="btn btn-md " style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; " data-bs-toggle="modal " data-bs-target="#productView<%=i +9 %>">Quick View</button>
+                                                <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle="modal" data-bs-target="#productView<%= i+9 %>">Quick View</button>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal fade" id="productView<%= i+9 %>" tabindex="-1" aria-labelledby="exampleModalLabel<%= i+9 %>" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg modal-dark">
+                                        <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalLabel<%= i+9 %>" style="font-weight:900; color:#752329">FOOD - SANDWICHES</h5>
@@ -228,7 +228,7 @@
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col col-7">
-                                                            <img src="./media/<%= menuDocument.Sandwiches[i].menuImage %>" class="img-fluid" alt="Food Sandwiches">
+                                                            <img src="./media/<%= menuDocument.Sandwiches[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
                                                         </div>
                                                         <div class="col col-5">
                                                             <br><br><br><br><br>
@@ -248,6 +248,7 @@
                                         <% } %>
                                             <% }) %>
                     </div>
+                    
                 </div>
                 <% } else { %>
                     <!-- FILTERED DISPLAY -->
