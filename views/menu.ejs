@@ -74,21 +74,20 @@
                                                             <img src="./media/<%= menuDocument.Signature[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
                                                         </div>
                                                         <div class="col col-5">
-                                                            <br><br>
                                                             <h5 class="card-title">
                                                                 <%= menuDocument.Signature[i].menuName %>
                                                             </h5>
                                                             <p class="card-text">PHP
                                                                 <%= menuDocument.Signature[i].price %>
                                                             </p>
-                                                            <p class="card-text">Description: 
+                                                            <p class="card-text">Description:
                                                                 <%= menuDocument.Signature[i].description %>
                                                             </p>
                                                             <form action="/review_process" method="POST" id="reviewForm">
-                    
+
                                                                 <div class="mb-3">
                                                                     <label for="rating" class="form-label">Your Rating</label>
-                                                                    <select id="rating" name="rating" class="form-select" style = "border-color: #752329;">
+                                                                    <select id="rating" name="rating" class="form-select" style="border-color: #752329;">
                                                                         <option value="1">☕ Bean There, Done That (Poor)</option>
                                                                         <option value="2">☕☕ A Latte Room for Improvement (Fair)</option>
                                                                         <option value="3">☕☕☕ Just Brew-tiful (Satisfactory)</option>
@@ -96,17 +95,17 @@
                                                                         <option value="5">☕☕☕☕☕ Espresso-tastic (Excellent)</option>
                                                                     </select>
                                                                 </div>
-                                                                
+
                                                                 <div class="mb-3">
                                                                     <label for="review" class="form-label">Your Review
                                                                         <span id="current">0</span>
                                                                         <span id="maximum">/ 300</span>
                                                                     </label>
-                                                                    <textarea id="review" name="message" rows="4" cols="50" maxlength="300" required class="form-control" placeholder="Write your review..." style = "border-color: #752329;"></textarea>
+                                                                    <textarea id="review" name="message" rows="4" cols="50" maxlength="300" required class="form-control" placeholder="Write your review..." style="border-color: #752329;"></textarea>
                                                                 </div>
-                                            
-                                                                <button type="submit" class="btn btn-dark submit-btn" style = "margin: 0 auto; display: block; background-color: #752329;">Submit Review</button>
-                                                            </form>    
+
+                                                                <button type="submit" class="btn btn-dark submit-btn" style="margin: 0 auto; display: block; background-color: #752329;">Submit Review</button>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -152,16 +151,38 @@
                                                             <img src="./media/<%= menuDocument.Non_Coffee[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
                                                         </div>
                                                         <div class="col col-5">
-                                                            <br><br><br><br><br>
                                                             <h5 class="card-title">
                                                                 <%= menuDocument.Non_Coffee[i].menuName %>
                                                             </h5>
                                                             <p class="card-text">PHP
                                                                 <%= menuDocument.Non_Coffee[i].price %>
                                                             </p>
-                                                            <p class="card-text">Description: 
+                                                            <p class="card-text">Description:
                                                                 <%= menuDocument.Non_Coffee[i].description %>
                                                             </p>
+                                                            <form action="/review_process" method="POST" id="reviewForm"></form>
+
+                                                            <div class="mb-3">
+                                                                <label for="rating" class="form-label">Your Rating</label>
+                                                                <select id="rating" name="rating" class="form-select" style="border-color: #752329;">
+                                                                        <option value="1">☕ Bean There, Done That (Poor)</option>
+                                                                        <option value="2">☕☕ A Latte Room for Improvement (Fair)</option>
+                                                                        <option value="3">☕☕☕ Just Brew-tiful (Satisfactory)</option>
+                                                                        <option value="4">☕☕☕☕ Brew-tifully Good (Very Good)</option>
+                                                                        <option value="5">☕☕☕☕☕ Espresso-tastic (Excellent)</option>
+                                                                    </select>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="review" class="form-label">Your Review
+                                                                        <span id="current">0</span>
+                                                                        <span id="maximum">/ 300</span>
+                                                                    </label>
+                                                                <textarea id="review" name="message" rows="4" cols="50" maxlength="300" required class="form-control" placeholder="Write your review..." style="border-color: #752329;"></textarea>
+                                                            </div>
+
+                                                            <button type="submit" class="btn btn-dark submit-btn" style="margin: 0 auto; display: block; background-color: #752329;">Submit Review</button>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -209,16 +230,38 @@
                                                             <img src="./media/<%= menuDocument.Best_Sellers[i].menuImage %>" class="img-fluid" alt="Food Best Sellers">
                                                         </div>
                                                         <div class="col col-5">
-                                                            <br><br><br><br><br>
                                                             <h5 class="card-title">
                                                                 <%= menuDocument.Best_Sellers[i].menuName %>
                                                             </h5>
                                                             <p class="card-text">PHP
                                                                 <%= menuDocument.Best_Sellers[i].price %>
                                                             </p>
-                                                            <p class="card-text">Description: 
+                                                            <p class="card-text">Description:
                                                                 <%= menuDocument.Best_Sellers[i].description %>
                                                             </p>
+                                                            <form action="/review_process" method="POST" id="reviewForm">
+
+                                                                <div class="mb-3">
+                                                                    <label for="rating" class="form-label">Your Rating</label>
+                                                                    <select id="rating" name="rating" class="form-select" style="border-color: #752329;">
+                                                                        <option value="1">☕ Bean There, Done That (Poor)</option>
+                                                                        <option value="2">☕☕ A Latte Room for Improvement (Fair)</option>
+                                                                        <option value="3">☕☕☕ Just Brew-tiful (Satisfactory)</option>
+                                                                        <option value="4">☕☕☕☕ Brew-tifully Good (Very Good)</option>
+                                                                        <option value="5">☕☕☕☕☕ Espresso-tastic (Excellent)</option>
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="review" class="form-label">Your Review
+                                                                        <span id="current">0</span>
+                                                                        <span id="maximum">/ 300</span>
+                                                                    </label>
+                                                                    <textarea id="review" name="message" rows="4" cols="50" maxlength="300" required class="form-control" placeholder="Write your review..." style="border-color: #752329;"></textarea>
+                                                                </div>
+
+                                                                <button type="submit" class="btn btn-dark submit-btn" style="margin: 0 auto; display: block; background-color: #752329;">Submit Review</button>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -264,16 +307,38 @@
                                                             <img src="./media/<%= menuDocument.Sandwiches[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
                                                         </div>
                                                         <div class="col col-5">
-                                                            <br><br><br><br><br>
                                                             <h5 class="card-title">
                                                                 <%= menuDocument.Sandwiches[i].menuName %>
                                                             </h5>
                                                             <p class="card-text">PHP
                                                                 <%= menuDocument.Sandwiches[i].price %>
                                                             </p>
-                                                            <p class="card-text">Description: 
+                                                            <p class="card-text">Description:
                                                                 <%= menuDocument.Sandwiches[i].description %>
                                                             </p>
+                                                            <form action="/review_process" method="POST" id="reviewForm"></form>
+
+                                                            <div class="mb-3">
+                                                                <label for="rating" class="form-label">Your Rating</label>
+                                                                <select id="rating" name="rating" class="form-select" style="border-color: #752329;">
+                                                                        <option value="1">☕ Bean There, Done That (Poor)</option>
+                                                                        <option value="2">☕☕ A Latte Room for Improvement (Fair)</option>
+                                                                        <option value="3">☕☕☕ Just Brew-tiful (Satisfactory)</option>
+                                                                        <option value="4">☕☕☕☕ Brew-tifully Good (Very Good)</option>
+                                                                        <option value="5">☕☕☕☕☕ Espresso-tastic (Excellent)</option>
+                                                                    </select>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="review" class="form-label">Your Review
+                                                                        <span id="current">0</span>
+                                                                        <span id="maximum">/ 300</span>
+                                                                    </label>
+                                                                <textarea id="review" name="message" rows="4" cols="50" maxlength="300" required class="form-control" placeholder="Write your review..." style="border-color: #752329;"></textarea>
+                                                            </div>
+
+                                                            <button type="submit" class="btn btn-dark submit-btn" style="margin: 0 auto; display: block; background-color: #752329;">Submit Review</button>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -284,20 +349,24 @@
                                         <% } %>
                                             <% }) %>
                     </div>
-                    
+
                 </div>
                 <% } else { %>
                     <!-- FILTERED DISPLAY -->
                     <div class="container"><br>
-                    <hr>
+                        <hr>
                         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 p-4 justify-content-center">
                             <% for( let i = 0; i < menu.length; i++ ) { %>
                                 <div class="col">
                                     <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
                                         <img src="./media/<%= menu[i].menuImage %>" class="img-fluid" alt="Coffee Drinks" style="width: 100%; height: auto; display: block; border-radius: 6px; border: 2px solid #bbb;">
                                         <div class="card-body">
-                                            <h5 class="card-title" style="color: #E8E8E1"><%= menu[i].menuName %></h5>
-                                            <p class="card-text" style="color: #E8E8E1">PHP <%= menu[i].price %></p>
+                                            <h5 class="card-title" style="color: #E8E8E1">
+                                                <%= menu[i].menuName %>
+                                            </h5>
+                                            <p class="card-text" style="color: #E8E8E1">PHP
+                                                <%= menu[i].price %>
+                                            </p>
                                             <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle="modal" data-bs-target="#productView<%= i %>">Quick View</button>
                                         </div>
                                     </div>
@@ -322,7 +391,7 @@
                                                         <p>PHP
                                                             <%= menu[i].price %>
                                                         </p>
-                                                        <p class="card-text">Description: 
+                                                        <p class="card-text">Description:
                                                             <%= menu[i].description %>
                                                         </p>
                                                     </div>
@@ -331,10 +400,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            <% } %>
+                                <% } %>
                         </div>
                     </div>
-                <% } %>  
+                    <% } %>
 
         </section>
 
