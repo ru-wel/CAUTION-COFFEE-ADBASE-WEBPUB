@@ -74,7 +74,7 @@
                                                             <img src="./media/<%= menuDocument.Signature[i].menuImage %>" class="img-fluid" alt="Coffee Drinks">
                                                         </div>
                                                         <div class="col col-5">
-                                                            <br><br><br><br><br>
+                                                            <br><br>
                                                             <h5 class="card-title">
                                                                 <%= menuDocument.Signature[i].menuName %>
                                                             </h5>
@@ -84,6 +84,29 @@
                                                             <p class="card-text">Description: 
                                                                 <%= menuDocument.Signature[i].description %>
                                                             </p>
+                                                            <form action="/review_process" method="POST" id="reviewForm">
+                    
+                                                                <div class="mb-3">
+                                                                    <label for="rating" class="form-label">Your Rating</label>
+                                                                    <select id="rating" name="rating" class="form-select" style = "border-color: #752329;">
+                                                                        <option value="1">☕ Bean There, Done That (Poor)</option>
+                                                                        <option value="2">☕☕ A Latte Room for Improvement (Fair)</option>
+                                                                        <option value="3">☕☕☕ Just Brew-tiful (Satisfactory)</option>
+                                                                        <option value="4">☕☕☕☕ Brew-tifully Good (Very Good)</option>
+                                                                        <option value="5">☕☕☕☕☕ Espresso-tastic (Excellent)</option>
+                                                                    </select>
+                                                                </div>
+                                                                
+                                                                <div class="mb-3">
+                                                                    <label for="review" class="form-label">Your Review
+                                                                        <span id="current">0</span>
+                                                                        <span id="maximum">/ 300</span>
+                                                                    </label>
+                                                                    <textarea id="review" name="message" rows="4" cols="50" maxlength="300" required class="form-control" placeholder="Write your review..." style = "border-color: #752329;"></textarea>
+                                                                </div>
+                                            
+                                                                <button type="submit" class="btn btn-dark submit-btn" style = "margin: 0 auto; display: block; background-color: #752329;">Submit Review</button>
+                                                            </form>    
                                                         </div>
                                                     </div>
                                                 </div>
