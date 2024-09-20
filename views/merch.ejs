@@ -231,6 +231,13 @@
                 document.getElementById('home').removeAttribute("class", 'active');
                 document.getElementById('home').setAttribute("class", "nav-link")
                 document.getElementById('products').setAttribute("class", 'nav-link dropdown-toggle active');
+
+                const submitButtons = document.getElementsByClassName("submit-btn");
+                for (let i = 0; i < submitButtons.length; i++) {
+                    submitButtons[i].addEventListener('click', () => {
+                        alert("FEATURE NOT AVAILABLE YET SIR HEHE. PLEASE REFER TO REVIEW PAGE");
+                    })
+                }
             </script>
 </body>
 
