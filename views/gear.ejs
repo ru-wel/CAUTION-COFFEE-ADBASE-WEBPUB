@@ -528,8 +528,17 @@
 
         <%- include('footer.ejs') %>
 
-            <!-- ADD TO CART CODE -->
+            
             <script>
+
+                const submitButtons = document.getElementsByClassName("submit-btn");
+                for (let i = 0; i < submitButtons.length; i++) {
+                    submitButtons[i].addEventListener('click', () => {
+                        alert("FEATURE NOT AVAILABLE YET SIR HEHE. PLEASE REFER TO REVIEW PAGE");
+                    })
+                }
+
+                // ADD TO CART CODE 
                 let atcButtons = document.getElementsByClassName("atc");
                 let quantityFields = document.getElementsByClassName("quantity");
                 let plusButtons = document.getElementsByClassName("plus");
