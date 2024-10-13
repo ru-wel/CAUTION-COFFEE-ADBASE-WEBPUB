@@ -1,7 +1,7 @@
 // TO BE REFACTORED //
 
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged} from "firebase/auth"; 
-import { doc, setDoc, getDoc, addDoc, collection, getDocs, query, where, updateDoc, arrayUnion, limit, orderBy, onSnapshot} from "firebase/firestore"; 
+import { doc, setDoc, getDoc, addDoc, collection, getDocs, query, where, updateDoc, arrayUnion, limit, orderBy, onSnapshot, deleteField} from "firebase/firestore"; 
 
 // TO BE REFACTORED //
 
@@ -41,7 +41,7 @@ app.get('/', async (req, res) =>{ // --------- NEED PA SI FIREBASE ADMIN PARA MA
         const user = auth.currentUser;
         if (user) {
             // User is signed in
-            res.render('index.ejs', { email:user.email, reviews, isLoggedIn : true, message : req.query.message }); // EMAIL FOR PLACEHOLDER ONLY : isLoggedIn TO BE REFACTORED
+            res.render('index.ejs', { reviews, isLoggedIn : true, message : req.query.message }); // EMAIL FOR PLACEHOLDER ONLY : isLoggedIn TO BE REFACTORED
         } else {
             res.render('index.ejs', { reviews, isLoggedIn : false, message : req.query.message});
         }
@@ -132,7 +132,7 @@ app.post('/logout', async (req, res) => {
     try {
         await signOut(auth);
         console.log("User signed out successfully!");
-        res.redirect("/");
+        res.redirect("/logout-success");
     } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -141,39 +141,48 @@ app.post('/logout', async (req, res) => {
     }
 });
 
-app.get('/profile', (req, res) => {
-    onAuthStateChanged(auth, (user) => { // TO BE REFACTORED TO A FUNCTION ?
-        if (user) {
-            // User is signed in,
-            const uid = user.uid;
-            async function fetchDocument(uid) { // DAPAT MAY ASYNC FUNCTION KAPAG GAGAMIT NG AW(a)IT OR NASA PINAKATAAS NG FUNCTION YUNG AW(a)IT
-            try {
-                // Define the document reference
-                const docRef = doc(db, 'users', uid);
+app.get('/logout-success', (req, res) => {
+    res.render("logout.ejs");
+})
 
-                // Retrieve the document snapshot
-                const docSnap = await getDoc(docRef);
+app.get('/profile', async (req, res) => {
+    const user = auth.currentUser; 
 
-                if (docSnap.exists()) {
-                    // Document data is available
-                    const userData = docSnap.data();
-                    res.render('profile.ejs', {user:userData, isLoggedIn : true})
-                } else {
-                    // Document does not exist
-                    console.log("No such document!");
+    if (user) {
+        const uid = user.uid;
+
+        try {
+            // Define the document reference
+            const docRef = doc(db, 'users', uid);
+
+            // Retrieve the document snapshot
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                const username = docSnap.data().username;
+                const orderQuery = query(collection(db, 'orders'), where('username', '==', username)); // FIND ORDERS OF THE USER IN DB
+                const cartSnap = await getDocs(orderQuery);
+                const userData = docSnap.data();
+                let orderData = [];
+
+                if (!cartSnap.empty) { // Check if there are documents in the snapshot
+                    orderData = cartSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })); 
                 }
-            } catch (error) {
-                // Handle potential errors
-                console.error("Error fetching document:", error);
+
+                res.render('profile.ejs', { user: userData, orders: orderData, isLoggedIn: true });
+            } else {
+                // No user document found
+                console.log("No user document found");
+                res.status(404).send("User not found");
             }
+        } catch (error) {
+            console.error("Error fetching document:", error);
+            res.status(500).send("Internal Server Error");
         }
-        fetchDocument(uid);
-        } else {
-          // User is signed out
-          // ... -------- TO BE CONTINUED / TO BE HANDLED
-        //   console.log("Please Log In");
-        }
-    });
+    } else {
+        // User is signed out, cannot access profile
+        res.status(401).send("Please log in to access your profile");
+    }
 });
 
 app.get('/review', async function (req, res) {
@@ -216,66 +225,62 @@ app.post('/review_process', async function (req, res) {
         })
     }
 
-    onAuthStateChanged(auth, async function (user) { // TO BE REFACTORED TO A FUNCTION ?
-        var message
-        if (user) {
-            // User is signed in,
-            const uid = user.uid;
-            async function fetchDocument(uid) { // DAPAT MAY ASYNC FUNCTION KAPAG GAGAMIT NG AW(a)IT OR NASA PINAKATAAS NG FUNCTION YUNG AW(a)IT
+    const user = auth.currentUser; 
 
-            try {
+    if (user) {
+        const uid = user.uid;
 
-                // Define the document reference
-                const userDocRef = doc(db, 'users', uid);
+        try {
+            // Define the document reference
+            const userDocRef = doc(db, 'users', uid);
 
-                // Retrieve the document snapshot
-                const docSnap = await getDoc(userDocRef);
+            // Retrieve the document snapshot
+            const docSnap = await getDoc(userDocRef);
 
-                if (docSnap.exists()) {
-                    // Document data is available ----- GET USERNAME FROM DATABASE BASED ON USERID
-                    const userData = docSnap.data();
+            if (docSnap.exists()) {
+                // Document data is available ----- GET USERNAME FROM DATABASE BASED ON USERID
+                const userData = docSnap.data();
 
-                    const docRef = await addDoc(collection(db, "reviews"), {
-                        username: userData.username,
-                        rating: data.rating,
-                        message: data.message,
-                        dateCreated: data.date
-                    });
-                    console.log("Review added successfully.");
+                // Add the new review to the "reviews" collection
+                const docRef = await addDoc(collection(db, "reviews"), {
+                    username: userData.username,
+                    rating: data.rating,
+                    message: data.message,
+                    dateCreated: data.date
+                });
+                console.log("Review added successfully.");
 
-                    // UPDATE USER DATABASE WITH NEW REVIEW
+                // Update user database with new review
+                const currentReviews = userData.reviews || []; // IF WALANG LAMAN YUNG REVIEWS ARRAY, CREATE NEW ARRAY
 
-                    const currentReviews = userData.reviews || []; // IF WALANG LAMAN YUNG REVIEWS ARRAY, CREATE NEW ARRAY
+                // Append new review to the existing or created array
+                currentReviews.push({
+                    reviewID: docRef.id,
+                    rating: data.rating,
+                    message: data.message,
+                    dateCreated: data.date
+                });
 
-                    currentReviews.push({  // APPEND NEW REVIEW TO THE CREATED ARRAY ^
-                        reviewID: docRef.id,
-                        rating: data.rating,
-                        message: data.message,
-                        dateCreated: data.date
-                    });
+                // Update database with merged reviews
+                await setDoc(userDocRef, { reviews: currentReviews }, { merge: true });
+                console.log("User updated successfully.");
 
-                    await setDoc(userDocRef, { reviews: currentReviews }, { merge: true });     // UPDATE DATABASE , MERGE:TRUE TO MERGE NEW DATA
-
-                    console.log("User updated successfully.");
-                    res.redirect("/review");
-                } else {
-                    // Document does not exist
-                    console.log("No such document!");
-                }
-            } catch (error) {
-                // Handle potential errors
-                console.error("Error:", error);
+                // Redirect after successful review addition
+                return res.redirect("/review");
+            } else {
+                console.log("No such document!");
+                return res.status(404).send("User not found");
             }
+        } catch (error) {
+            // Handle potential errors
+            console.error("Error:", error);
+            return res.status(500).send("Internal Server Error");
         }
-        fetchDocument(uid);
-        } else {
-          // User is signed out
-          // ... -------- TO BE CONTINUED
-          // BAWAL MAGREVIEW KAPAG DI NAKASIGN IN
-        //   message = "Please sign in to write a review"
-        //   res.redirect(`/review?message=${encodeURIComponent(message)}`);
-        }
-    });
+    } else {
+        // User is not signed in, cannot write a review
+        const message = "Please sign in to write a review";
+        return res.redirect(`/review?message=${encodeURIComponent(message)}`);
+    }
 });
 
 app.get('/merch', async function (req, res) {
@@ -292,7 +297,7 @@ app.get('/merch', async function (req, res) {
         const user = auth.currentUser;
         if (user) {
             // User is signed in
-            res.render('merch.ejs', { merch, isLoggedIn : true, message : req.query.message }); // EMAIL FOR PLACEHOLDER ONLY : isLoggedIn TO BE REFACTORED
+            res.render('merch.ejs', { merch, isLoggedIn : true, message : req.query.message }); // isLoggedIn TO BE REFACTORED
         } else {
             res.render('merch.ejs', { merch, isLoggedIn : false, message : req.query.message});
         }
@@ -499,273 +504,260 @@ app.get('/gear', async function (req, res) {
     }
 });
 
-app.get('/cart', (req, res) => {
-    onAuthStateChanged(auth, (user) => { // TO BE REFACTORED TO A FUNCTION ?
-        if (user) {
-            // User is signed in,
-            const uid = user.uid;
-            async function fetchDocument(uid) { // DAPAT MAY ASYNC FUNCTION KAPAG GAGAMIT NG AW(a)IT OR NASA PINAKATAAS NG FUNCTION YUNG AW(a)IT
-            try {
-                // Define the document reference
-                const docRef = doc(db, 'users', uid);
+app.get('/cart', async (req, res) => {
+    const user = auth.currentUser; 
 
-                // Retrieve the document snapshot
-                const docSnap = await getDoc(docRef);
+    if (user) {
+        const uid = user.uid;
+
+        try {
+            // Define the document reference for the user
+            const docRef = doc(db, 'users', uid);
+
+            // Retrieve the document snapshot
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
                 const username = docSnap.data().username;
-                const cartQuery = query(collection(db, 'cart'), where('username', '==', username)); // FIND CART OF THE USER IN DB
+
+                // Query the cart for the current user
+                const cartQuery = query(collection(db, 'cart'), where('username', '==', username));
                 const cartSnap = await getDocs(cartQuery);
 
-                if (!cartSnap.empty){
+                if (!cartSnap.empty) {
                     let cartID;
                     cartSnap.forEach((doc) => {
                         cartID = doc.id;
                     });
-                    const cartRef = doc(db, "cart", cartID)
+
+                    const cartRef = doc(db, "cart", cartID);
                     const cartDoc = await getDoc(cartRef);
 
                     if (cartDoc.exists()) {
-                        // Document data is available
                         const cartData = cartDoc.data();
-                        res.render('cart.ejs', {cart:cartData, isLoggedIn : true})
+                        // Render the cart page with the cart data
+                        return res.render('cart.ejs', { cart: cartData, isLoggedIn: true });
                     } else {
-                        // Document does not exist
-                        console.log("No such document!");
+                        console.log("No such cart document!");
                     }
-                } else { res.render('cart.ejs', {cart : "", isLoggedIn : true} )}
-
-            } catch (error) {
-                // Handle potential errors
-                console.error("Error fetching document:", error);
+                } else {
+                    // Render the cart page with empty data if the cart is empty
+                    return res.render('cart.ejs', { cart: "", isLoggedIn: true });
+                }
+            } else {
+                console.log("No such user document!");
             }
+        } catch (error) {
+            // Handle potential errors
+            console.error("Error fetching document:", error);
+            return res.status(500).send("Internal Server Error");
         }
-        fetchDocument(uid);
-        } else {
-        //   res.status(404).send("Please Log In to Access Your Cart")
-        }
-    });
-})
+    } else {
+        // User is not signed in, respond accordingly
+        return res.status(401).send("Please Log In to Access Your Cart");
+    }
+});
 
 app.post('/add-to-cart', async function (req, res) {
 
-    // ADD DATA VALIDATION + ADD VALIDATION WHEN ADDED TO CART
+    const user = auth.currentUser;
 
-    onAuthStateChanged(auth, async function (user) { // TO BE REFACTORED TO A FUNCTION ?
-        if (user) {
-            // User is signed in,
-            const uid = user.uid;
+    if (user) {
+        const uid = user.uid;
 
-            const fetchDocument = async (uid) => { // DAPAT MAY ASYNC FUNCTION KAPAG GAGAMIT NG AW(a)IT OR NASA PINAKATAAS NG FUNCTION YUNG AW(a)IT
+        try {
+            // Define the document reference
+            const userDocRef = doc(db, 'users', uid);
 
-            try {
+            // Retrieve the document snapshot
+            const docSnap = await getDoc(userDocRef);
 
-                // Define the document reference
-                const userDocRef = doc(db, 'users', uid);
+            if (docSnap.exists()) {
+                // Document data is available ----- GET USERNAME FROM DATABASE BASED ON USERID
+                const userData = docSnap.data();
+                const username = userData.username;
 
-                // Retrieve the document snapshot
-                const docSnap = await getDoc(userDocRef);
+                const cartQuery = query(collection(db, 'cart'), where('username', '==', username)); // FIND CART OF THE USER IN DB
+                const cartSnap = await getDocs(cartQuery);
 
-                if (docSnap.exists()) {
-                    // Document data is available ----- GET USERNAME FROM DATABASE BASED ON USERID
-                    const userData = docSnap.data();
-                    const username = userData.username;
+                if (!cartSnap.empty) { // USER ALREADY HAS CART IN DB
+                    // UPDATE EXISTING CART
+                    let cartID;
+                    cartSnap.forEach((doc) => {
+                        cartID = doc.id;
+                    });
 
-                    const cartQuery = query(collection(db, 'cart'), where('username', '==', username)); // FIND CART OF THE USER IN DB
-                    const cartSnap = await getDocs(cartQuery);
+                    const cartRef = doc(db, "cart", cartID);
+                    const cartDoc = await getDoc(cartRef);
+                    const cartData = cartDoc.data();
+                    const products = cartData.products || []; // IF WALANG LAMAN YUNG PRODUCTS ARRAY, CREATE NEW ARRAY
+                    const existingProductIndex = products.findIndex(product => product.product_name === req.body.title); // FIND INDEX OF EXISTING PRODUCT INSIDE CART
 
-                    if (!cartSnap.empty) { // USER ALREADY HAS CART IN DB
-
-                        // UPDATE EXISTING CART
-                        let cartID;
-                        cartSnap.forEach((doc) => {
-                            cartID = doc.id;
-                        });
-
-                        const cartRef = doc(db, "cart", cartID)
-                        const cartDoc = await getDoc(cartRef);
-                        const cartData = cartDoc.data();
-                        const products = cartData.products || []; // IF WALANG LAMAN YUNG PRODUCTS ARRAY, CREATE NEW ARRAY
-                        const existingProductIndex = products.findIndex(product => product.product_name === req.body.title); // FIND INDEX OF EXISTING PRODUCT INSIDE CART
-
-                        if (existingProductIndex > -1) { // IF PRODUCT EXISTS IN CART, ONLY UPDATE ITS QUANTITY
-                            products[existingProductIndex].quantity += parseInt(req.body.quantity);
-                            await updateDoc(cartRef, {
-                                products: products
-                            });
-                        } else{
-                            await updateDoc(cartRef, {
-                                products: arrayUnion({
-                                    product_name: req.body.title,
-                                    price: parseInt(req.body.price),
-                                    quantity: req.body.quantity
-                                })
-                            });
-                        }
+                    if (existingProductIndex > -1) { // IF PRODUCT EXISTS IN CART, ONLY UPDATE ITS QUANTITY
+                        console.log("Item already in cart, updating quantity");
+                        products[existingProductIndex].quantity += parseInt(req.body.quantity);
+                        await updateDoc(cartRef, { products: products });
                     } else {
-                        await addDoc(collection(db, "cart"), { // TO DO : GAWING OBJECT PER PRODUCT
-                            username: username,
-                            products: [{
-                                product_name : req.body.title,
-                                price : parseInt(req.body.price),
-                                quantity : req.body.quantity
-                            }]
+                        await updateDoc(cartRef, {
+                            products: arrayUnion({
+                                product_name: req.body.title,
+                                price: parseInt(req.body.price),
+                                quantity: req.body.quantity
+                            })
                         });
                     }
-                    res.json({ success: true, message: 'Product added to cart' }); // NEEDED IN FOR ORDER FOR .then(data => { PROMISE TO FIRE
                 } else {
-                    // Document does not exist
-                    console.log("No such document!");
+                    // If no cart exists, create a new cart
+                    await addDoc(collection(db, "cart"), {
+                        username: username,
+                        products: [{
+                            product_name: req.body.title,
+                            price: parseInt(req.body.price),
+                            quantity: req.body.quantity
+                        }]
+                    });
                 }
-            } catch (error) {
-                // Handle potential errors
-                console.error("Error:", error);
+                return res.json({ success: true, message: 'Product added to cart' }); // Return to prevent further execution
+            } else {
+                console.log("No such document!");
+                return res.status(404).json({ error: "User document not found" }); // Send error response if no user document
             }
+        } catch (error) {
+            console.error("Error:", error);
+            return res.status(500).json({ error: 'An error occurred' }); // Handle potential errors
         }
-        fetchDocument(uid);
-        } else { // ------ TO BE REMOVED/EDITED
-          // User is signed out
-          // ... -------- TO BE CONTINUED
-          // BAWAL MAG ADD TO CART KAPAG DI NAKASIGN IN
-
-        //   res.status(404).send("Please Log In to Access Your Cart")
-        }
-    });
-})
+    } else {
+        // User is signed out, respond accordingly
+        return res.status(401).json({ error: "Please log in to add items to the cart" });
+    }
+});
 
 app.patch('/cart', async function (req, res) {
 
-    onAuthStateChanged(auth, async function (user) { // TO BE REFACTORED TO A FUNCTION ?
-        if (user) {
-            // User is signed in,
-            const uid = user.uid;
+    // Use auth.currentUser to check the current user
+    const user = auth.currentUser;
 
-            const fetchDocument = async (uid) => { // DAPAT MAY ASYNC FUNCTION KAPAG GAGAMIT NG AW(a)IT OR NASA PINAKATAAS NG FUNCTION YUNG AW(a)IT
+    if (user) {
+        const uid = user.uid;
 
-            try {
+        try {
+            // Define the document reference
+            const userDocRef = doc(db, 'users', uid);
 
-                // Define the document reference
-                const userDocRef = doc(db, 'users', uid);
+            // Retrieve the document snapshot
+            const docSnap = await getDoc(userDocRef);
 
-                // Retrieve the document snapshot
-                const docSnap = await getDoc(userDocRef);
+            if (docSnap.exists()) {
+                // Document data is available ----- GET USERNAME FROM DATABASE BASED ON USERID
+                const userData = docSnap.data();
+                const username = userData.username;
 
-                if (docSnap.exists()) {
-                    // Document data is available ----- GET USERNAME FROM DATABASE BASED ON USERID
-                    const userData = docSnap.data();
-                    const username = userData.username;
+                const cartQuery = query(collection(db, 'cart'), where('username', '==', username)); // FIND CART OF THE USER IN DB
+                const cartSnap = await getDocs(cartQuery);
 
-                    const cartQuery = query(collection(db, 'cart'), where('username', '==', username)); // FIND CART OF THE USER IN DB
-                    const cartSnap = await getDocs(cartQuery);
+                if (!cartSnap.empty) { // USER ALREADY HAS CART IN DB
+                    // UPDATE EXISTING CART
+                    let cartID;
+                    cartSnap.forEach((doc) => {
+                        cartID = doc.id;
+                    });
 
-                    if (!cartSnap.empty) { // USER ALREADY HAS CART IN DB
+                    const cartRef = doc(db, "cart", cartID);
+                    const cartDoc = await getDoc(cartRef);
+                    const cartData = cartDoc.data();
+                    const products = cartData.products;
 
-                        // UPDATE EXISTING CART
-                        let cartID;
-                        cartSnap.forEach((doc) => {
-                            cartID = doc.id;
-                        });
-
-                        const cartRef = doc(db, "cart", cartID)
-                        const cartDoc = await getDoc(cartRef);
-                        const cartData = cartDoc.data();
-                        const products = cartData.products
-
+                    // Update product quantity
+                    if (req.body.index < products.length && req.body.index >= 0) {
                         products[req.body.index].quantity = parseInt(req.body.quantity);
-                        await updateDoc(cartRef, {
-                            products: products
-                        });
+                        await updateDoc(cartRef, { products: products });
+                        
+                        // Send success response
+                        return res.json({ success: true, message: 'Cart updated successfully' });
                     } else {
-                        // Document does not exist
-                        console.log("No such document!");
+                        // Handle invalid product index
+                        return res.status(400).json({ error: 'Invalid product index' });
                     }
-                    res.json({ success: true, message: 'Cart updated successfully' }); // NEEDED IN FOR ORDER FOR .then(data => { PROMISE TO FIRE
                 } else {
-                    // Document does not exist
-                    console.log("No such document!");
+                    // No cart found for user
+                    return res.status(404).json({ error: "No cart found for the user" });
                 }
-            } catch (error) {
-                // Handle potential errors
-                console.error("Error:", error);
+            } else {
+                // No user document found
+                return res.status(404).json({ error: "No user document found" });
             }
+        } catch (error) {
+            // Handle potential errors
+            console.error("Error:", error);
+            return res.status(500).json({ error: 'Internal server error' });
         }
-        fetchDocument(uid);
-        } else { // ------ TO BE REMOVED/EDITED
-          // User is signed out
-          // ... -------- TO BE CONTINUED
-          // BAWAL MAG ADD TO CART KAPAG DI NAKASIGN IN
-        //   res.status(404).send("Please Log In to Access Your Cart")
-        }
-    });
-})
+    } else {
+        // User is signed out, respond accordingly
+        return res.status(401).json({ error: "Please log in to update the cart" });
+    }
+});
 
 app.delete('/cart', async function (req, res) {
 
-    onAuthStateChanged(auth, async function (user) { // TO BE REFACTORED TO A FUNCTION ?
-        if (user) {
-            // User is signed in,
-            const uid = user.uid;
+    // Use auth.currentUser to check the current user
+    const user = auth.currentUser;
 
-            const fetchDocument = async (uid) => { // DAPAT MAY ASYNC FUNCTION KAPAG GAGAMIT NG AW(a)IT OR NASA PINAKATAAS NG FUNCTION YUNG AW(a)IT
+    if (user) {
+        const uid = user.uid;
 
-            try {
+        try {
+            // Define the document reference
+            const userDocRef = doc(db, 'users', uid);
 
-                // Define the document reference
-                const userDocRef = doc(db, 'users', uid);
+            // Retrieve the document snapshot
+            const docSnap = await getDoc(userDocRef);
 
-                // Retrieve the document snapshot
-                const docSnap = await getDoc(userDocRef);
+            if (docSnap.exists()) {
+                // Document data is available ----- GET USERNAME FROM DATABASE BASED ON USERID
+                const userData = docSnap.data();
+                const username = userData.username;
 
-                if (docSnap.exists()) {
-                    // Document data is available ----- GET USERNAME FROM DATABASE BASED ON USERID
-                    const userData = docSnap.data();
-                    const username = userData.username;
+                const cartQuery = query(collection(db, 'cart'), where('username', '==', username)); // FIND CART OF THE USER IN DB
+                const cartSnap = await getDocs(cartQuery);
 
-                    const cartQuery = query(collection(db, 'cart'), where('username', '==', username)); // FIND CART OF THE USER IN DB
-                    const cartSnap = await getDocs(cartQuery);
+                if (!cartSnap.empty) { // USER ALREADY HAS CART IN DB
+                    // UPDATE EXISTING CART
+                    let cartID;
+                    cartSnap.forEach((doc) => {
+                        cartID = doc.id;
+                    });
 
-                    if (!cartSnap.empty) { // USER ALREADY HAS CART IN DB
+                    const cartRef = doc(db, "cart", cartID);
+                    const cartDoc = await getDoc(cartRef);                    
+                    const data = cartDoc.data();
+                    
+                    const updatedItems = data.products.filter(product => product.product_name !== req.body.title);
 
-                        // UPDATE EXISTING CART
-                        let cartID;
-                        cartSnap.forEach((doc) => {
-                            cartID = doc.id;
-                        });
+                    // Update the document with the new array
+                    await updateDoc(cartRef, {
+                        products: updatedItems
+                    });
 
-                        const cartRef = doc(db, "cart", cartID)
-                        const cartDoc = await getDoc(cartRef);                    
-                        const data = cartDoc.data();
-                        
-                        const updatedItems = data.products.filter(product => product.product_name !== req.body.title);
-
-                        // Update the document with the new array
-                        await updateDoc(cartRef, {
-                            products : updatedItems 
-                        });
-
-                    } else {
-                        // Document does not exist
-                        console.log("No such document!");
-                        res.json({ success: false, message: 'Cart not found' });
-                    }
-                    res.json({ success: true, message: 'Item removed successfully' }); // NEEDED IN FOR ORDER FOR .then(data => { PROMISE TO FIRE
+                    // Send success response
+                    return res.json({ success: true, message: 'Item removed successfully' });
                 } else {
-                    // Document does not exist
-                    console.log("No such document!");
-                    res.json({ success: false, message: 'Cart not found' });
+                    // Cart not found for the user
+                    return res.status(404).json({ success: false, message: 'Cart not found' });
                 }
-            } catch (error) {
-                // Handle potential errors
-                console.error("Error:", error);
+            } else {
+                // No user document found
+                return res.status(404).json({ success: false, message: 'User not found' });
             }
+        } catch (error) {
+            // Handle potential errors
+            console.error("Error:", error);
+            return res.status(500).json({ success: false, message: 'Internal server error' });
         }
-        fetchDocument(uid);
-        } else { // ------ TO BE REMOVED/EDITED
-          // User is signed out
-          // ... -------- TO BE CONTINUED
-          // BAWAL MAG ADD TO CART KAPAG DI NAKASIGN IN
-        //   res.status(404).send("Please Log In to Access Your Cart")
-        }
-    });
-})
+    } else {
+        // User is signed out, respond accordingly
+        return res.status(401).json({ success: false, message: 'Please log in to access your cart' });
+    }
+});
 
 app.get('/search', (req, res) => { 
     
@@ -795,10 +787,150 @@ app.get('/feature', (req, res) => {
     const user = auth.currentUser;
         if (user) {
             // User is signed in
-            res.render('feature.ejs', { isLoggedIn : true, message : req.query.message }); // EMAIL FOR PLACEHOLDER ONLY : isLoggedIn TO BE REFACTORED
+            res.render('feature.ejs', { isLoggedIn : true, message : req.query.message }); // isLoggedIn TO BE REFACTORED
         } else {
             res.render('feature.ejs', { isLoggedIn : false, message : req.query.message});
         }
+});
+
+app.get('/checkout', async (req, res) => {
+    const user = auth.currentUser; // Get the currently signed-in user
+
+    if (user) {
+        const uid = user.uid;
+
+        try {
+            // Define the document reference
+            const docRef = doc(db, 'users', uid);
+
+            // Retrieve the document snapshot
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                const username = docSnap.data().username;
+                
+                // FIND CART OF THE USER IN DB
+                const cartQuery = query(collection(db, 'cart'), where('username', '==', username));
+                const cartSnap = await getDocs(cartQuery);
+
+                if (!cartSnap.empty) {
+                    let cartID;
+                    cartSnap.forEach((doc) => {
+                        cartID = doc.id;
+                    });
+
+                    const cartRef = doc(db, "cart", cartID);
+                    const cartDoc = await getDoc(cartRef);
+
+                    if (cartDoc.exists()) {
+                        // Cart data is available
+                        const cartData = cartDoc.data();
+                        res.render('checkout.ejs', { cart: cartData, isLoggedIn: true });
+                    } else {
+                        // Cart document does not exist
+                        console.log("No such document!");
+                        res.status(404).send("No cart document found");
+                    }
+                } else {
+                    // No cart items found
+                    res.status(404).send("Please add an item to your cart");
+                }
+            } else {
+                // User document does not exist
+                console.log("No user document found");
+                res.status(404).send("User not found");
+            }
+        } catch (error) {
+            console.error("Error fetching document:", error);
+            res.status(500).send("Internal Server Error");
+        }
+    } else {
+        // User is signed out, cannot access checkout
+        res.status(401).send("Please log in to access your cart");
+    }
+});
+
+app.post('/checkout', async (req, res) => {
+    const user = auth.currentUser; // Get the currently signed-in user
+
+    if (user) {
+        const uid = user.uid;
+
+        try {
+            const fetchDocument = async (uid) => {
+                // Define the document reference
+                const userDocRef = doc(db, 'users', uid);
+
+                // Retrieve the document snapshot
+                const docSnap = await getDoc(userDocRef);
+
+                if (docSnap.exists()) {
+                    // Document data is available ----- GET USERNAME FROM DATABASE BASED ON USERID
+                    const userData = docSnap.data();
+                    const username = userData.username;
+
+                    // FIND CART OF THE USER IN DB
+                    const cartQuery = query(collection(db, 'cart'), where('username', '==', username));
+                    const cartSnap = await getDocs(cartQuery);
+
+                    if (!cartSnap.empty) { // USER ALREADY HAS CART IN DB
+                        let cartID;
+                        cartSnap.forEach((doc) => {
+                            cartID = doc.id;
+                        });
+
+                        const cartRef = doc(db, "cart", cartID);
+                        const cartDoc = await getDoc(cartRef);
+
+                        const cartData = cartDoc.data();
+
+                        delete cartData.username;
+
+                        const docRef = await addDoc(collection(db, "orders"), {
+                            username: username,
+                            fName: req.body.fName,
+                            lName: req.body.lName,
+                            address: req.body.address,
+                            pNumber: req.body.pNumber,
+                            pMethod: req.body.pMethod,
+                            products: cartData.products,
+                            date: new Date().toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: '2-digit',
+                                day: '2-digit'
+                            }),
+                            totalPrice: parseInt(req.body.totalPrice)
+                        });
+
+                        console.log("Order added successfully!");
+                        console.log("Document written with ID: ", docRef.id);
+
+                        await updateDoc(cartRef, {
+                            products: deleteField()
+                        });
+
+                        console.log("Cart cleared successfully");
+
+                        res.redirect('/profile');
+                    } else {
+                        console.log("No cart document found!");
+                        res.status(404).send("Cart is empty");
+                    }
+                } else {
+                    console.log("No user document found!");
+                    res.status(404).send("User not found");
+                }
+            };
+
+            await fetchDocument(uid);
+        } catch (error) {
+            console.error("Error:", error);
+            res.status(500).send("Internal Server Error");
+        }
+    } else {
+        // User is signed out, cannot checkout
+        res.status(401).send("Please log in to checkout");
+    }
 });
 
 app.listen(3000, ()  => {
