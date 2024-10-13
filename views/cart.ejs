@@ -26,10 +26,10 @@
                 <div class="col">
                     <p>
                         <span class="h2">Shopping Cart</span>
-                        <span class="h4">(<%= cart.products.length %> items in your cart)</span>
                     </p>
 
                     <% if (cart.products && cart.products.length > 0) { %> <!-- CHECK IF MAY REVIEWS BA YUNG USER -->
+                        <p><span class="h4">(<%= cart.products.length %> items in your cart)</span></p>
                         <% var total = []%>
                         <% var totalPrice = 0%>
 
@@ -91,7 +91,7 @@
                     
                     <div class="d-flex justify-content-end">
                         <a href="/gear" class="btn btn-dark btn-lg me-2" role="button" style="background-color: #252020; border-color: #252020;">Continue Shopping</a>
-                        <button type="button" class="btn btn-primary btn-lg" style="background-color: #752329; border-color: #752329;" id="checkout">Check Out</button>
+                        <button type="button" class="btn btn-primary btn-lg" style="background-color: #752329; border-color: #752329;" id="checkout"><a href="/checkout" style="text-decoration: none; color: #f3f3f2;">Check Out</a></button>
                     </div>
                 </div>
             </div>
@@ -209,9 +209,15 @@
             });    
         }
 
-        document.getElementById("checkout").addEventListener("click", () => {
-            alert("FEATURE NOT AVAILABLE YET SIR HEHE");
-        })
+        if (<%- cart.products && cart.products.length > 0 %> ) { 
+            document.getElementById("checkout").removeAttribute("disabled");
+        } else {
+            document.getElementById("checkout").setAttribute("disabled", "");
+        }
+
+        // document.getElementById("checkout").addEventListener("click", () => {
+        //     alert("FEATURE NOT AVAILABLE YET SIR HEHE");
+        // })
 
     </script>
 

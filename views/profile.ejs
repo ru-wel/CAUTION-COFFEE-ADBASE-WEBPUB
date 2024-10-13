@@ -83,6 +83,50 @@
         </div>
     </section>
 
+    <section class="py-3" style="background-color: #f3f3f2; margin-top: 0%; padding-top: 0%;">
+      <div class="container h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+              <div class="col">
+                  <p>
+                      <span class="h2">Orders</span>
+                  </p>
+
+                  <% if (orders && orders.length > 0) { %> <!-- CHECK IF MAY REVIEWS BA YUNG USER -->
+
+                      <% orders.forEach(orders => { %>
+                          <div class="card mb-4">
+                              <div class="card-body p-4">
+                                  <div class="row text-center">
+
+                                      <% orders.products.forEach(products => { %>
+                                        <p>Name: <%= products.product_name %></p>
+                                        <p>Price: <%= products.price %></p>
+                                        <p>Quantity: <%= products.quantity %></p>
+
+                                      <% }) %>
+
+                                      <p>Total Price: <%= orders.totalPrice %></p>
+                                      <p>Date Ordered: <%= orders.date %></p>
+                                      <p>Name: <%= orders.fName + ' ' + orders.lName %></p>
+                                      <p>Address: <%= orders.address %></p>
+                                      <p>Payment Method: <%= orders.pMethod %></p>
+                                      <p>Contact Number: <%= orders.pNumber %></p>
+                                      
+                                  </div>
+                              </div>
+                          </div>
+
+                      <% }) %>
+
+                  <% } else { %>
+                          <h2>You Have No Orders Yet!</h2>
+                  <% } %>
+
+              </div>
+          </div>
+      </div>
+    </section>
+
     <section class="bg-light py-5 py-xl-8 ">
         <h1 style="text-align: center; padding: 20px; font-family: 'Playfair Display', serif; font-weight: 900; color:#752329">Reviews</h1>
         <div class="container-fluid overflow-hidden">
