@@ -22,8 +22,57 @@
 
     <section class="py-3" style="background-color: #f3f3f2; margin-top: 0%; padding-top: 0%;">
         <div class="container h-100">
-            <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="row d-flex justify-content-center h-100">
                 <div class="col">
+
+                    <br>
+                    
+                    <p><span class="h2" style = "color: #752329; font-weight: 900;">User Information</span></p>
+
+                    <form id="checkoutform" action="/checkout" method="post">
+                        <div class="row">
+                            <div class="form-outline mb-2 col-md-6">
+                                <label class="form-label" for="form2Example17">First Name</label>
+                                <input type="text" id="fName" class="form-control form-control-lg" name="fName" style = "border-color: #752329;" required/>
+                            </div>
+                            <div class="form-outline mb-2 col-md-6">
+                                <label class="form-label" for="form2Example17">Last Name</label>
+                                <input type="text" id="lName" class="form-control form-control-lg" name="lName" style = "border-color: #752329;" required/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-outline mb-2">
+                            <label class="form-label" for="form2Example17">Address</label>
+                            <input type="text" id="address" class="form-control form-control-lg" name="address" style = "border-color: #752329;" required/>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="form-outline mb-2 col-md-6">
+                                <label class="form-label" for="form2Example17">Phone Number</label>
+                                <input type="text" id="pNumber" class="form-control form-control-lg" name="pNumber" style = "border-color: #752329;" required/>
+                            </div>
+                            <div class="form-outline mb-2 col-md-6">
+                                <label class="form-label" for="pMethod">Payment Method</label>
+                                <select class="form-select form-select-lg" id="pMethod" name="pMethod" aria-label="Large select example" style = "border-color: #752329;" required>
+                                    <option selected value="gcash">GCash</option>
+                                    <option value="cod">Cash on Delivery</option>
+                                    <option value="credit-card">Credit Card</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="totalPrice" value="<%= totalPrice %>">
+
+                        <div class="d-flex justify-content-end">
+                            <a href="/cart" class="btn btn-dark btn-lg me-2" role="button" style="background-color: #252020; border-color: #252020;">Back to Cart</a>
+                            <button type="submit" class="btn btn-primary btn-lg" style="background-color: #752329; border-color: #752329;" id="checkout">Place Order</button>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="col">
+                    <br>
                     <p>
                         <span class="h2" style = "color: #752329; font-weight:900;">Checkout</span>
                     </p>
@@ -80,51 +129,7 @@
                     </div>
                 </div>
 
-                <div class="col">
-                    <br>
-                    <p><span class="h2" style = "color: #752329; font-weight: 900;">User Information</span></p>
-
-                    <form id="checkoutform" action="/checkout" method="post">
-                        <div class="row">
-                            <div class="form-outline mb-2 col-md-6">
-                                <label class="form-label" for="form2Example17">First Name</label>
-                                <input type="text" id="fName" class="form-control form-control-lg" name="fName" style = "border-color: #752329;" required/>
-                            </div>
-                            <div class="form-outline mb-2 col-md-6">
-                                <label class="form-label" for="form2Example17">Last Name</label>
-                                <input type="text" id="lName" class="form-control form-control-lg" name="lName" style = "border-color: #752329;" required/>
-                            </div>
-                        </div>
-                        
-                        <div class="form-outline mb-2">
-                            <label class="form-label" for="form2Example17">Address</label>
-                            <input type="text" id="address" class="form-control form-control-lg" name="address" style = "border-color: #752329;" required/>
-                        </div>
-
-                        <div class="row mb-4">
-                            <div class="form-outline mb-2 col-md-6">
-                                <label class="form-label" for="form2Example17">Phone Number</label>
-                                <input type="text" id="pNumber" class="form-control form-control-lg" name="pNumber" style = "border-color: #752329;" required/>
-                            </div>
-                            <div class="form-outline mb-2 col-md-6">
-                                <label class="form-label" for="pMethod">Payment Method</label>
-                                <select class="form-select form-select-lg" id="pMethod" name="pMethod" aria-label="Large select example" style = "border-color: #752329;" required>
-                                    <option selected value="gcash">GCash</option>
-                                    <option value="cod">Cash on Delivery</option>
-                                    <option value="credit-card">Credit Card</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <input type="hidden" name="totalPrice" value="<%= totalPrice %>">
-
-                        <div class="d-flex justify-content-end">
-                            <a href="/cart" class="btn btn-dark btn-lg me-2" role="button" style="background-color: #252020; border-color: #252020;">Back to Cart</a>
-                            <button type="submit" class="btn btn-primary btn-lg" style="background-color: #752329; border-color: #752329;" id="checkout">Place Order</button>
-                        </div>
-
-                    </form>
-                </div>
+                
             </div>
         </div>
     </section>

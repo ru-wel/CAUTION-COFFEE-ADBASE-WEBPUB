@@ -88,7 +88,8 @@
           <div class="row d-flex justify-content-center align-items-center h-100">
               <div class="col">
 
-                  <h1 style = "font-weight: 900; text-align: center; color:#752329">Orders</h1>
+                  <h1 style = "font-weight: 900; text-align: center; color:#752329">Order History</h1>
+                  <hr class="featurette-divider" style="border: none; border-top: 1px solid #752329; ">
                   <br>
 
                   <% if (orders && orders.length > 0) { %> <!-- CHECK IF MAY REVIEWS BA YUNG USER -->
@@ -96,9 +97,15 @@
                       <% orders.forEach(orders => { %>
                           <div class="card mb-4" style = "background-color: #E8E8E1;">
                               <div class="card-body p-4">
-                                  <div class="row text-center">
+                                  <div class="row" >
 
-                                    <div class="col">
+                                    <div class="col-md-2">
+                                      <h4>Contact Details:</h4>
+                                    </div>
+
+                                    <div class="col-md-4" >
+                                      
+                                      <br>
 
                                       <p>Date Ordered: <%= orders.date %></p>
                                       <p>Name: <%= orders.fName + ' ' + orders.lName %></p>
@@ -106,9 +113,15 @@
                                       <p>Payment Method: <%= orders.pMethod %></p>
                                       <p>Contact Number: <%= orders.pNumber %></p>
                                       <p>Total Price: <%= orders.totalPrice %></p>
+                                      
                                     </div>
 
-                                    <div class="col">
+                                    <div class="col-md-2" >
+                                      <h4>Order Summary:</h4>
+                                    </div>
+                                    <div class="col-md-4">
+                                      
+                                      <br>
                                       <% orders.products.forEach(products => { %>
                                         <p>Name: <%= products.product_name %></p>
                                         <p>Price: <%= products.price %></p>
@@ -116,14 +129,6 @@
 
                                       <% }) %>
                                     </div>
-
-                                      
-                                      
-
-                                      
-
-                                      
-                                      
                                   </div>
                               </div>
                           </div>
@@ -141,6 +146,8 @@
 
     <section class="bg-light py-5 py-xl-8 ">
         <h1 style="text-align: center; padding: 20px; font-family: 'Playfair Display', serif; font-weight: 900; color:#752329">Reviews</h1>
+        <hr class="featurette-divider" style="border: none; border-top: 1px solid #752329; ">
+        <br>
         <div class="container-fluid overflow-hidden">
             <div class="row gy-4 gy-md-0 gx-xxl-5 ">
                 <% user.reviews.forEach(reviews => { %>
