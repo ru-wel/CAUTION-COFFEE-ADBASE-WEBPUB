@@ -450,12 +450,9 @@
                                                         <img src="./media/<%= gear[i].gearImage %>" class="img-fluid" alt="Caution Coffee Brew Gear">
                                                     </div>
                                                     <div class="col col-5">
-                                                        <h5>
-                                                            <%= gear[i].gearName %>
-                                                        </h5>
-                                                        <p>PHP
-                                                            <%= gear[i].price %>
-                                                        </p>
+                                                        <h5 class="card-title" style="color: #f5f5dc;"><%= gear.gearName %></h5>
+
+                                                        <p class="card-text" style="color: #f5f5dc;">PHP <%= gear.price %></p>
                                                         <form action="/review_process" method="POST" id="reviewForm">
 
                                                             <div class="mb-3">
