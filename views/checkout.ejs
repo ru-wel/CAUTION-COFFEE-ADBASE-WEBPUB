@@ -61,7 +61,7 @@
                             </div>
                         </div>
 
-                        <input type="hidden" name="totalPrice" value="<%= totalPrice %>">
+                        <!-- <input type="hidden" name="totalPrice" value="<%= totalPrice %>" id="totalPrice"> -->
 
                         <div class="d-flex justify-content-end">
                             <a href="/cart" class="btn btn-dark btn-lg me-2" role="button" style="background-color: #252020; border-color: #252020;">Back to Cart</a>
@@ -142,6 +142,11 @@
             e.preventDefault();
 
             if (confirm("Would you like to proceed?") == true) {
+                var totalPrice = document.createElement("input");
+                totalPrice.setAttribute('type', 'hidden');
+                totalPrice.setAttribute('name', 'totalPrice');
+                totalPrice.setAttribute('value', "<%= totalPrice %>");
+                checkoutform.appendChild(totalPrice);
                 console.log("PROCESSING ORDER");
                 checkoutform.submit();
             } else {
