@@ -74,7 +74,7 @@
 
     <!-- WRITE REVIEW -->
     <section style = "background-color: #E8E8E1;">
-        <div class="container my-5" style = "background-color: #E8E8E1;">
+        <div class="container mb-5" style = "background-color: #E8E8E1;">
             <br><br>
             <h2 class="text-center mb-4" style="color: #752329; font-weight: 900;">Submit Your Review</h2>
             <div class="card-review p-4 mb-5 shadow-sm review-box">
@@ -103,7 +103,7 @@
                             <span id="current">0</span>
                             <span id="maximum">/ 300</span>
                         </label>
-                        <textarea id="review" name="message" rows="4" cols="50" maxlength="300" required class="form-control" placeholder="Write your review..." style = "border-color: #752329;"></textarea>
+                        <textarea id="review" class="form-control" name="message" rows="4" cols="50" maxlength="300" required placeholder="Write your review..." style = "border-color: #752329; "></textarea>
                     </div>
 
                     <button type="submit" class="btn btn-dark submit-btn" style = "margin: 0 auto; display: block; background-color: #752329;">Submit Review</button>
@@ -150,6 +150,12 @@
                 window.location.reload();
             });
         }
+    </script>
+
+    <script>
+        document.getElementById('home').removeAttribute("class", 'active');
+        document.getElementById('home').setAttribute("class", "nav-link")
+        document.getElementById('contact').setAttribute("class", 'nav-link dropdown-toggle active');
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>

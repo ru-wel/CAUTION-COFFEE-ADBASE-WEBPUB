@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DASHBOARD | CAUTION COFFEE</title>
+    <title>USER LIST | CAUTION COFFEE</title>
     <link rel="icon" href="./media/favicon-l.png" type="image/png">
 
     <!-- STYLE LINKS -->
@@ -75,6 +75,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        document.getElementById('home').removeAttribute("class", 'active');
+        document.getElementById('home').setAttribute("class", "nav-link")
+        document.getElementById('dashboard').setAttribute("class", 'nav-link dropdown-toggle active');
+    </script>
     <script>
         function searchUsers() {
             const search = document.getElementById('search').value.toLowerCase();
