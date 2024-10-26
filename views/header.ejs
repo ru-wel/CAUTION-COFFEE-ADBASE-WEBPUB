@@ -7,9 +7,16 @@
         <li class="nav-item me-3">
         <a class="nav-link" href="/feature" id="feature">Feature</a>
         </li>
-        <li class="nav-item me-3">
-          <a class="nav-link" href="/review" id="review">Reviews</a>
-          </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="contact" role="button" data-bs-toggle="dropdown" aria-expanded="false">Contact</a>     
+          <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/contact">Contact Us</a></li>
+              <li><hr class="dropdown-divider" /></li>
+              <li><a class="dropdown-item" href="/review">Reviews</a></li>
+          </ul>
+        </li>
+
         <li class="nav-item dropdown">
         <a
             class="nav-link dropdown-toggle"
@@ -30,8 +37,13 @@
         </ul>
         </li>
         <% if (isAdmin) { %>
-          <li class="nav-item">
-            <a href="/dashboard" class="nav-link">Dashboard </a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="dashboard" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Dashboard</a>     
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/dashboard">User List</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" href="/messages">Messages</a></li>
+            </ul>
           </li>
         <% } %>
       </ul>
@@ -291,9 +303,16 @@
                     <li class="nav-item">
                     <a class="nav-link" href="/feature">Feature</a>
                     </li>
-                    <li class="nav-item me-3">
-                      <a class="nav-link" href="/review">Reviews</a>
-                      </li>
+
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" id="contact" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Contact</a>     
+                      <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="/contact">Contact Us</a></li>
+                          <li><hr class="dropdown-divider" /></li>
+                          <li><a class="nav-link" href="/review">Reviews</a></li>
+                      </ul>
+                    </li>
+
                     <li class="nav-item dropdown">
                     <a
                         class="nav-link dropdown-toggle"
@@ -315,8 +334,13 @@
                     
                     </li>
                     <% if (isAdmin) { %>
-                      <li class="nav-item">
-                        <a href="/dashboard" class="nav-link">Dashboard </a>
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="dashboard" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Dashboard</a>     
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/dashboard">User List</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" href="/messages">Messages</a></li>
+                        </ul>
                       </li>
                     <% } %>
                 </ul>

@@ -1003,6 +1003,142 @@ app.get('/dashboard', async (req, res) =>{
     }
 })
 
+app.get('/contact', async (req, res) =>{
+
+    const user = auth.currentUser;
+    
+    if (user) {
+        // User is signed in
+        if (user.email === "acdizon@gmail.com"){
+            res.render('contact.ejs', { isLoggedIn : true, isAdmin: true, message : req.query.message });
+        } else {
+            res.render('contact.ejs', { isLoggedIn : true, isAdmin: false, message : req.query.message });     // isLoggedIn TO BE REFACTORED
+        }
+    } else {
+        res.render('contact.ejs', { isLoggedIn : false, isAdmin: false, message : req.query.message});
+    }
+})
+
+app.post('/contact', async (req, res) =>{
+
+    var data = {
+        name: req.body.name,
+        contact: req.body.contact,
+        email: req.body.email,
+        message: req.body.message,
+        date: new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        })
+    }
+
+    const user = auth.currentUser; 
+
+    if (user) {
+        const uid = user.uid;
+
+        try {
+            // Define the document reference
+            const userDocRef = doc(db, 'users', uid);
+
+            // Retrieve the document snapshot
+            const docSnap = await getDoc(userDocRef);
+
+            if (docSnap.exists()) {
+                // Document data is available ----- GET USERNAME FROM DATABASE BASED ON USERID
+                const userData = docSnap.data();
+                
+                // Add the new review to the "messages" collection
+                const docRef = await addDoc(collection(db, "messages"), {
+                    username: userData.username,
+                    name: data.name,
+                    contact: data.contact,
+                    email: userData.email,
+                    message: data.message,
+                    dateCreated: data.date
+                });
+                console.log("Message sent successfully.");
+
+                return res.redirect("/contact");
+            } else {
+                console.log("No such document!");
+                return res.status(404).send("User not found");
+            }
+        } catch (error) {
+            // Handle potential errors
+            console.error("Error:", error);
+            return res.status(500).send("Internal Server Error");
+        }
+    } else {
+        // User is not signed in, cannot write a review
+        const message = "Please sign in to send a message";
+        return res.redirect(`/review?message=${encodeURIComponent(message)}`);
+    }
+})
+
+app.get('/email', async (req, res) =>{
+
+    const user = auth.currentUser;
+    
+    if (user) {
+        // User is signed in
+        if (user.email === "acdizon@gmail.com"){
+            res.render('email.ejs', { isLoggedIn : true, isAdmin: true, message : req.query.message });
+        } else {
+            res.render('email.ejs', { isLoggedIn : true, isAdmin: false, message : req.query.message });     // isLoggedIn TO BE REFACTORED
+        }
+    } else {
+        res.render('email.ejs', { isLoggedIn : false, isAdmin: false, message : req.query.message});
+    }
+})
+
+app.get('/socmed', async (req, res) =>{
+
+    const user = auth.currentUser;
+    
+    if (user) {
+        // User is signed in
+        if (user.email === "acdizon@gmail.com"){
+            res.render('socmed.ejs', { isLoggedIn : true, isAdmin: true, message : req.query.message });
+        } else {
+            res.render('socmed.ejs', { isLoggedIn : true, isAdmin: false, message : req.query.message });     // isLoggedIn TO BE REFACTORED
+        }
+    } else {
+        res.render('socmed.ejs', { isLoggedIn : false, isAdmin: false, message : req.query.message});
+    }
+})
+
+app.get('/messages', async (req, res) =>{
+    try {
+        // Retrieve all documents from the "messages" collection
+
+        const q = query(collection(db, "messages"), orderBy("dateCreated", "desc"));
+        const querySnapshot = await getDocs(q);
+        const messages = [];
+
+        // Collect all messages in an array
+        querySnapshot.forEach((doc) => {
+            messages.push(doc.data());
+        });
+
+        const user = auth.currentUser;
+        if (user) {
+            // User is signed in
+            if (user.email === "acdizon@gmail.com"){ // isLoggedIn TO BE REFACTORED
+                res.render('messages.ejs', { messages, isLoggedIn : true, isAdmin: true, message : req.query.message });
+            } else {
+                res.render('messages.ejs', { messages, isLoggedIn : true, isAdmin: false, message : req.query.message });     // isLoggedIn TO BE REFACTORED
+            }
+        } else {
+            res.render('messages.ejs', { messages, isLoggedIn : false, isAdmin: false, message : req.query.message});
+        }
+    } catch (error) {
+        console.error("Error fetching messages:", error);
+        res.status(500).send("Error fetching messages"); // <------------- POSSIBLE ERROR HANDLING (SEND STATUS CODES)
+    }
+})
+
 app.listen(3000, ()  => {
     console.log("Listening at Port 3000");
 });
