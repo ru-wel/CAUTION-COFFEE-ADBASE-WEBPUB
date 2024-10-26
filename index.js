@@ -22,7 +22,6 @@ app.use(express.json()); // PARSE DATA FROM FETCH
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname,'css')));
 app.use(express.static(path.join(__dirname,'media'))); // SERVE STATIC FILES ^
-// app.use(checkAuth) // CUSTOM MIDDLEWARE
 
 app.get('/', async (req, res) =>{ // --------- NEED PA SI FIREBASE ADMIN PARA MAS MAGING SECURE
 
@@ -39,11 +38,16 @@ app.get('/', async (req, res) =>{ // --------- NEED PA SI FIREBASE ADMIN PARA MA
         });
 
         const user = auth.currentUser;
+        
         if (user) {
             // User is signed in
-            res.render('index.ejs', { reviews, isLoggedIn : true, message : req.query.message }); // EMAIL FOR PLACEHOLDER ONLY : isLoggedIn TO BE REFACTORED
+            if (user.email === "acdizon@gmail.com"){
+                res.render('index.ejs', { reviews, isLoggedIn : true, isAdmin: true, message : req.query.message });
+            } else {
+                res.render('index.ejs', { reviews, isLoggedIn : true, isAdmin: false, message : req.query.message });     // isLoggedIn TO BE REFACTORED
+            }
         } else {
-            res.render('index.ejs', { reviews, isLoggedIn : false, message : req.query.message});
+            res.render('index.ejs', { reviews, isLoggedIn : false, isAdmin: false, message : req.query.message});
         }
 
     } catch (error) {
@@ -56,9 +60,13 @@ app.get('/signup', (req, res) => {
     const user = auth.currentUser;
     if (user) {
         // User is signed in
-        res.render('signup.ejs', {isLoggedIn : true})
+        if (user.email === "acdizon@gmail.com"){
+            res.render('signup.ejs', { isLoggedIn : true, isAdmin: true, message : req.query.message });
+        } else {
+            res.render('signup.ejs', { isLoggedIn : true, isAdmin: false, message : req.query.message });     // isLoggedIn TO BE REFACTORED
+        }
     } else {
-        res.render('signup.ejs', {isLoggedIn : false});
+        res.render('signup.ejs', {isLoggedIn : false, isAdmin: false});
     }
 })
 
@@ -108,9 +116,13 @@ app.get('/login', (req, res) => {
     const user = auth.currentUser;
     if (user) {
         // User is signed in
-        res.render('login.ejs', {isLoggedIn : true})
+        if (user.email === "acdizon@gmail.com"){
+            res.render('login.ejs', { isLoggedIn : true, isAdmin: true, message : req.query.message });
+        } else {
+            res.render('login.ejs', { isLoggedIn : true, isAdmin: false, message : req.query.message });     // isLoggedIn TO BE REFACTORED
+        }
     } else {
-        res.render('login.ejs', {isLoggedIn : false});
+        res.render('login.ejs', {isLoggedIn : false, isAdmin: false});
     }
 });
 
@@ -160,7 +172,11 @@ app.get('/profile', async (req, res) => {
 
             if (docSnap.exists()) {
                 const username = docSnap.data().username;
-                const orderQuery = query(collection(db, 'orders'), where('username', '==', username)); // FIND ORDERS OF THE USER IN DB
+                const orderQuery = query(
+                    collection(db, 'orders'),
+                    where('username', '==', username),
+                    orderBy('date', 'desc') // Sorts by date in descending order (latest first)
+                );
                 const cartSnap = await getDocs(orderQuery);
                 const userData = docSnap.data();
                 let orderData = [];
@@ -168,8 +184,11 @@ app.get('/profile', async (req, res) => {
                 if (!cartSnap.empty) { // Check if there are documents in the snapshot
                     orderData = cartSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })); 
                 }
-
-                res.render('profile.ejs', { user: userData, orders: orderData, isLoggedIn: true });
+                if (user.email === "acdizon@gmail.com"){
+                    res.render('profile.ejs', { user: userData, orders: orderData, isLoggedIn : true, isAdmin: true, message : req.query.message });
+                } else {
+                    res.render('profile.ejs', { user: userData, orders: orderData, isLoggedIn: true, isAdmin: false });  // isLoggedIn TO BE REFACTORED
+                }
             } else {
                 // No user document found
                 console.log("No user document found");
@@ -202,11 +221,14 @@ app.get('/review', async function (req, res) {
         const user = auth.currentUser;
         if (user) {
             // User is signed in
-            res.render('review.ejs', { reviews, isLoggedIn : true, message : req.query.message }); // EMAIL FOR PLACEHOLDER ONLY : isLoggedIn TO BE REFACTORED
+            if (user.email === "acdizon@gmail.com"){ // isLoggedIn TO BE REFACTORED
+                res.render('review.ejs', { reviews, isLoggedIn : true, isAdmin: true, message : req.query.message });
+            } else {
+                res.render('review.ejs', { reviews, isLoggedIn : true, isAdmin: false, message : req.query.message });     // isLoggedIn TO BE REFACTORED
+            }
         } else {
-            res.render('review.ejs', { reviews, isLoggedIn : false, message : req.query.message});
+            res.render('review.ejs', { reviews, isLoggedIn : false, isAdmin: false, message : req.query.message});
         }
-
     } catch (error) {
         console.error("Error fetching reviews:", error);
         res.status(500).send("Error fetching reviews"); // <------------- POSSIBLE ERROR HANDLING (SEND STATUS CODES)
@@ -297,9 +319,13 @@ app.get('/merch', async function (req, res) {
         const user = auth.currentUser;
         if (user) {
             // User is signed in
-            res.render('merch.ejs', { merch, isLoggedIn : true, message : req.query.message }); // isLoggedIn TO BE REFACTORED
+            if (user.email === "acdizon@gmail.com"){ // isLoggedIn TO BE REFACTORED
+                res.render('merch.ejs', { merch, isLoggedIn : true, isAdmin: true, message : req.query.message });
+            } else {
+                res.render('merch.ejs', { merch, isLoggedIn : true, isAdmin: false, message : req.query.message });     // isLoggedIn TO BE REFACTORED
+            }
         } else {
-            res.render('merch.ejs', { merch, isLoggedIn : false, message : req.query.message});
+            res.render('merch.ejs', { merch, isLoggedIn : false, isAdmin: false, message : req.query.message});
         }
 
     } catch (error) {
@@ -411,9 +437,13 @@ app.get('/menu', async function (req, res) {
         const user = auth.currentUser;
         if (user) {
             // User is signed in
-            res.render('menu.ejs', { menu, isLoggedIn : true, isFiltered, message : req.query.message }); // EMAIL FOR PLACEHOLDER ONLY : isLoggedIn TO BE REFACTORED
+            if (user.email === "acdizon@gmail.com"){ // isLoggedIn TO BE REFACTORED
+                res.render('menu.ejs', { menu, isLoggedIn : true, isAdmin: true, isFiltered, message : req.query.message });
+            } else {
+                res.render('menu.ejs', { menu, isLoggedIn : true, isAdmin: false, isFiltered, message : req.query.message });     // isLoggedIn TO BE REFACTORED
+            }
         } else {
-            res.render('menu.ejs', { menu, isLoggedIn : false, isFiltered, message : req.query.message});
+            res.render('menu.ejs', { menu, isLoggedIn : false, isAdmin: false, isFiltered, message : req.query.message});
         }
 
     } catch (error) {
@@ -493,9 +523,13 @@ app.get('/gear', async function (req, res) {
         const user = auth.currentUser;
         if (user) {
             // User is signed in
-            res.render('gear.ejs', { gear, isLoggedIn : true, isFiltered, message : req.query.message }); // EMAIL FOR PLACEHOLDER ONLY : isLoggedIn TO BE REFACTORED
+            if (user.email === "acdizon@gmail.com"){ // isLoggedIn TO BE REFACTORED
+                res.render('gear.ejs', { gear, isLoggedIn : true, isAdmin: true, isFiltered, message : req.query.message });
+            } else {
+                res.render('gear.ejs', { gear, isLoggedIn : true, isAdmin: false, isFiltered, message : req.query.message });     // isLoggedIn TO BE REFACTORED
+            }
         } else {
-            res.render('gear.ejs', { gear, isLoggedIn : false, isFiltered, message : req.query.message});
+            res.render('gear.ejs', { gear, isLoggedIn : false, isAdmin: false, isFiltered, message : req.query.message});
         }
 
     } catch (error) {
@@ -536,13 +570,17 @@ app.get('/cart', async (req, res) => {
                     if (cartDoc.exists()) {
                         const cartData = cartDoc.data();
                         // Render the cart page with the cart data
-                        return res.render('cart.ejs', { cart: cartData, isLoggedIn: true });
+                        if (user.email === "acdizon@gmail.com"){ // isLoggedIn TO BE REFACTORED
+                            return res.render('cart.ejs', { cart: cartData, isLoggedIn : true, isAdmin: true, message : req.query.message });
+                        } else {
+                            return res.render('cart.ejs', { cart: cartData, isLoggedIn : true, isAdmin: false, message : req.query.message });     // isLoggedIn TO BE REFACTORED
+                        }
                     } else {
                         console.log("No such cart document!");
                     }
                 } else {
                     // Render the cart page with empty data if the cart is empty
-                    return res.render('cart.ejs', { cart: "", isLoggedIn: true });
+                    return res.render('cart.ejs', { cart: "", isLoggedIn: true, isAdmin: false, });
                 }
             } else {
                 console.log("No such user document!");
@@ -777,9 +815,13 @@ app.get('/search', (req, res) => {
     
     if (user) {
         // User is signed in
-        res.render('search.ejs', { product, query, isLoggedIn : true, message : req.query.message }); // isLoggedIn TO BE REFACTORED
+        if (user.email === "acdizon@gmail.com"){ // isLoggedIn TO BE REFACTORED
+            res.render('search.ejs', { product, query, isLoggedIn : true, isAdmin: true, message : req.query.message });
+        } else {
+            res.render('search.ejs', { product, query, isLoggedIn : true, isAdmin: false, message : req.query.message });     // isLoggedIn TO BE REFACTORED
+        }
     } else {
-        res.render('search.ejs', { product, query, isLoggedIn : false, message : req.query.message});
+        res.render('search.ejs', { product, query, isLoggedIn : false, isAdmin: false, message : req.query.message});
     }
 })
 
@@ -787,9 +829,13 @@ app.get('/feature', (req, res) => {
     const user = auth.currentUser;
         if (user) {
             // User is signed in
-            res.render('feature.ejs', { isLoggedIn : true, message : req.query.message }); // isLoggedIn TO BE REFACTORED
+            if (user.email === "acdizon@gmail.com"){ // isLoggedIn TO BE REFACTORED
+                res.render('feature.ejs', { isLoggedIn : true, isAdmin: true, message : req.query.message });
+            } else {
+                res.render('feature.ejs', { isLoggedIn : true, isAdmin: false, message : req.query.message });     // isLoggedIn TO BE REFACTORED
+            }
         } else {
-            res.render('feature.ejs', { isLoggedIn : false, message : req.query.message});
+            res.render('feature.ejs', { isLoggedIn : false, isAdmin: false, message : req.query.message});
         }
 });
 
@@ -825,7 +871,11 @@ app.get('/checkout', async (req, res) => {
                     if (cartDoc.exists()) {
                         // Cart data is available
                         const cartData = cartDoc.data();
-                        res.render('checkout.ejs', { cart: cartData, isLoggedIn: true });
+                        if (user.email === "acdizon@gmail.com"){ // isLoggedIn TO BE REFACTORED
+                            res.render('checkout.ejs', { cart: cartData, isLoggedIn : true, isAdmin: true, message : req.query.message });
+                        } else {
+                            res.render('checkout.ejs', { cart: cartData, isLoggedIn : true, isAdmin: false, message : req.query.message });     // isLoggedIn TO BE REFACTORED
+                        }
                     } else {
                         // Cart document does not exist
                         console.log("No such document!");
@@ -932,6 +982,26 @@ app.post('/checkout', async (req, res) => {
         res.status(401).send("Please log in to checkout");
     }
 });
+
+app.get('/dashboard', async (req, res) =>{
+    const user = auth.currentUser;
+    if (user.email === "acdizon@gmail.com"){
+        try {
+            const users = [];
+            const querySnapshot = await getDocs(collection(db, "users"));
+            querySnapshot.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                users.push({ id: doc.id, ...doc.data() });
+            });
+            res.render('dashboard.ejs', { users, isLoggedIn : true, isAdmin: true, })
+        } catch (error) {
+            console.log(error);
+            res.status(500).send("An error has occurred!");
+        }
+    } else {
+        res.status(401).send("You are not an admin");
+    }
+})
 
 app.listen(3000, ()  => {
     console.log("Listening at Port 3000");

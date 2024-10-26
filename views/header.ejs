@@ -29,6 +29,11 @@
             <li><a class="dropdown-item" href="/merch">Merchandise</a></li> 
         </ul>
         </li>
+        <% if (isAdmin) { %>
+          <li class="nav-item">
+            <a href="/dashboard" class="nav-link">Dashboard </a>
+          </li>
+        <% } %>
       </ul>
   </div>
 
@@ -299,6 +304,7 @@
                     >
                         Products
                     </a>
+                    
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/menu">Menu</a></li>
                         <li><hr class="dropdown-divider" /></li>
@@ -306,7 +312,13 @@
                         <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="/merch">Merchandise</a></li>
                     </ul>
+                    
                     </li>
+                    <% if (isAdmin) { %>
+                      <li class="nav-item">
+                        <a href="/dashboard" class="nav-link">Dashboard </a>
+                      </li>
+                    <% } %>
                 </ul>
 
                 
