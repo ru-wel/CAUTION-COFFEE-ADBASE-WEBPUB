@@ -39,11 +39,11 @@
                                 <figure>
                                     <figcaption>
                                         <blockquote class="mb-4">
-                                            <h4 class="mb-2 name" style="border: 2px solid #752329; border-radius: 50px; padding: 10px 15px; background-color: #752329; color: white !important; display: inline-block; text-align: center; font-size: 15px; margin: 0 auto;"><%= messages.name %> (@<%= messages.username %>)</h4> <!-- COPY NIYO LANG TO <%= messages.message %> <%= messages.username %> PARA MAINPUT YUNG MESSAGE-->
-                                            <h4 class="mb-2" style="border: 2px solid #752329; border-radius: 50px; padding: 10px 15px; background-color: #752329; color: white !important; display: inline-block; text-align: center; font-size: 15px; margin: 0 auto;"><%= messages.contact %> | <%= messages.email %></h4> <!-- COPY NIYO LANG TO <%= messages.contact %> <%= messages.email %> PARA MAINPUT YUNG CONTACT-->
+                                            <h4 class="mb-2 name" style="border: 2px solid #752329; border-radius: 50px; padding: 10px 15px; background-color: #752329; color: white !important; display: inline-block; text-align: center; font-size: 15px; margin: 0 auto;"><%= messages.name %> (@<%= messages.username %>)</h4> 
+                                            <h4 class="mb-2 email" style="border: 2px solid #752329; border-radius: 50px; padding: 10px 15px; background-color: #752329; color: white !important; display: inline-block; text-align: center; font-size: 15px; margin: 0 auto;"><%= messages.contact %> | <%= messages.email %></h4> 
                                             <br><br>
-                                            <p class="card-text message" style="font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 18px; font-style: normal;"><%= messages.message %></p> <!-- COPY NIYO LANG TO <%= messages.message %> PARA MAINPUT YUNG MESSAGE-->
-                                            <p class="card-text"><%= messages.dateCreated %></p> <!-- COPY NIYO LANG TO <%= messages.dateCreated %> PARA MAINPUT YUNG DATE-->
+                                            <p class="card-text message" style="font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 18px; font-style: normal;"><%= messages.message %></p> 
+                                            <p class="card-text"><%= messages.dateCreated %></p> 
                                         </blockquote>
                                     </figcaption>
                                 </figure>
@@ -75,12 +75,11 @@
             const messages = document.querySelectorAll('.message-item'); 
 
             messages.forEach(message => {
-                const username = message.querySelector('.username').innerText.toLowerCase();
                 const name = message.querySelector('.name').innerText.toLowerCase();
                 const email = message.querySelector('.email').innerText.toLowerCase();
                 const textmessage = message.querySelector('.message').innerText.toLowerCase();
 
-                if (username.includes(search) || name.includes(search) || email.includes(search) || textmessage.includes(search)) {
+                if (name.includes(search) || email.includes(search) || textmessage.includes(search)) {
                     message.style.display = ""; 
                 } else {
                     message.style.display = "none"; 
