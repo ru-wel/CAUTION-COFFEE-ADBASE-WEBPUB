@@ -23,7 +23,7 @@
 
         <h1 style="text-align: center; padding: 20px; font-family: 'Playfair Display', serif; font-weight: 900; color:#752329">Customer Messages</h1>
 
-        <input class="mb-5" type="text" id="search" placeholder="Search" style="padding: 10px; width: 40%; text-align: center;" onkeyup="searchMessages()">
+        <input class="mb-5" type="text" id="search" placeholder="Search" style="padding: 10px; width: 30%; text-align: center; margin: 20px; border-radius: 8px; border: 2px solid #752329;" onkeyup="searchMessages()">
         <br>
         
         <div class="container-fluid overflow-hidden"> 
@@ -31,26 +31,26 @@
 
                 <% if (messages && messages.length >= 1) { %> <!-- CHECK IF MAY LAMAN BA YUNG REVIEWS DATABASE -->
                     <% messages.forEach(messages => { %>
-                        <!-- REVIEW CARDS -->
+                        <!-- MESSAGE CARDS -->
                         <div class="col-12 col-md-4 mb-3 message-item">
                             <div class="card border-0 border-bottom shadow-sm rounded-card" style="border-color: #752329; background-color:#E8E8E1">
                                 <div class="card-body p-4 p-xxl-5">
                                 <figure>
                                     <figcaption>
-                                        <blockquote class="bsb-blockquote-icon mb-4">
-                                            <p class="card-text message" style="font-family: 'Poppins', sans-serif; font-weight: 400; font-style: normal;"><%= messages.message %></p> <!-- COPY NIYO LANG TO <%= messages.message %> PARA MAINPUT YUNG MESSAGE-->
+                                        <blockquote class="mb-4">
+                                            <h4 class="mb-2 name" style="border: 2px solid #752329; border-radius: 50px; padding: 10px 15px; background-color: #752329; color: white !important; display: inline-block; text-align: center; font-size: 15px; margin: 0 auto;"><%= messages.name %> (@<%= messages.username %>)</h4> <!-- COPY NIYO LANG TO <%= messages.message %> <%= messages.username %> PARA MAINPUT YUNG MESSAGE-->
+                                            <h4 class="mb-2" style="border: 2px solid #752329; border-radius: 50px; padding: 10px 15px; background-color: #752329; color: white !important; display: inline-block; text-align: center; font-size: 15px; margin: 0 auto;"><%= messages.contact %> | <%= messages.email %></h4> <!-- COPY NIYO LANG TO <%= messages.contact %> <%= messages.email %> PARA MAINPUT YUNG CONTACT-->
+                                            <br><br>
+                                            <p class="card-text message" style="font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 18px; font-style: normal;"><%= messages.message %></p> <!-- COPY NIYO LANG TO <%= messages.message %> PARA MAINPUT YUNG MESSAGE-->
+                                            <p class="card-text"><%= messages.dateCreated %></p> <!-- COPY NIYO LANG TO <%= messages.dateCreated %> PARA MAINPUT YUNG DATE-->
                                         </blockquote>
-                                        <h4 class="mb-2 name"><%= messages.name %></h4> <!-- COPY NIYO LANG TO <%= messages.message %> PARA MAINPUT YUNG MESSAGE-->
-                                        <h4 class="mb-2 username"><%= messages.username %></h4> <!-- COPY NIYO LANG TO <%= messages.username %> PARA MAINPUT YUNG NAME-->
-                                        <h4 class="mb-2"><%= messages.contact %></h4> <!-- COPY NIYO LANG TO <%= messages.contact %> PARA MAINPUT YUNG CONTACT-->
-                                        <h4 class="mb-2 email"><%= messages.email %></h4> <!-- COPY NIYO LANG TO <%= messages.email %> PARA MAINPUT YUNG EMAIL-->
-                                        <p class="card-text"><%= messages.dateCreated %></p> <!-- COPY NIYO LANG TO <%= messages.dateCreated %> PARA MAINPUT YUNG DATE-->
                                     </figcaption>
                                 </figure>
                                 </div>
                             </div>
+                            <br><br><br><br>
                         </div>
-                        <!-- REVIEW CARDS -->
+                        <!-- MESSAGE CARDS -->
 
                     <% }) %>
                 <% } %>
