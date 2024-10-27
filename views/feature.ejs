@@ -182,7 +182,8 @@
             </div>
             <div class="col-md-6" style="text-align: center;">
               <br>
-              <img src="./media/location.JPG" alt="Location Image" class="img-fluid" style="max-width: 100%; height: auto;">
+              <!-- <img src="./media/location.JPG " alt="Location Image " class="img-fluid " style="max-width: 100%; height: auto; "> -->
+              <div id = "caution-map" style = "height: 330px; width: 100%;"></div>
             </div>
         </div>
         </div>
@@ -200,4 +201,21 @@
       document.getElementById('home').setAttribute("class", "nav-link")
       document.getElementById('feature').setAttribute("class", 'nav-link active');
     </script>
+    <script>
+  
+      function initMap() {
+        const businessLocation = { lat: 15.166291327636827, lng: 120.6178745035489 }; 
+        const map = new google.maps.Map(document.getElementById("caution-map"), {
+          zoom: 15,
+          center: businessLocation,
+        });
+        const marker = new google.maps.Marker({
+          position: businessLocation,
+          map: map,
+          title: "Caution Coffee Location",
+        });
+      }
+  </script>
+  
+  <script async defer src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyBS_YqCosNJfq_hZZZPvkGs9Jmep3tOR_4&callback=initMap"></script>
 </body>
