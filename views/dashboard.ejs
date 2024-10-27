@@ -21,12 +21,16 @@
 
 <section style="background-color: #eee;">
     <h1 style="text-align: center; padding: 20px; font-family: 'Playfair Display', serif; font-weight: 900; color:#752329;">User List</h1>
+
+    <input class="mb-5" type="text" id="search" placeholder="Search" style="padding: 10px; width: 30%; text-align: center; margin: 20px; border-radius: 8px; border: 2px solid #752329;" onkeyup="searchUsers()">
+    <br>
+
     <div class="container-fluid overflow-hidden">
         <div class="row gy-4 gy-md-0"> 
             
             <% if (users && users.length > 0) { %>
                 <% users.forEach(user => { %>
-                    <div class="col-12 col-md-4 mb-3"> 
+                    <div class="col-12 col-md-4 mb-3 user-item"> 
                         <div class="card border-0 shadow-sm rounded" style="border: 1px solid #752329; background-color: #f8f9fa; max-width: 350px; margin: 0 auto;">
                             <div class="card-body p-4">
                                 <figure>
