@@ -19,57 +19,36 @@
 
     <%- include('header.ejs') %>
 
-    <section style="background-color: #eee;">
-        <h1 style="text-align: center; padding: 20px; font-family: 'Playfair Display', serif; font-weight: 900; color:#752329"> User List</h1>
-        <div class="container py-3">
-
-            <input class="mb-5" type="text" id="search" placeholder="Search" style="padding: 10px; width: 40%; text-align: center;" onkeyup="searchUsers()">
-            <br>
-
-            <div class="row"> 
-
-            <% if (users && users.length > 0) { %> 
-                <% users.forEach(user => { %> 
-                    <div class="col-lg-6 user-item">
-                        <div class="card mb-4">
-                          <div class="card-body">
-                            <div class="row">
-                              <div class="col-sm-3">
-                                <p class="mb-0">Full Name</p>
-                              </div>
-                              <div class="col-sm-9">
-                                <p class="text-muted mb-0 fullname"><%= user.fName + " " + user.lName %></p>
-                              </div>
+<section style="background-color: #eee;">
+    <h1 style="text-align: center; padding: 20px; font-family: 'Playfair Display', serif; font-weight: 900; color:#752329;">User List</h1>
+    <div class="container-fluid overflow-hidden">
+        <div class="row gy-4 gy-md-0"> 
+            
+            <% if (users && users.length > 0) { %>
+                <% users.forEach(user => { %>
+                    <div class="col-3 col-sm-5 mb-3 me-1"> 
+                        <div class="card border-0 shadow-sm rounded" style="border: 1px solid #752329; background-color: #f8f9fa; max-width: 350px; margin: 0 auto;">
+                            <div class="card-body p-4">
+                                <figure>
+                                    <figcaption>
+                                        <p class="text-muted mb-0 fullname" style="color: #752329 !important; font-weight: 600 !important; font-size: 1.2rem;"><%= user.fName + " " + user.lName %></p>
+                                        <p class="text-muted mb-0 email" style="font-size: 0.9rem; font-weight: 500 !important;"><%= user.email %></p>
+                                        <br>
+                                        <p class="text-muted mb-0 username" style="border: 2px solid #752329; border-radius: 50px; padding: 10px 15px; background-color: #752329; color: white !important; display: inline-block; text-align: center; margin: 0 auto;"><%= user.username %></p>
+                                    </figcaption>
+                                </figure>
                             </div>
-                            <hr>
-                            <div class="row">
-                              <div class="col-sm-3">
-                                <p class="mb-0">Email</p>
-                              </div>
-                              <div class="col-sm-9">
-                                <p class="text-muted mb-0 email"><%= user.email %></p>
-                              </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                              <div class="col-sm-3">
-                                <p class="mb-0">Username</p>
-                              </div>
-                              <div class="col-sm-9">
-                                <p class="text-muted mb-0 username"><%= user.username %></p>
-                              </div>
-                            </div>
-                          </div>
                         </div>
                     </div>
                 <% }) %>
             <% } else { %>
-                    <h2>You Have No Users!</h2>
+                <h2>You Have No Users!</h2>
             <% } %>
             
-          </div>
         </div>
-    </section>
+    </div>
+</section>
+
 
     <%- include('footer.ejs') %>
 
