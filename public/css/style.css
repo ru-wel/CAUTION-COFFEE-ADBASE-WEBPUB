@@ -62,6 +62,8 @@ button:focus {
 }
 
 
+
+
 @media only screen and (min-width: 990px) {
 
     #navbarSupportedContent, #navbar3{
@@ -101,6 +103,10 @@ button:focus {
 
     .tab-btn{
       display:none important;
+    }
+
+    #btn-contact{
+      display: none !important;
     }
 
 }
@@ -143,6 +149,10 @@ button:focus {
       max-width: 750px;
     }
 
+    #desk-btn{
+      display: none !important;
+    }
+
 }
 
 @media (max-width: 767px) {
@@ -163,6 +173,10 @@ button:focus {
       width: 65%; 
       max-width: 750px;
     }
+
+    #desk-btn{
+      display: none !important;
+    }
 }
 
 @media (min-width: 768px) {
@@ -172,4 +186,7 @@ button:focus {
   #logo-sm{
     display: none;
   }
+
+
+  
 }
