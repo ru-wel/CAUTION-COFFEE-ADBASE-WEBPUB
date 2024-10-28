@@ -1,110 +1,597 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MERCH | CAUTION COFFEE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"/>
+    <title>GEAR | CAUTION COFFEE</title>
+    <link rel="icon" href="./media/favicon-l.png" type="image/png">
+
+    <!-- STYLE LINKS -->
     <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/bs-brain@2.0.4/components/testimonials/testimonial-3/assets/css/testimonial-3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"></link>
 </head>
 
 <body>
 
     <%- include('header.ejs') %>
 
+        <section class="coffeenbrewgear">
 
-    <section class="coffee&brewgear">
-        <div class="container">
-            <br><h2 style="text-align: center;">BREW GEAR</h2>
-            <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
-                <% gear.reverse().forEach(gear => { %>
-                    <% if (gear.category === "brew_gear") { %>
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="">
-                                <div class="card-body">
-                                    <h5 class="card-title"><%= gear.gearName %></h5>
-                                    <p class="card-text">PHP <%= gear.price %></p>
-                                </div>
-                            </div>
-                        </div>
-                    <% } %>
-                <% }) %>
+            <div style="display: inline-block; padding: 0 0 0 40px;">
+                <form action="/gear" method="get" id="formsort">
+                    <br>
+                    <label for="filter">Sort By:</label>
+                    <select id="filter" name="filter">
+                    <option value="">Default</option>
+                    <option value="atoz">A to Z</option>
+                    <option value="pricelth">Price: Low to High</option>
+                    <option value="pricehtl">Price: High to Low</option>
+                </select>
+                    <button class="btn btn-dark" style="background-color: #752329;">SORT</button>
+                </form>
             </div>
 
-            <br><hr><br><h2 style="text-align: center;">COFFEE BEANS</h2>
-            <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
-                <% gear.reverse().forEach(gear => { %>
-                    <% if (gear.category === "beans") { %>
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="">
-                                <div class="card-body">
-                                    <h5 class="card-title"><%= gear.gearName %></h5>
-                                    <p class="card-text">PHP <%= gear.price %></p>
+            <% if (!isFiltered) { %>
+                <!-- DEFAULT DISPLAY -->
+                <div class="container">
+                    <br>
+                    <h1 style="font-weight: 900; text-align:center; color:#752329">COFFEE & BREW GEAR</h1>
+                    <hr>
+                    <br>
+                    <h2 style="text-align: center; font-weight:900; color:#82383e">BREW GEAR</h2>
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 p-4 justify-content-center">
+                        <% let modalIndex = 0; %>
+                            <% gear.reverse().forEach(gear => { %>
+                                <% if (gear.category === "brew_gear") { %>
+                                    <div class="col">
+                                        <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
+                                            <div style="border: 2px solid #bbb; border-radius: 8px; margin: 10px;">
+                                                <img src="./media/<%= gear.gearImage %>" class="img-fluid" style="width: 100%; height: auto; display: block; border-radius: 6px;" alt="Brew Gear">
+                                            </div>
+                                            <div class="card-body">
+                                                <h5 class="card-title" style="color: #f5f5dc;"><%=gear.gearName%></h5>
+                                                <p class="card-text" style="color: #f5f5dc;">PHP <%= gear.price %></p>
+                                                <button class="btn btn-dark minus" style="background-color: #e8e8e1; color: #000000;">-</button>
+                                                <input type="number" name="" id="" class="quantity" value="0" style="display: inline-block; width: 35.41px; height: 38px; background-color: #e8e8e1;">
+                                                <button class="btn btn-dark plus" style="background-color: #e8e8e1; color: #000000;">+</button>
+
+                                                <button class="btn btn-dark atc desk-tab-btn" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
+                                                <br><br>
+                                                <button type="button" class="btn btn-md desk-tab-btn" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex %>">Quick View</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" id="productView<%= modalIndex %>" tabindex="-1" aria-labelledby="exampleModalLabel<%= modalIndex %>" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel<%= modalIndex %>" style="font-weight:900; color:#752329">BREW GEAR</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col col-7">
+                                                            <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="Brew Gear">
+                                                        </div>
+                                                        <div class="col col-5">
+                                                            <h5 class="card-title"><%= gear.gearName %></h5>
+                                                            <p class="card-text">PHP <%= gear.price %></p>
+                                                                
+                                                            <form action="/review_process" method="POST" id="reviewForm"></form>
+
+                                                            <div class="mb-3">
+                                                                <label for="rating" class="form-label">Your Rating</label>
+                                                                <select id="rating" name="rating" class="form-select" style="border-color: #752329;">
+                                                                        <option value="1">☕ Bean There, Done That (Poor)</option>
+                                                                        <option value="2">☕☕ A Latte Room for Improvement (Fair)</option>
+                                                                        <option value="3">☕☕☕ Just Brew-tiful (Satisfactory)</option>
+                                                                        <option value="4">☕☕☕☕ Brew-tifully Good (Very Good)</option>
+                                                                        <option value="5">☕☕☕☕☕ Espresso-tastic (Excellent)</option>
+                                                                    </select>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="review" class="form-label">Your Review
+                                                                        <span id="current">0</span>
+                                                                        <span id="maximum">/ 300</span>
+                                                                    </label>
+                                                                <textarea id="review" name="message" rows="4" cols="50" maxlength="300" required class="form-control" placeholder="Write your review..." style="border-color: #752329;"></textarea>
+                                                            </div>
+
+                                                            <button type="submit" class="btn btn-dark submit-btn" style="margin: 0 auto; display: block; background-color: #752329;">Submit Review</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% modalIndex++; %>
+                                        <% } %>
+                                            <% }) %>
+                    </div>
+
+                    <br>
+                    <hr><br>
+                    <h2 style="text-align: center; font-weight: 900; color:#82383e">COFFEE BEANS</h2>
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 p-4 justify-content-center">
+                        <% let modalIndex2 = 5; %>
+                            <% gear.reverse().forEach(gear => { %>
+                                <% if (gear.category === "beans") { %>
+                                    <div class="col">
+                                        <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
+                                            <div style="border: 2px solid #bbb; border-radius: 8px; margin: 10px;">
+                                                <img src="./media/<%= gear.gearImage %>" class="img-fluid" style="width: 100%; height: auto; display: block; border-radius: 6px;" alt="Coffee Beans">
+                                            </div>
+                                            <div class="card-body">
+                                                <h5 class="card-title" style="color: #f5f5dc;"><%=gear.gearName%></h5>
+                                                <p class="card-text" style="color: #f5f5dc;">PHP <%= gear.price %></p>
+                                                <button class="btn btn-dark minus" style="background-color: #e8e8e1; color: #000000;">-</button>
+                                                <input type="number" name="" id="" class="quantity" value="0" style="display: inline-block; width: 35.41px; height: 38px; background-color: #e8e8e1;">
+                                                <button class="btn btn-dark plus" style="background-color: #e8e8e1; color: #000000;">+</button>
+                                                <button class="btn btn-dark atc desk-tab-btn" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
+                                                <br><br>
+                                                <button type="button" class="btn btn-md desk-tab-btn" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex2 %>">Quick View</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" id="productView<%= modalIndex2 %>" tabindex="-1" aria-labelledby="exampleModalLabel<%= modalIndex2 %>" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel<%= modalIndex2 %>" style="font-weight:900; color:#752329">COFFEE BEANS</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col col-7">
+                                                            <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="Coffee Beans">
+                                                        </div>
+                                                        <div class="col col-5">
+                                                            <h5 class="card-title"><%= gear.gearName %></h5>
+                                                            <p class="card-text">PHP <%= gear.price %></p>
+                                                            <form action="/review_process" method="POST" id="reviewForm"></form>
+
+                                                            <div class="mb-3">
+                                                                <label for="rating" class="form-label">Your Rating</label>
+                                                                <select id="rating" name="rating" class="form-select" style="border-color: #752329;">
+                                                                        <option value="1">☕ Bean There, Done That (Poor)</option>
+                                                                        <option value="2">☕☕ A Latte Room for Improvement (Fair)</option>
+                                                                        <option value="3">☕☕☕ Just Brew-tiful (Satisfactory)</option>
+                                                                        <option value="4">☕☕☕☕ Brew-tifully Good (Very Good)</option>
+                                                                        <option value="5">☕☕☕☕☕ Espresso-tastic (Excellent)</option>
+                                                                    </select>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="review" class="form-label">Your Review
+                                                                        <span id="current">0</span>
+                                                                        <span id="maximum">/ 300</span>
+                                                                    </label>
+                                                                <textarea id="review" name="message" rows="4" cols="50" maxlength="300" required class="form-control" placeholder="Write your review..." style="border-color: #752329;"></textarea>
+                                                            </div>
+
+                                                            <button type="submit" class="btn btn-dark submit-btn" style="margin: 0 auto; display: block; background-color: #752329;">Submit Review</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% modalIndex2++; %>
+                                        <% } %>
+                                            <% }) %>
+                    </div>
+
+                    <br>
+                    <hr><br>
+                    <h2 style="text-align: center; font-weight: 900; color:#82383e">TORANI SYRUPS</h2>
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 p-4 justify-content-center">
+                        <% let modalIndex3 = 8; %>
+                            <% gear.reverse().forEach(gear => { %>
+                                <% if (gear.category === "syrups") { %>
+                                    <div class="col">
+                                        <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
+                                            <div style="border: 2px solid #bbb; border-radius: 8px; margin: 10px;">
+                                                <img src="./media/<%= gear.gearImage %>" class="img-fluid" style="width: 100%; height: auto; display: block; border-radius: 6px;" alt="Torani Syrups">
+                                            </div>
+                                            <div class="card-body">
+                                                <h5 class="card-title" style="color: #f5f5dc;"><%= gear.gearName %></h5>
+                                                
+                                                <p class="card-text" style="color: #f5f5dc;">PHP <%= gear.price %></p>
+                                            
+                                                <button class="btn btn-dark minus" style="background-color: #e8e8e1; color: #000000;">-</button>
+                                                <input type="number" name="" id="" class="quantity" value="0" style="display: inline-block; width: 35.41px; height: 38px; background-color: #e8e8e1;">
+                                                <button class="btn btn-dark plus" style="background-color: #e8e8e1; color: #000000;">+</button>
+                                                <button class="btn btn-dark atc desk-tab-btn" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
+                                                <br><br>
+                                                <button type="button" class="btn btn-md desk-tab-btn" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex3 %>">Quick View</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" id="productView<%= modalIndex3 %>" tabindex="-1" aria-labelledby="exampleModalLabel<%= modalIndex3 %>" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel<%= modalIndex3 %>" style="font-weight:900; color:#752329">TORANI SYRUPS</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col col-7">
+                                                            <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="Torani Syrup">
+                                                        </div>
+                                                        <div class="col col-5">
+                                                            <h5 class="card-title" style="color: #f5f5dc;"><%= gear.gearName %></h5>
+                                                
+                                                            <p class="card-text" style="color: #f5f5dc;">PHP <%= gear.price %></p>
+                                                            <form action="/review_process" method="POST" id="reviewForm"></form>
+
+                                                            <div class="mb-3">
+                                                                <label for="rating" class="form-label">Your Rating</label>
+                                                                <select id="rating" name="rating" class="form-select" style="border-color: #752329;">
+                                                                        <option value="1">☕ Bean There, Done That (Poor)</option>
+                                                                        <option value="2">☕☕ A Latte Room for Improvement (Fair)</option>
+                                                                        <option value="3">☕☕☕ Just Brew-tiful (Satisfactory)</option>
+                                                                        <option value="4">☕☕☕☕ Brew-tifully Good (Very Good)</option>
+                                                                        <option value="5">☕☕☕☕☕ Espresso-tastic (Excellent)</option>
+                                                                    </select>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="review" class="form-label">Your Review
+                                                                        <span id="current">0</span>
+                                                                        <span id="maximum">/ 300</span>
+                                                                    </label>
+                                                                <textarea id="review" name="message" rows="4" cols="50" maxlength="300" required class="form-control" placeholder="Write your review..." style="border-color: #752329;"></textarea>
+                                                            </div>
+
+                                                            <button type="submit" class="btn btn-dark submit-btn" style="margin: 0 auto; display: block; background-color: #752329;">Submit Review</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% modalIndex3++; %>
+                                        <% } %>
+                                            <% }) %>
+                    </div>
+
+                    <br>
+                    <hr><br>
+                    <h2 style="text-align: center; font-weight: 900; color:#82383e">MILKS</h2>
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 p-4 justify-content-center">
+                        <% let modalIndex4 = 11; %>
+                            <% gear.reverse().forEach(gear => { %>
+                                <% if (gear.category === "milk") { %>
+                                    <div class="col">
+                                        <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
+                                            <div style="border: 2px solid #bbb; border-radius: 8px; margin: 10px;">
+                                                <img src="./media/<%= gear.gearImage %>" class="img-fluid" style="width: 100%; height: auto; display: block; border-radius: 6px;" alt="Milks">
+                                            </div>
+                                            <div class="card-body">
+                                                <h5 class="card-title" style="color: #f5f5dc;"><%= gear.gearName %></h5>
+
+                                                <p class="card-text" style="color: #f5f5dc;">PHP <%= gear.price %></p>
+                                                    
+                                                <button class="btn btn-dark minus" style="background-color: #e8e8e1; color: #000000;">-</button>
+                                                <input type="number" name="" id="" class="quantity" value="0" style="display: inline-block; width: 35.41px; height: 38px; background-color: #e8e8e1;">
+                                                <button class="btn btn-dark plus" style="background-color: #e8e8e1; color: #000000;">+</button>
+                                                <button class="btn btn-dark atc desk-tab-btn" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
+                                                <br><br>
+                                                <button type="button" class="btn btn-md desk-tab-btn" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex4 %>">Quick View</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" id="productView<%= modalIndex4 %>" tabindex="-1" aria-labelledby="exampleModalLabel<%= modalIndex4 %>" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel<%= modalIndex4 %>" style="font-weight:900; color:#752329">MILKS</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col col-7">
+                                                            <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="Milks">
+                                                        </div>
+                                                        <div class="col col-5">
+                                                            <h5 class="card-title" style="color: #f5f5dc;"><%= gear.gearName %></h5>
+
+                                                            <p class="card-text" style="color: #f5f5dc;">PHP <%= gear.price %></p>
+                                                            <form action="/review_process" method="POST" id="reviewForm"></form>
+
+                                                            <div class="mb-3">
+                                                                <label for="rating" class="form-label">Your Rating</label>
+                                                                <select id="rating" name="rating" class="form-select" style="border-color: #752329;">
+                                                                        <option value="1">☕ Bean There, Done That (Poor)</option>
+                                                                        <option value="2">☕☕ A Latte Room for Improvement (Fair)</option>
+                                                                        <option value="3">☕☕☕ Just Brew-tiful (Satisfactory)</option>
+                                                                        <option value="4">☕☕☕☕ Brew-tifully Good (Very Good)</option>
+                                                                        <option value="5">☕☕☕☕☕ Espresso-tastic (Excellent)</option>
+                                                                    </select>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="review" class="form-label">Your Review
+                                                                        <span id="current">0</span>
+                                                                        <span id="maximum">/ 300</span>
+                                                                    </label>
+                                                                <textarea id="review" name="message" rows="4" cols="50" maxlength="300" required class="form-control" placeholder="Write your review..." style="border-color: #752329;"></textarea>
+                                                            </div>
+
+                                                            <button type="submit" class="btn btn-dark submit-btn" style="margin: 0 auto; display: block; background-color: #752329;">Submit Review</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% modalIndex4++; %>
+                                        <% } %>
+                                            <% }) %>
+                    </div>
+
+                    <br>
+                    <hr><br>
+                    <h2 style="text-align: center; font-weight: 900; color:#82383e">CUPS</h2>
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 p-4 justify-content-center">
+                        <% let modalIndex5 = 17; %>
+                            <% gear.reverse().forEach(gear => { %>
+                                <% if (gear.category === "cups") { %>
+                                    <div class="col">
+                                        <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
+                                            <div style="border: 2px solid #bbb; border-radius: 8px; margin: 10px;">
+                                                <img src="./media/<%= gear.gearImage %>" class="img-fluid" style="width: 100%; height: auto; display: block; border-radius: 6px;" alt="Cup">
+                                            </div>
+                                            <div class="card-body">
+                                                <h5 class="card-title" style="color: #f5f5dc;"><%= gear.gearName %></h5>
+
+                                                <p class="card-text" style="color: #f5f5dc;">PHP <%= gear.price %></p>
+                                                <button class="btn btn-dark minus" style="background-color: #e8e8e1; color: #000000;">-</button>
+                                                <input type="number" name="" id="" class="quantity" value="0" style="display: inline-block; width: 35.41px; height: 38px; background-color: #e8e8e1;">
+                                                <button class="btn btn-dark plus" style="background-color: #e8e8e1; color: #000000;">+</button>
+                                                <button class="btn btn-dark atc desk-tab-btn" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
+                                                <br><br>
+                                                <button type="button" class="btn btn-md desk-tab-btn" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= modalIndex5 %>">Quick View</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" id="productView<%= modalIndex5 %>" tabindex="-1" aria-labelledby="exampleModalLabel<%= modalIndex5 %>" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel<%= modalIndex5 %>" style="font-weight:900; color:#752329">CUPS</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col col-7">
+                                                            <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="Cups">
+                                                        </div>
+                                                        <div class="col col-5">
+                                                            <h5 class="card-title" style="color: #f5f5dc;"><%= gear.gearName %></h5>
+
+                                                            <p class="card-text" style="color: #f5f5dc;">PHP <%= gear.price %></p>
+                                                            <form action="/review_process" method="POST" id="reviewForm"></form>
+
+                                                            <div class="mb-3">
+                                                                <label for="rating" class="form-label">Your Rating</label>
+                                                                <select id="rating" name="rating" class="form-select" style="border-color: #752329;">
+                                                                        <option value="1">☕ Bean There, Done That (Poor)</option>
+                                                                        <option value="2">☕☕ A Latte Room for Improvement (Fair)</option>
+                                                                        <option value="3">☕☕☕ Just Brew-tiful (Satisfactory)</option>
+                                                                        <option value="4">☕☕☕☕ Brew-tifully Good (Very Good)</option>
+                                                                        <option value="5">☕☕☕☕☕ Espresso-tastic (Excellent)</option>
+                                                                    </select>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="review" class="form-label">Your Review
+                                                                        <span id="current">0</span>
+                                                                        <span id="maximum">/ 300</span>
+                                                                    </label>
+                                                                <textarea id="review" name="message" rows="4" cols="50" maxlength="300" required class="form-control" placeholder="Write your review..." style="border-color: #752329;"></textarea>
+                                                            </div>
+
+                                                            <button type="submit" class="btn btn-dark submit-btn" style="margin: 0 auto; display: block; background-color: #752329;">Submit Review</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% modalIndex5++; %>
+                                        <% } %>
+                                            <% }) %>
+                    </div>
+                </div>
+                <% } else { %>
+                    <div class="container"><br>
+                        <hr>
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 p-4 justify-content-center">
+                            <% for( let i = 0; i < gear.length; i++ ) { %>
+                                <div class="col">
+                                    <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
+                                        <img src="./media/<%= gear[i].gearImage %>" class="img-fluid" alt="Coffee Drinks" style="width: 100%; height: auto; display: block; border-radius: 6px; border: 2px solid #bbb;">
+                                        <div class="card-body">
+                                            <h5 class="card-title" style="color: #f5f5dc;"><%= gear[i].gearName %></h5>
+
+                                            <p class="card-text" style="color: #f5f5dc;">PHP <%= gear[i].price %></p>
+                                            <button class="btn btn-dark minus" style="background-color: #e8e8e1; color: #000000;">-</button>
+                                            <input type="number" name="" id="" class="quantity" value="0" style="display: inline-block; width: 35.41px; height: 38px; background-color: #e8e8e1;">
+                                            <button class="btn btn-dark plus" style="background-color: #e8e8e1; color: #000000;">+</button>
+                                            <button class="btn btn-dark atc desk-tab-btn" style="background-color: #ECDCAC; color: #000000;">Add to Cart</button>
+                                            <br><br>
+                                            <button type="button" class="btn btn-md desk-tab-btn" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329; margin-left: 0px;" data-bs-toggle="modal" data-bs-target="#productView<%= i %>">Quick View</button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    <% } %>
-                <% }) %>
-            </div>
+                                <div class="modal fade" id="productView<%= i %>" tabindex="-1" aria-labelledby="exampleModalLabel<%= i %>" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel<%= i %>" style="font-weight:900">BREW GEAR</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col col-7">
+                                                        <img src="./media/<%= gear[i].gearImage %>" class="img-fluid" alt="Caution Coffee Brew Gear">
+                                                    </div>
+                                                    <div class="col col-5">
+                                                        <h5 class="card-title" style="color: #212529;"><%= gear[i].gearName %></h5>
 
-            <br><hr><br><h2 style="text-align: center;">TORANI SYRUPS</h2>
-            <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
-                <% gear.reverse().forEach(gear => { %>
-                    <% if (gear.category === "syrups") { %>
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="">
-                                <div class="card-body">
-                                    <h5 class="card-title"><%= gear.gearName %></h5>
-                                    <p class="card-text">PHP <%= gear.price %></p>
+                                                        <p class="card-text" style="color: #212529;">PHP <%= gear[i].price %></p>
+                                                        <form action="/review_process" method="POST" id="reviewForm">
+
+                                                            <div class="mb-3">
+                                                                <label for="rating" class="form-label">Your Rating</label>
+                                                                <select id="rating" name="rating" class="form-select" style="border-color: #752329;">
+                                                                    <option value="1">☕ Bean There, Done That (Poor)</option>
+                                                                    <option value="2">☕☕ A Latte Room for Improvement (Fair)</option>
+                                                                    <option value="3">☕☕☕ Just Brew-tiful (Satisfactory)</option>
+                                                                    <option value="4">☕☕☕☕ Brew-tifully Good (Very Good)</option>
+                                                                    <option value="5">☕☕☕☕☕ Espresso-tastic (Excellent)</option>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="review" class="form-label">Your Review
+                                                                    <span id="current">0</span>
+                                                                    <span id="maximum">/ 300</span>
+                                                                </label>
+                                                                <textarea id="review" name="message" rows="4" cols="50" maxlength="300" required class="form-control" placeholder="Write your review..." style="border-color: #752329;"></textarea>
+                                                            </div>
+
+                                                            <button type="submit" class="btn btn-dark submit-btn" style="margin: 0 auto; display: block; background-color: #752329;">Submit Review</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                                <% } %>
                         </div>
+                    </div>
                     <% } %>
-                <% }) %>
-            </div>
 
-            <br><hr><br><h2 style="text-align: center;">MILKS</h2>
-            <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
-                <% gear.reverse().forEach(gear => { %>
-                    <% if (gear.category === "milk") { %>
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="">
-                                <div class="card-body">
-                                    <h5 class="card-title"><%= gear.gearName %></h5>
-                                    <p class="card-text">PHP <%= gear.price %></p>
-                                </div>
-                            </div>
-                        </div>
-                    <% } %>
-                <% }) %>
-            </div>
+        </section>
 
-            <br><hr><br><h2 style="text-align: center;">CUPS</h2>
-            <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
-                <% gear.forEach(gear => { %>
-                    <% if (gear.category === "cups") { %>
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="./media/<%= gear.gearImage %>" class="img-fluid" alt="">
-                                <div class="card-body">
-                                    <h5 class="card-title"><%= gear.gearName %></h5>
-                                    <p class="card-text">PHP <%= gear.price %></p>
-                                </div>
-                            </div>
-                        </div>
-                    <% } %>
-                <% }) %>
-            </div>
-        </div>
-    </section>
+        <%- include('footer.ejs') %>
 
-    <%- include('footer.ejs') %>
+            
+            <script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+                const submitButtons = document.getElementsByClassName("submit-btn");
+                for (let i = 0; i < submitButtons.length; i++) {
+                    submitButtons[i].addEventListener('click', () => {
+                        alert("FEATURE NOT AVAILABLE YET SIR HEHE. PLEASE REFER TO REVIEW PAGE");
+                    })
+                }
+
+                // ADD TO CART CODE 
+                let atcButtons = document.getElementsByClassName("atc");
+                let quantityFields = document.getElementsByClassName("quantity");
+                let plusButtons = document.getElementsByClassName("plus");
+                let minusButtons = document.getElementsByClassName("minus");
+
+                for (let i = 0; i < quantityFields.length; i++) {
+                    if (quantityFields[i].value == 0) {
+                        atcButtons[i].setAttribute("disabled", "");
+                    }
+
+                    minusButtons[i].addEventListener("click", () => {
+                        let currentQuantity = parseInt(quantityFields[i].value);
+                        if (currentQuantity > 0) {
+                            quantityFields[i].value = currentQuantity - 1;
+                        }
+                        updateAtcButtonState(i);
+                    });
+
+                    plusButtons[i].addEventListener("click", () => {
+                        let currentQuantity = parseInt(quantityFields[i].value);
+                        quantityFields[i].value = currentQuantity + 1;
+                        updateAtcButtonState(i);
+                    });
+
+                    atcButtons[i].addEventListener("click", (event) => {
+                        let currentQuantity = parseInt(quantityFields[i].value);
+                        if (currentQuantity > 0) {
+                            let title = event.target.parentElement.getElementsByClassName("card-title")[0].innerHTML;
+                            let price = event.target.parentElement.getElementsByClassName("card-text")[0].innerHTML;
+                            let parts = price.split('PHP'); // SPLIT WORD 'PHP'
+                            let newPrice = parts[1].trim(); // TRIM REMAINING PRICE INLUCDING WHITESPACE
+
+                            const product = {
+                                title: title,
+                                price: newPrice,
+                                quantity: currentQuantity
+                            };
+
+                            if ('<%- isLoggedIn %>' === 'true') {
+                                fetch('/add-to-cart', { // FETCH ROUTE FROM APPLICATION
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify(product)
+                                    })
+                                    .then(response => {
+                                        if (!response.ok) { // ------ EDIT ERROR HANDLING
+                                            throw new Error('Network response was not ok');
+                                        }
+                                        return response.json();
+                                    })
+                                    .then(data => { // NEEDS res.json FROM APP TO FIRE
+                                        if (data.success) { // ------ EDIT ERROR HANDLING
+                                            alert('Product added to cart successfully!');
+                                        } else { // ------ EDIT ERROR HANDLING
+                                            alert('Failed to add product to cart.');
+                                        }
+                                    })
+                                    .catch(error => { // ------ EDIT ERROR HANDLING
+                                        console.error('Error adding product to cart:', error);
+                                    });
+                            } else {
+                                alert('Please Sign In to Add to Cart');
+                                location.reload();
+                            }
+                            quantityFields[i].value = 0;
+                            updateAtcButtonState(i);
+                        }
+                    });
+
+                    function updateAtcButtonState(i) {
+                        let currentQuantity = parseInt(quantityFields[i].value);
+                        if (currentQuantity > 0) {
+                            atcButtons[i].removeAttribute("disabled");
+                        } else {
+                            atcButtons[i].setAttribute("disabled", "");
+                        }
+                    }
+                }
+            </script>
+
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+            <script>
+                document.getElementById('home').removeAttribute("class", 'active');
+                document.getElementById('home').setAttribute("class", "nav-link")
+                document.getElementById('products').setAttribute("class", 'nav-link dropdown-toggle active');
+            </script>
 </body>
+
 </html>

@@ -1,60 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MERCH | CAUTION COFFEE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"/>
+    <link rel="icon" href="./media/favicon-l.png" type="image/png">
+
+    <!-- STYLE LINKS -->
     <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/bs-brain@2.0.4/components/testimonials/testimonial-3/assets/css/testimonial-3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"></link>
 </head>
 
 <body>
 
     <%- include('header.ejs') %>
 
-    <section class="merch">
-        <div class="container">
-            <br>
-            <h2 style="text-align: center;">MERCHANDISE</h2>
-            <div class="row row-cols-1 row-cols-md-3 g-4 p-4 justify-content-center">
+        <section class="merch">
+            <div class="container">
+                <br>
+                <h2 style="text-align: center; font-weight: 900; color:#752329">MERCHANDISE</h2>
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 p-4 justify-content-center">
 
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="./media/<%= merch[0].merchImage %>" class="img-fluid" alt="Caution T-Shirt (Black)">
-                        <div class="card-body">
-                            <h5 class="card-title"><%= merch[0].merchName %></h5>
-                            <p class="card-text">PHP <%= merch[0].price %></p>
+                    <div class="col">
+                        <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
+                            <img src="./media/<%= merch[0].merchImage %>" class="img-fluid" alt="Caution T-Shirt (Black)" style="width: 100%; height: auto; display: block; border-radius: 6px; border: 2px solid #bbb;">
+                            <div class="card-body">
+                                <h5 class="card-title" style="color: #E8E8E1">
+                                    <%= merch[0].merchName %>
+                                </h5>
+                                <p class="card-text" style="color: #E8E8E1">PHP
+                                    <%= merch[0].price %>
+                                </p>
+                                <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle="modal" data-bs-target="#productView">Quick View</button>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="./media/<%= merch[2].merchImage %>" class="img-fluid" alt="Caution T-Shirt (Black)">
-                        <div class="card-body">
-                            <h5 class="card-title"><%= merch[2].merchName %></h5>
-                            <p class="card-text">PHP <%= merch[2].price %></p>
+                    <div class="modal fade" id="productView" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel" style="font-weight:900; color:#752329">MERCHANDISE</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col col-7">
+                                            <img src="./media/<%= merch[0].merchImage %>" class="img-fluid" alt="Caution T-Shirt (Black)">
+                                        </div>
+                                        <div class="col col-5">
+                                            <h5>
+                                                <%= merch[0].merchName %>
+                                            </h5>
+                                            <p>PHP
+                                                <%= merch[0].price %>
+                                            </p>
+                                            <form action="/review_process" method="POST" id="reviewForm">
+
+                                                <div class="mb-3">
+                                                    <label for="rating" class="form-label">Your Rating</label>
+                                                    <select id="rating" name="rating" class="form-select" style="border-color: #752329;">
+                                                        <option value="1">☕ Bean There, Done That (Poor)</option>
+                                                        <option value="2">☕☕ A Latte Room for Improvement (Fair)</option>
+                                                        <option value="3">☕☕☕ Just Brew-tiful (Satisfactory)</option>
+                                                        <option value="4">☕☕☕☕ Brew-tifully Good (Very Good)</option>
+                                                        <option value="5">☕☕☕☕☕ Espresso-tastic (Excellent)</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="review" class="form-label">Your Review
+                                                        <span id="current">0</span>
+                                                        <span id="maximum">/ 300</span>
+                                                    </label>
+                                                    <textarea id="review" name="message" rows="4" cols="50" maxlength="300" required class="form-control" placeholder="Write your review..." style="border-color: #752329;"></textarea>
+                                                </div>
+
+                                                <button type="submit" class="btn btn-dark submit-btn" style="margin: 0 auto; display: block; background-color: #752329;">Submit Review</button>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="./media/<%= merch[1].merchImage %>" class="img-fluid" alt="Caution T-Shirt (Black)">
-                        <div class="card-body">
-                            <h5 class="card-title"><%= merch[1].merchName %></h5>
-                            <p class="card-text">PHP <%= merch[1].price %></p>
+                    <div class="col">
+                        <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
+                            <img src="./media/<%= merch[2].merchImage %>" class="img-fluid" alt="Caution T-Shirt (Beige)" style="width: 100%; height: auto; display: block; border-radius: 6px; border: 2px solid #bbb;">
+                            <div class="card-body">
+                                <h5 class="card-title" style="color: #E8E8E1">
+                                    <%= merch[2].merchName %>
+                                </h5>
+                                <p class="card-text" style="color: #E8E8E1">PHP
+                                    <%= merch[2].price %>
+                                </p>
+                                <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle="modal" data-bs-target="#productView2">Quick View</button>
+                            </div>
                         </div>
                     </div>
-                </div>
 
+                    <div class="modal fade" id="productView2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel2" style="font-weight:900; color:#752329">MERCHANDISE</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col col-7">
+                                            <img src="./media/<%= merch[2].merchImage %>" class="img-fluid" alt="Caution T-Shirt (Black)">
+                                        </div>
+                                        <div class="col col-5">
+                                            <h5>
+                                                <%= merch[2].merchName %>
+                                            </h5>
+                                            <p>PHP
+                                                <%= merch[2].price %>
+                                            </p>
+                                            <form action="/review_process" method="POST" id="reviewForm">
+
+                                                <div class="mb-3">
+                                                    <label for="rating" class="form-label">Your Rating</label>
+                                                    <select id="rating" name="rating" class="form-select" style="border-color: #752329;">
+                                                        <option value="1">☕ Bean There, Done That (Poor)</option>
+                                                        <option value="2">☕☕ A Latte Room for Improvement (Fair)</option>
+                                                        <option value="3">☕☕☕ Just Brew-tiful (Satisfactory)</option>
+                                                        <option value="4">☕☕☕☕ Brew-tifully Good (Very Good)</option>
+                                                        <option value="5">☕☕☕☕☕ Espresso-tastic (Excellent)</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="review" class="form-label">Your Review
+                                                        <span id="current">0</span>
+                                                        <span id="maximum">/ 300</span>
+                                                    </label>
+                                                    <textarea id="review" name="message" rows="4" cols="50" maxlength="300" required class="form-control" placeholder="Write your review..." style="border-color: #752329;"></textarea>
+                                                </div>
+
+                                                <button type="submit" class="btn btn-dark submit-btn" style="margin: 0 auto; display: block; background-color: #752329;">Submit Review</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card h-100" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px; overflow: hidden; background-color: #262626;">
+                            <img src="./media/<%= merch[1].merchImage %>" class="img-fluid" alt="Caution Sticker" style="width: 100%; height: auto; display: block; border-radius: 6px; border: 2px solid #bbb;">
+                            <div class="card-body">
+                                <h5 class="card-title" style="color: #E8E8E1">
+                                    <%= merch[1].merchName %>
+                                </h5>
+                                <p class="card-text" style="color: #E8E8E1">PHP
+                                    <%= merch[1].price %>
+                                </p>
+                                <button type="button" class="btn btn-md" style=" margin: 0 auto; display: block; color: #F5F5DC; background-color: #752329;" data-bs-toggle="modal" data-bs-target="#productView3">Quick View</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="productView3" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel3" style="font-weight:900; color:#752329">MERCHANDISE</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col col-7">
+                                            <img src="./media/<%= merch[1].merchImage %>" class="img-fluid" alt="Caution T-Shirt (Black)">
+                                        </div>
+                                        <div class="col col-5">
+                                            <h5>
+                                                <%= merch[1].merchName %>
+                                            </h5>
+                                            <p>PHP
+                                                <%= merch[1].price %>
+                                            </p>
+                                            <form action="/review_process" method="POST" id="reviewForm">
+
+                                                <div class="mb-3">
+                                                    <label for="rating" class="form-label">Your Rating</label>
+                                                    <select id="rating" name="rating" class="form-select" style="border-color: #752329;">
+                                                        <option value="1">☕ Bean There, Done That (Poor)</option>
+                                                        <option value="2">☕☕ A Latte Room for Improvement (Fair)</option>
+                                                        <option value="3">☕☕☕ Just Brew-tiful (Satisfactory)</option>
+                                                        <option value="4">☕☕☕☕ Brew-tifully Good (Very Good)</option>
+                                                        <option value="5">☕☕☕☕☕ Espresso-tastic (Excellent)</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="review" class="form-label">Your Review
+                                                        <span id="current">0</span>
+                                                        <span id="maximum">/ 300</span>
+                                                    </label>
+                                                    <textarea id="review" name="message" rows="4" cols="50" maxlength="300" required class="form-control" placeholder="Write your review..." style="border-color: #752329;"></textarea>
+                                                </div>
+
+                                                <button type="submit" class="btn btn-dark submit-btn" style="margin: 0 auto; display: block; background-color: #752329;">Submit Review</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <%- include('footer.ejs') %>
+        <%- include('footer.ejs') %>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+            <script>
+                document.getElementById('home').removeAttribute("class", 'active');
+                document.getElementById('home').setAttribute("class", "nav-link")
+                document.getElementById('products').setAttribute("class", 'nav-link dropdown-toggle active');
+
+                const submitButtons = document.getElementsByClassName("submit-btn");
+                for (let i = 0; i < submitButtons.length; i++) {
+                    submitButtons[i].addEventListener('click', () => {
+                        alert("FEATURE NOT AVAILABLE YET SIR HEHE. PLEASE REFER TO REVIEW PAGE");
+                    })
+                }
+            </script>
 </body>
+
 </html>
